@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
+import ProductOrderSheet from '../components/ProductOrderSheet';
+import BuyABCSheet from '../components/BuyABCSheet';
+import ExchangeSCSheet from '../components/ExchangeSCSheet';
 
 const CATEGORY_NAMES = {
   classics:   '国学经典',
@@ -40,8 +42,10 @@ const FILTERS = ['全部', 'A', 'B', 'C'];
 
 export default function P6List() {
   const { category } = useParams();
-  const navigate = useNavigate();
   const [filter, setFilter] = useState('全部');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [buyOpen, setBuyOpen] = useState(false);
+  const [exchangeOpen, setExchangeOpen] = useState(false);
 
   const products = genProducts(category);
   const visible  = filter === '全部' ? products : products.filter(p => p.type === filter);
@@ -53,7 +57,7 @@ export default function P6List() {
 
       <div className="px-4 pt-4 pb-8">
         {/* filter chips */}
-        <div className="mb-4 flex gap-2">
+        <div className="no-scrollbar mb-4 flex flex-nowrap gap-2 overflow-x-auto">
           {FILTERS.map(f => {
             const active = filter === f;
             const v = f.toLowerCase();
@@ -61,7 +65,7 @@ export default function P6List() {
               <button
                 key={f}
                 onClick={() => setFilter(f)}
-                className="rounded-full px-4 py-1.5 text-[13px] font-semibold transition-all"
+                className="shrink-0 whitespace-nowrap rounded-full px-4 py-1.5 text-[13px] font-semibold transition-all"
                 style={{
                   background: active ? (f === '全部' ? 'var(--color-primary)' : `var(--token-${v}-from)`) : 'var(--color-bg-card)',
                   color: active ? '#fff' : 'var(--color-text-secondary)',
@@ -82,7 +86,7 @@ export default function P6List() {
             return (
               <button
                 key={p.id}
-                onClick={() => navigate(`/ai/${category}/${p.id}`)}
+                onClick={() => setSelectedProduct(p)}
                 className="overflow-hidden text-left"
                 style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}
               >
@@ -107,6 +111,31 @@ export default function P6List() {
           })}
         </div>
       </div>
+
+      {selectedProduct && (
+        <ProductOrderSheet
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onOpenBuy={() => {
+            setSelectedProduct(null);
+            setBuyOpen(true);
+          }}
+          onOpenExchange={() => {
+            setSelectedProduct(null);
+            setExchangeOpen(true);
+          }}
+        />
+      )}
+      {buyOpen && (
+        <BuyABCSheet
+          onClose={() => setBuyOpen(false)}
+          onOpenExchange={() => {
+            setBuyOpen(false);
+            setExchangeOpen(true);
+          }}
+        />
+      )}
+      {exchangeOpen && <ExchangeSCSheet onClose={() => setExchangeOpen(false)} />}
     </>
   );
 }

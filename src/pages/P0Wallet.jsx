@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 import BuyABCSheet from '../components/BuyABCSheet';
 import ExchangeSCSheet from '../components/ExchangeSCSheet';
 import ExchangeSubmittedSheet from '../components/ExchangeSubmittedSheet';
+import ProductOrderSheet from '../components/ProductOrderSheet';
 import {
   ArrowDownLeft, ArrowUpRight, ArrowLeftRight, ChevronRight, Clock, History,
   PlayCircle, ShoppingCart, Wallet,
@@ -31,10 +32,10 @@ const ORDERS = [
 ];
 
 const VIDEO_PRODUCTS = [
-  { id: 1, title: '星空延时·极光版', tag: '4K', dur: '30s', price: '1.5 亿', grad: 'linear-gradient(135deg,#1a1a4e,#3b2d8a,#6c3fa0)' },
-  { id: 2, title: '海浪慢镜·日落',   tag: 'HD', dur: '15s', price: '0.8 亿', grad: 'linear-gradient(135deg,#0d4f7c,#1a8fa8,#43c6b0)' },
-  { id: 3, title: '城市航拍·霓虹夜', tag: '4K', dur: '60s', price: '3 亿',   grad: 'linear-gradient(135deg,#1a0533,#7b1fa2,#e040fb)' },
-  { id: 4, title: '樱花飘落·慢镜',   tag: 'HD', dur: '20s', price: '1 亿',   grad: 'linear-gradient(135deg,#4a0010,#c2185b,#f48fb1)' },
+  { id: 1, title: '星空延时·极光版', tag: '4K', dur: '30s', price: '1.5 亿', type: 'C', orderPrice: 2, duration: 30, grad: 'linear-gradient(135deg,#1a1a4e,#3b2d8a,#6c3fa0)' },
+  { id: 2, title: '海浪慢镜·日落',   tag: 'HD', dur: '15s', price: '0.8 亿', type: 'C', orderPrice: 2, duration: 15, grad: 'linear-gradient(135deg,#0d4f7c,#1a8fa8,#43c6b0)' },
+  { id: 3, title: '城市航拍·霓虹夜', tag: '4K', dur: '60s', price: '3 亿',   type: 'B', orderPrice: 6, duration: 60, grad: 'linear-gradient(135deg,#1a0533,#7b1fa2,#e040fb)' },
+  { id: 4, title: '樱花飘落·慢镜',   tag: 'HD', dur: '20s', price: '1 亿',   type: 'C', orderPrice: 2, duration: 20, grad: 'linear-gradient(135deg,#4a0010,#c2185b,#f48fb1)' },
 ];
 
 // ── Sub-components ───────────────────────────────────────────
@@ -414,9 +415,20 @@ export default function P0Wallet() {
   const [exchangeOpen, setExchangeOpen] = useState(false);
   const [exchangeSubmitted, setExchangeSubmitted] = useState(null); // null | number (amount)
   const [buyOpen, setBuyOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [devOpen, setDevOpen] = useState(false);
   const [devVisible, setDevVisible] = useState(true);
   const [devModal, setDevModal] = useState(null);
+
+  function handlePreviewProduct(product) {
+    setSelectedProduct({
+      id: `home-${product.id}`,
+      title: product.title,
+      type: product.type,
+      price: product.orderPrice,
+      duration: product.duration,
+    });
+  }
 
   return (
     <>
@@ -443,7 +455,7 @@ export default function P0Wallet() {
           <WalletHistory onMore={() => navigate('/history')} />
         </div>
         <div className="enter" style={{ animationDelay: '380ms' }}>
-          <AIVideoMallPreview onEnter={() => navigate('/ai')} />
+          <AIVideoMallPreview onEnter={() => navigate('/ai')} onProduct={handlePreviewProduct} />
         </div>
       </main>
 
@@ -455,6 +467,20 @@ export default function P0Wallet() {
       )}
       {exchangeSubmitted !== null && (
         <ExchangeSubmittedSheet amount={exchangeSubmitted} onClose={() => setExchangeSubmitted(null)} />
+      )}
+      {selectedProduct && (
+        <ProductOrderSheet
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onOpenBuy={() => {
+            setSelectedProduct(null);
+            setBuyOpen(true);
+          }}
+          onOpenExchange={() => {
+            setSelectedProduct(null);
+            setExchangeOpen(true);
+          }}
+        />
       )}
       {buyOpen && <BuyABCSheet onClose={() => setBuyOpen(false)} onOpenExchange={() => { setBuyOpen(false); setExchangeOpen(true); }} />}
       {devOpen && <DevPanel onClose={() => setDevOpen(false)} onTrigger={(amt) => setDevModal(amt)} />}

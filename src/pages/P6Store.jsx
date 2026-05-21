@@ -3,11 +3,11 @@ import { ChevronRight, PlayCircle } from 'lucide-react';
 import HeaderActions from '../components/HeaderActions';
 
 const CATEGORIES = [
-  { id: 'classics',   name: '国学经典',   desc: 'BOOKLIST 001–020 · 20 部作品', count: 20, grad: 'linear-gradient(135deg,#4a0010,#c2185b,#e91e63)' },
-  { id: 'business',   name: '商业经典',   desc: 'BOOKLIST 021–040 · 20 部作品', count: 20, grad: 'linear-gradient(135deg,#0d274f,#1565c0,#1976d2)' },
-  { id: 'humanities', name: '人文地理',   desc: 'BOOKLIST 041–060 · 20 部作品', count: 20, grad: 'linear-gradient(135deg,#0d4f3c,#00695c,#00897b)' },
-  { id: 'science',    name: '科技未来',   desc: 'BOOKLIST 061–080 · 20 部作品', count: 20, grad: 'linear-gradient(135deg,#1a1a4e,#4527a0,#6a1b9a)' },
-  { id: 'lifestyle',  name: '生活美学',   desc: 'BOOKLIST 081–100 · 20 部作品', count: 20, grad: 'linear-gradient(135deg,#4a2900,#e65100,#f57c00)' },
+  { id: 'classics',   name: '国学经典',   desc: 'BOOKLIST 001–020 · 20 部作品', image: '/assets/booklist-classics.png' },
+  { id: 'business',   name: '商业经典',   desc: 'BOOKLIST 021–040 · 20 部作品', image: '/assets/booklist-business.png' },
+  { id: 'humanities', name: '人文地理',   desc: 'BOOKLIST 041–060 · 20 部作品', image: '/assets/booklist-humanities.png' },
+  { id: 'science',    name: '科技未来',   desc: 'BOOKLIST 061–080 · 20 部作品', image: '/assets/booklist-science.png' },
+  { id: 'lifestyle',  name: '生活美学',   desc: 'BOOKLIST 081–100 · 20 部作品', image: '/assets/booklist-lifestyle.png' },
 ];
 
 export default function P6Store() {
@@ -28,7 +28,7 @@ export default function P6Store() {
           <PlayCircle className="h-5 w-5 text-white/80" strokeWidth={1.8} />
           <span className="text-[13px] text-white/70 font-medium">AI 视频生成专区</span>
         </div>
-        <p className="text-[20px] font-extrabold text-white leading-tight mb-1">选择主题·消耗词元</p>
+        <p className="text-[20px] font-extrabold text-white leading-tight mb-1">选择主题·兑换视频</p>
         <p className="text-[13px] text-white/60">使用 ASC / BSC / CSC 兑换专属视频</p>
       </div>
 
@@ -43,10 +43,12 @@ export default function P6Store() {
               className="relative overflow-hidden flex items-center gap-4 text-left"
               style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}
             >
-              {/* color swatch */}
-              <div className="h-[80px] w-[90px] shrink-0 flex items-center justify-center" style={{ background: cat.grad }}>
-                <span className="text-[22px] font-extrabold text-white/30 font-num">{cat.count}</span>
-              </div>
+              <img
+                src={cat.image}
+                alt=""
+                className="h-[80px] w-[90px] shrink-0 object-cover"
+                loading="lazy"
+              />
               <div className="flex-1 py-4 pr-4">
                 <p className="text-[16px] font-semibold text-tokenText">{cat.name}</p>
                 <p className="mt-0.5 text-[12px] text-tokenHint">{cat.desc}</p>
