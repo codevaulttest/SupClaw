@@ -23,13 +23,13 @@ export default function P6Store() {
       </header>
 
       {/* hero */}
-      <div className="mx-4 mb-5 px-1">
-        <div className="flex items-center gap-1.5 mb-1.5">
-          <PlayCircle className="h-[17px] w-[17px] text-tokenPrimary" strokeWidth={2.5} />
-          <span className="text-[12px] text-tokenPrimary font-bold tracking-wide">AI 视频生成专区</span>
+      <div className="mx-4 mb-5 overflow-hidden rounded-[20px] px-5 py-5" style={{ background: 'linear-gradient(135deg,#0e2a4a 0%,#0a3d62 60%,#0d6e94 100%)', boxShadow: 'var(--shadow-lg)' }}>
+        <div className="flex items-center gap-2 mb-2">
+          <PlayCircle className="h-5 w-5 text-white/80" strokeWidth={1.8} />
+          <span className="text-[13px] text-white/70 font-medium">AI 视频生成专区</span>
         </div>
-        <p className="text-[20px] font-extrabold text-tokenText leading-tight mb-1">选择主题 · 兑换视频</p>
-        <p className="text-[13px] text-tokenSub">使用 ASC / BSC / CSC 兑换专属视频</p>
+          <p className="text-[20px] font-extrabold text-white leading-tight mb-1">选择主题·兑换视频</p>
+        <p className="text-[13px] text-white/60">使用 ASC / BSC / CSC 兑换专属视频</p>
       </div>
 
       {/* categories */}
