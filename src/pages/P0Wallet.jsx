@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
+import BuyABCSheet from '../components/BuyABCSheet';
+import ExchangeSCSheet from '../components/ExchangeSCSheet';
 import {
   ArrowDownLeft, ArrowLeftRight, ChevronRight, History,
   PlayCircle, ShoppingCart, Wallet,
@@ -392,6 +394,8 @@ function DevPanel({ onClose, onTrigger }) {
 export default function P0Wallet() {
   const navigate = useNavigate();
   const [lang, setLang] = useState('zh');
+  const [exchangeOpen, setExchangeOpen] = useState(false);
+  const [buyOpen, setBuyOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
   const [devVisible, setDevVisible] = useState(true);
   const [devModal, setDevModal] = useState(null);
@@ -409,10 +413,10 @@ export default function P0Wallet() {
           <SloganBanner lang={lang} setLang={setLang} />
         </div>
         <div className="enter" style={{ animationDelay: '80ms' }}>
-          <SCHeroCard onExchange={() => navigate('/exchange')} />
+          <SCHeroCard onExchange={() => setExchangeOpen(true)} />
         </div>
         <div className="enter" style={{ animationDelay: '160ms' }}>
-          <ABCCard onBuy={() => navigate('/buy')} />
+          <ABCCard onBuy={() => setBuyOpen(true)} />
         </div>
         <div className="enter" style={{ animationDelay: '260ms' }}>
           <SubsidyCountdown onTrigger={devModal} />
@@ -425,6 +429,8 @@ export default function P0Wallet() {
         </div>
       </main>
 
+      {exchangeOpen && <ExchangeSCSheet onClose={() => setExchangeOpen(false)} />}
+      {buyOpen && <BuyABCSheet onClose={() => setBuyOpen(false)} onOpenExchange={() => { setBuyOpen(false); setExchangeOpen(true); }} />}
       {devOpen && <DevPanel onClose={() => setDevOpen(false)} onTrigger={(amt) => setDevModal(amt)} />}
       {devModal !== null && <SubsidyResultModal subsidyAmount={devModal} orderTotal={9} onClose={() => setDevModal(null)} />}
       {devVisible && (

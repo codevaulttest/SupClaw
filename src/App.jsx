@@ -17,9 +17,7 @@ const SHELL = 'mx-auto min-h-screen w-full max-w-[480px] overflow-x-hidden font-
 function MainLayout() {
   return (
     <div className={SHELL} style={{ background: 'var(--color-bg-page)' }}>
-      <div style={{ paddingBottom: 'calc(max(16px, env(safe-area-inset-bottom)) + 72px)' }}>
-        <Outlet />
-      </div>
+      <Outlet />
       <BottomNav />
     </div>
   );

@@ -75,7 +75,7 @@ export default function P2BuyABC() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  {phase === 'cart' ? (
+                  {phase === 'cart' || insufficient ? (
                     <div className="flex items-center gap-3">
                       <button
                         onClick={() => adjust(key, -1)}

@@ -32,11 +32,11 @@ export default function BottomNav() {
 
   return (
     <div
-      className="fixed left-1/2 z-30 w-full max-w-[480px] -translate-x-1/2 px-5"
+      className="pointer-events-none fixed left-1/2 z-30 w-full max-w-[480px] -translate-x-1/2 px-5"
       style={{ bottom: 'max(14px, env(safe-area-inset-bottom))' }}
     >
       <nav
-        className="grid h-[68px] grid-cols-3 rounded-full p-1.5"
+        className="pointer-events-auto grid h-[68px] grid-cols-3 overflow-hidden rounded-full p-1.5"
         style={{
           background: 'linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.58))',
           backdropFilter: 'saturate(190%) blur(28px)',
