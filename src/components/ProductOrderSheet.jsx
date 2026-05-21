@@ -95,9 +95,12 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
             </div>
 
             <div className="mb-4 flex items-center justify-between rounded-xl px-5 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
-              <div>
+              <div className="min-w-0">
                 <p className="text-[13px] text-tokenSub">购买数量</p>
-                <p className="mt-0.5 text-[12px] text-tokenHint">合计生成 {duration} 秒视频</p>
+                <p className="mt-1 flex items-baseline gap-1 whitespace-nowrap">
+                  <span className="font-num text-[28px] font-bold leading-none text-tokenPrimary">{duration}</span>
+                  <span className="text-[15px] font-semibold text-tokenPrimary">秒视频</span>
+                </p>
               </div>
               <div className="flex items-center gap-3">
                 <button onClick={() => setQty(q => Math.max(1, q - 1))} className="flex h-9 w-9 items-center justify-center rounded-full border border-tokenBorder">
