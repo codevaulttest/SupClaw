@@ -237,7 +237,7 @@ function SubsidyCountdown({ onTrigger }) {
 
 function WalletHistory({ onMore }) {
   const [tab, setTab] = useState('sc');
-  const TABS = [{ key: 'sc', label: '收支明细' }, { key: 'order', label: '兑换记录' }];
+  const TABS = [{ key: 'sc', label: '词元收支明细' }, { key: 'order', label: '首发权兑换记录' }];
 
   return (
     <section className="mt-6">

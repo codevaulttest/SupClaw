@@ -18,7 +18,7 @@ const ORDERS = [
   { combo: 'A×3',             amount: '−15 亿 SC', time: '3天前 19:22' },
 ];
 
-const TABS = [{ key: 'sc', label: '收支明细' }, { key: 'order', label: '兑换记录' }];
+const TABS = [{ key: 'sc', label: '词元收支明细' }, { key: 'order', label: '首发权兑换记录' }];
 
 export default function P5History() {
   const [tab, setTab] = useState('sc');
