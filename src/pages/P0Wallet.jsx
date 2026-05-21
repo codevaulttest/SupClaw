@@ -5,7 +5,7 @@ import BuyABCSheet from '../components/BuyABCSheet';
 import ExchangeSCSheet from '../components/ExchangeSCSheet';
 import Toast from '../components/Toast';
 import {
-  ArrowDownLeft, ArrowLeftRight, ChevronRight, History,
+  ArrowDownLeft, ArrowUpRight, ArrowLeftRight, ChevronRight, Clock, History,
   PlayCircle, ShoppingCart, Wallet,
 } from 'lucide-react';
 import InfoTip from '../components/InfoTip';
@@ -20,9 +20,9 @@ const ABC_BALANCES = [
 ];
 
 const SC_FLOWS = [
-  { dir: 'in',  label: '补贴到账', sub: '本轮补贴 3.11 亿（补贴 +3.7%）', amount: '+3.11 亿 SC', time: '今天 16:40' },
-  { dir: 'in',  label: '兑换 SC',  sub: '10 DOS → 10 亿 SC',             amount: '+10 亿 SC',   time: '今天 14:23' },
-  { dir: 'in',  label: '补贴到账', sub: '本轮折让 36%（折让）',           amount: '+5.20 亿 SC', time: '昨天 20:08' },
+  { dir: 'pending', label: '兑换 SC',  sub: '5 DOS → 5 亿 SC',              amount: '5 亿 SC',     time: '今天 17:02' },
+  { dir: 'in',      label: '补贴到账', sub: '本轮补贴 3.11 亿（补贴 +3.7%）', amount: '+3.11 亿 SC', time: '今天 16:40' },
+  { dir: 'out',     label: '兑换首发权', sub: 'A×2  B×1',                     amount: '-13 亿 SC',   time: '今天 14:23' },
 ];
 
 const ORDERS = [
@@ -269,21 +269,37 @@ function WalletHistory({ onMore }) {
 
       {tab === 'sc' && (
         <div key="sc" className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
-          {SC_FLOWS.map((item, i) => (
-            <div key={i} className={`flex items-center gap-3 px-4 py-3${i < 2 ? ' border-b border-tokenBorderSubtle' : ''}`}>
-              <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={{ background: 'var(--color-success-soft)' }}>
-                <ArrowDownLeft className="h-[18px] w-[18px] text-tokenSuccess" strokeWidth={2.2} />
+          {SC_FLOWS.map((item, i) => {
+            const pending = item.dir === 'pending';
+            const out = item.dir === 'out';
+            const iconBg = pending ? '#fff8ee' : out ? 'var(--color-danger-soft)' : 'var(--color-success-soft)';
+            const amountColor = pending ? '#d97706' : out ? 'var(--color-danger)' : 'var(--color-success)';
+            return (
+              <div key={i} className={`flex items-center gap-3 px-4 py-3${i < SC_FLOWS.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>
+                <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={{ background: iconBg }}>
+                  {pending
+                    ? <Clock className="h-[17px] w-[17px]" style={{ color: '#f59e0b' }} strokeWidth={2} />
+                    : out
+                      ? <ArrowUpRight className="h-[18px] w-[18px] text-tokenDanger" strokeWidth={2.2} />
+                      : <ArrowDownLeft className="h-[18px] w-[18px] text-tokenSuccess" strokeWidth={2.2} />
+                  }
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <p className="truncate text-[14px] font-medium leading-[18px] text-tokenText">{item.label}</p>
+                    {pending && (
+                      <span className="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold leading-none" style={{ background: '#fff8ee', border: '1px solid #fcd34d', color: '#d97706' }}>处理中</span>
+                    )}
+                  </div>
+                  <p className="mt-0.5 truncate text-[12px] leading-[16px] text-tokenSub">{item.sub}</p>
+                </div>
+                <div className="shrink-0 text-right">
+                  <p className="font-num text-[15px] font-semibold leading-[20px]" style={{ color: amountColor }}>{item.amount}</p>
+                  <p className="mt-0.5 text-[11px] leading-[15px] text-tokenHint">{item.time}</p>
+                </div>
               </div>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-[14px] font-medium leading-[18px] text-tokenText">{item.label}</p>
-                <p className="mt-0.5 truncate text-[12px] leading-[16px] text-tokenSub">{item.sub}</p>
-              </div>
-              <div className="shrink-0 text-right">
-                <p className="font-num text-[15px] font-semibold leading-[20px] text-tokenSuccess">{item.amount}</p>
-                <p className="mt-0.5 text-[11px] leading-[15px] text-tokenHint">{item.time}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
