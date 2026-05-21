@@ -11,8 +11,10 @@ export default function ProductCard({ product, onClick, className = '', style = 
   const v = type.toLowerCase();
   const info = TOKEN_INFO[type] || TOKEN_INFO.C;
   const badge = product.tag || type;
-  const duration = product.dur || `${product.duration}s / 个`;
-  const price = product.displayPrice || `${product.price}亿`;
+  const duration = product.dur 
+    ? `每 ${product.dur.replace('s', '秒')}视频` 
+    : `每 ${product.duration}秒视频`;
+  const price = product.displayPrice || `${product.price}亿 ${type}SC`;
   const background = product.grad || `linear-gradient(135deg, var(--token-${v}-from), var(--token-${v}-to))`;
 
   return (
@@ -37,14 +39,9 @@ export default function ProductCard({ product, onClick, className = '', style = 
         <span className="absolute left-2 top-2 rounded px-1.5 py-0.5 text-[10px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.3)' }}>
           {badge}
         </span>
-        <span className="font-num text-[10px] text-white/80">{duration}</span>
       </div>
       <div className="px-3 py-2.5">
-        <p className="mb-1 truncate text-[13px] font-semibold text-tokenText">{product.title}</p>
-        <div className="flex items-center justify-between gap-2">
-          <span className="min-w-0 truncate text-[11px] font-medium" style={{ color: info.color }}>{info.label}</span>
-          <span className="shrink-0 font-num text-[13px] font-bold" style={{ color: `var(--token-${v}-text)` }}>{price}</span>
-        </div>
+        <p className="truncate text-[13px] font-semibold text-tokenText">{product.title}</p>
       </div>
     </button>
   );

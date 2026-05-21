@@ -15,9 +15,9 @@ const CATEGORY_NAMES = {
 };
 
 const TOKEN_INFO = {
-  A: { label: '品牌定制版', price: 10, color: 'var(--token-a-text)', bg: 'var(--token-a-soft)', border: 'var(--token-a-border)' },
-  B: { label: '创意文案版', price: 6,  color: 'var(--token-b-text)', bg: 'var(--token-b-soft)', border: 'var(--token-b-border)' },
-  C: { label: '极速盲盒版', price: 2,  color: 'var(--token-c-text)', bg: 'var(--token-c-soft)', border: 'var(--token-c-border)' },
+  A: { label: '品牌定制版', price: 1, color: 'var(--token-a-text)', bg: 'var(--token-a-soft)', border: 'var(--token-a-border)' },
+  B: { label: '创意文案版', price: 1,  color: 'var(--token-b-text)', bg: 'var(--token-b-soft)', border: 'var(--token-b-border)' },
+  C: { label: '极速盲盒版', price: 1,  color: 'var(--token-c-text)', bg: 'var(--token-c-soft)', border: 'var(--token-c-border)' },
 };
 
 // 每个分类 mock 10 个商品

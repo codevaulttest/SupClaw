@@ -33,10 +33,10 @@ const ORDERS = [
 ];
 
 const VIDEO_PRODUCTS = [
-  { id: 1, title: '星空延时·极光版', tag: '4K', dur: '30s', displayPrice: '1.5 亿 SC', type: 'C', orderPrice: 2, duration: 30, grad: 'linear-gradient(135deg,#1a1a4e,#3b2d8a,#6c3fa0)' },
-  { id: 2, title: '海浪慢镜·日落',   tag: 'HD', dur: '15s', displayPrice: '0.8 亿 SC', type: 'C', orderPrice: 2, duration: 15, grad: 'linear-gradient(135deg,#0d4f7c,#1a8fa8,#43c6b0)' },
-  { id: 3, title: '城市航拍·霓虹夜', tag: '4K', dur: '60s', displayPrice: '3 亿 SC',   type: 'B', orderPrice: 6, duration: 60, grad: 'linear-gradient(135deg,#1a0533,#7b1fa2,#e040fb)' },
-  { id: 4, title: '樱花飘落·慢镜',   tag: 'HD', dur: '20s', displayPrice: '1 亿 SC',   type: 'C', orderPrice: 2, duration: 20, grad: 'linear-gradient(135deg,#4a0010,#c2185b,#f48fb1)' },
+  { id: 1, title: '星空延时·极光版', tag: '4K', dur: '30s', displayPrice: '3 亿 CSC', type: 'C', orderPrice: 3, duration: 30, grad: 'linear-gradient(135deg,#1a1a4e,#3b2d8a,#6c3fa0)' },
+  { id: 2, title: '海浪慢镜·日落',   tag: 'HD', dur: '15s', displayPrice: '1.5 亿 CSC', type: 'C', orderPrice: 1.5, duration: 15, grad: 'linear-gradient(135deg,#0d4f7c,#1a8fa8,#43c6b0)' },
+  { id: 3, title: '城市航拍·霓虹夜', tag: '4K', dur: '60s', displayPrice: '6 亿 BSC',   type: 'B', orderPrice: 6, duration: 60, grad: 'linear-gradient(135deg,#1a0533,#7b1fa2,#e040fb)' },
+  { id: 4, title: '樱花飘落·慢镜',   tag: 'HD', dur: '20s', displayPrice: '2 亿 CSC',   type: 'C', orderPrice: 2, duration: 20, grad: 'linear-gradient(135deg,#4a0010,#c2185b,#f48fb1)' },
 ];
 
 // ── Sub-components ───────────────────────────────────────────

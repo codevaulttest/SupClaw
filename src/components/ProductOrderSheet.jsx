@@ -116,11 +116,11 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
             <div className="mb-4 rounded-xl px-5 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
               <p className="mb-3 text-[13px] font-semibold text-tokenText">组合支付</p>
               <div className="mb-2 flex items-center justify-between">
-                <span className="text-[13px] text-tokenSub">{type}SC 词元</span>
+                <span className="text-[13px] text-tokenSub">{type}SC</span>
                 <span className="font-num text-[15px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>{totalABC} 亿 {type}SC</span>
               </div>
               <div className="mb-3 flex items-center justify-between">
-                <span className="text-[13px] text-tokenSub">SC 词元（+10%）</span>
+                <span className="text-[13px] text-tokenSub">SC（+10%）</span>
                 <span className="font-num text-[15px] font-semibold text-tokenPrimary">{totalSC} 亿 SC</span>
               </div>
               <div className="mb-3 h-px bg-tokenBorderSubtle" />

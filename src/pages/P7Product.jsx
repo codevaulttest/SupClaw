@@ -7,7 +7,7 @@ import PageHeader from '../components/PageHeader';
 const BALANCES = { A: 5.20, B: 3.00, C: 1.80 };
 const SC_BALANCE = 32.11;
 // per-type price (亿 ABC / unit)
-const UNIT_PRICE  = { A: 10, B: 6, C: 2 };
+const UNIT_PRICE  = { A: 1, B: 1, C: 1 };
 // SC rate: 1 ASC = 5亿 SC; 10% of that = 0.5亿 SC per ASC
 const SC_RATE     = { A: 5, B: 3, C: 1 };
 const TYPE_INFO   = {
@@ -99,13 +99,13 @@ export default function P7Product() {
         <div className="mb-4 rounded-xl px-5 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
           <p className="mb-3 text-[13px] font-semibold text-tokenText">组合支付</p>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[13px] text-tokenSub">{type}SC 词元</span>
+            <span className="text-[13px] text-tokenSub">{type}SC</span>
             <span className="font-num text-[15px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>
               {totalABC} 亿 {type}SC
             </span>
           </div>
           <div className="flex items-center justify-between mb-3">
-            <span className="text-[13px] text-tokenSub">SC 词元（+10%）</span>
+            <span className="text-[13px] text-tokenSub">SC（+10%）</span>
             <span className="font-num text-[15px] font-semibold text-tokenPrimary">{totalSC} 亿 SC</span>
           </div>
           <div className="h-px bg-tokenBorderSubtle mb-3" />
