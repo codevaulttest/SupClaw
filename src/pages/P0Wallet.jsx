@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import BuyABCSheet from '../components/BuyABCSheet';
 import ExchangeSCSheet from '../components/ExchangeSCSheet';
+import Toast from '../components/Toast';
 import {
   ArrowDownLeft, ArrowLeftRight, ChevronRight, History,
   PlayCircle, ShoppingCart, Wallet,
@@ -395,6 +396,7 @@ export default function P0Wallet() {
   const navigate = useNavigate();
   const [lang, setLang] = useState('zh');
   const [exchangeOpen, setExchangeOpen] = useState(false);
+  const [exchangeToast, setExchangeToast] = useState(null); // null | 'loading' | 'success'
   const [buyOpen, setBuyOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
   const [devVisible, setDevVisible] = useState(true);
@@ -429,7 +431,21 @@ export default function P0Wallet() {
         </div>
       </main>
 
-      {exchangeOpen && <ExchangeSCSheet onClose={() => setExchangeOpen(false)} />}
+      {exchangeOpen && (
+        <ExchangeSCSheet
+          onClose={() => setExchangeOpen(false)}
+          onSubmit={() => {
+            setExchangeToast('loading');
+            setTimeout(() => setExchangeToast('success'), 3000);
+          }}
+        />
+      )}
+      {exchangeToast === 'loading' && (
+        <Toast type="loading" message="兑换处理中…" />
+      )}
+      {exchangeToast === 'success' && (
+        <Toast type="success" message="兑换成功，SC 已到账" duration={2500} onDone={() => setExchangeToast(null)} />
+      )}}
       {buyOpen && <BuyABCSheet onClose={() => setBuyOpen(false)} onOpenExchange={() => { setBuyOpen(false); setExchangeOpen(true); }} />}
       {devOpen && <DevPanel onClose={() => setDevOpen(false)} onTrigger={(amt) => setDevModal(amt)} />}
       {devModal !== null && <SubsidyResultModal subsidyAmount={devModal} orderTotal={9} onClose={() => setDevModal(null)} />}

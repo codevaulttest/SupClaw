@@ -17,11 +17,8 @@ export default function Toast({ type, message, duration = 3000, onDone }) {
 
   return createPortal(
     <div
-      className="fixed left-1/2 z-[100] -translate-x-1/2 px-4 w-full max-w-[480px]"
-      style={{
-        top: 'max(20px, env(safe-area-inset-top, 20px))',
-        pointerEvents: 'none',
-      }}
+      className="fixed left-1/2 top-1/2 z-[100] -translate-x-1/2 -translate-y-1/2 px-4 w-full max-w-[480px]"
+      style={{ pointerEvents: 'none' }}
     >
       <div
         className="mx-auto flex w-fit items-center gap-2.5 rounded-full px-4 py-2.5"
@@ -31,7 +28,7 @@ export default function Toast({ type, message, duration = 3000, onDone }) {
           boxShadow: '0 4px 20px rgba(0,0,0,0.22)',
           transition: 'opacity 280ms, transform 280ms',
           opacity: visible ? 1 : 0,
-          transform: visible ? 'translateY(0)' : 'translateY(-8px)',
+          transform: visible ? 'scale(1)' : 'scale(0.92)',
           animation: 'toastIn 260ms cubic-bezier(0.22,1,0.36,1) both',
         }}
       >

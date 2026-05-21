@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowDownUp, X } from 'lucide-react';
+import Toast from './Toast';
 
 const DOS_BALANCE = 50;
 const SC_BALANCE = 32.11;
 
-export default function ExchangeSCSheet({ onClose }) {
+export default function ExchangeSCSheet({ onClose, onSubmit }) {
   const [amount, setAmount] = useState('');
-  const [submitted, setSubmitted] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -22,8 +22,8 @@ export default function ExchangeSCSheet({ onClose }) {
 
   function handleSubmit() {
     if (!canSubmit) return;
-    setSubmitted(true);
-    setTimeout(onClose, 1200);
+    onSubmit?.(num);
+    onClose();
   }
 
   return createPortal(
@@ -130,28 +130,19 @@ export default function ExchangeSCSheet({ onClose }) {
 
             {/* 提交 */}
             <div className="mt-5">
-              {submitted ? (
-                <div className="flex items-center justify-center gap-2 rounded-xl py-4" style={{ background: 'var(--color-success-soft)', border: '1px solid var(--color-primary-border)' }}>
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="var(--color-success)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  <span className="text-[15px] font-semibold text-tokenSuccess">兑换成功</span>
-                </div>
-              ) : (
-                <button
-                  onClick={handleSubmit}
-                  disabled={!canSubmit}
-                  className="w-full py-[14px] text-[15px] font-semibold"
-                  style={{
-                    borderRadius: 'var(--radius-md)',
-                    background: canSubmit ? 'var(--color-primary)' : 'var(--color-border)',
-                    color: canSubmit ? '#fff' : 'var(--color-text-hint)',
-                    boxShadow: canSubmit ? '0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent)' : 'none',
-                  }}
-                >
-                  确认兑换
-                </button>
-              )}
+              <button
+                onClick={handleSubmit}
+                disabled={!canSubmit}
+                className="w-full py-[14px] text-[15px] font-semibold"
+                style={{
+                  borderRadius: 'var(--radius-md)',
+                  background: canSubmit ? 'var(--color-primary)' : 'var(--color-border)',
+                  color: canSubmit ? '#fff' : 'var(--color-text-hint)',
+                  boxShadow: canSubmit ? '0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent)' : 'none',
+                }}
+              >
+                确认兑换
+              </button>
             </div>
           </div>
         </div>
@@ -160,3 +151,4 @@ export default function ExchangeSCSheet({ onClose }) {
     document.body
   );
 }
+

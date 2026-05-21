@@ -93,6 +93,11 @@ body {
   to   { transform: translateY(0);    opacity: 1; }
 }
 
+@keyframes toastIn {
+  from { transform: scale(0.88); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
 @keyframes popIn {
   from { transform: scale(0.5); opacity: 0; }
   to   { transform: scale(1);   opacity: 1; }
