@@ -40,16 +40,18 @@ export default function P6Store() {
             <button
               key={cat.id}
               onClick={() => navigate(`/ai/${cat.id}`)}
-              className="relative overflow-hidden flex items-center gap-4 text-left"
+              className="relative flex min-h-[112px] overflow-hidden bg-tokenCard text-left"
               style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}
             >
-              <img
-                src={cat.image}
-                alt=""
-                className="h-[80px] w-[90px] shrink-0 object-cover"
-                loading="lazy"
-              />
-              <div className="flex-1 py-4 pr-4">
+              <div className="w-[136px] shrink-0 overflow-hidden">
+                <img
+                  src={cat.image}
+                  alt=""
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div className="flex min-w-0 flex-1 flex-col justify-center py-4 pl-4 pr-3">
                 <p className="text-[16px] font-semibold text-tokenText">{cat.name}</p>
                 <p className="mt-0.5 text-[12px] text-tokenHint">{cat.desc}</p>
                 <div className="mt-2 flex gap-1">
@@ -59,7 +61,7 @@ export default function P6Store() {
                   ))}
                 </div>
               </div>
-              <ChevronRight className="mr-4 h-5 w-5 text-tokenHint shrink-0" strokeWidth={2} />
+              <ChevronRight className="mr-4 h-5 w-5 self-center text-tokenHint shrink-0" strokeWidth={2} />
             </button>
           ))}
         </div>
