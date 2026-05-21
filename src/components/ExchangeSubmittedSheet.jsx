@@ -2,7 +2,7 @@ import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { X, Clock } from 'lucide-react';
 
-export default function ExchangeSubmittedSheet({ amount, onClose }) {
+export default function ExchangeSubmittedSheet({ amount, detail, onClose }) {
   const navigate = useNavigate();
 
   return createPortal(
@@ -37,6 +37,9 @@ export default function ExchangeSubmittedSheet({ amount, onClose }) {
             <p className="text-[20px] font-semibold text-tokenText">兑换已提交</p>
             {amount > 0 && (
               <p className="mt-1.5 text-[14px] text-tokenSub">{amount} DOS → {amount} 亿 SC</p>
+            )}
+            {detail && (
+              <p className="mt-1.5 text-[14px] text-tokenSub">{detail}</p>
             )}
             <p className="mt-3 text-center text-[13px] leading-[20px] text-tokenHint">
               兑换正在处理中，到账时间取决于网络状态，可在记录页查看最新进度。

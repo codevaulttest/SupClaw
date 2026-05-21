@@ -402,6 +402,7 @@ export default function P0Wallet() {
   const [lang, setLang] = useState('zh');
   const [exchangeOpen, setExchangeOpen] = useState(false);
   const [exchangeSubmitted, setExchangeSubmitted] = useState(null); // null | number (amount)
+  const [buySubmitted, setBuySubmitted] = useState(null);
   const [buyOpen, setBuyOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [devOpen, setDevOpen] = useState(false);
@@ -456,6 +457,12 @@ export default function P0Wallet() {
       {exchangeSubmitted !== null && (
         <ExchangeSubmittedSheet amount={exchangeSubmitted} onClose={() => setExchangeSubmitted(null)} />
       )}
+      {buySubmitted && (
+        <ExchangeSubmittedSheet
+          detail={`${buySubmitted.combo} · 扣除 ${buySubmitted.total} 亿 SC`}
+          onClose={() => setBuySubmitted(null)}
+        />
+      )}
       {selectedProduct && (
         <ProductOrderSheet
           product={selectedProduct}
@@ -470,7 +477,13 @@ export default function P0Wallet() {
           }}
         />
       )}
-      {buyOpen && <BuyABCSheet onClose={() => setBuyOpen(false)} onOpenExchange={() => { setBuyOpen(false); setExchangeOpen(true); }} />}
+      {buyOpen && (
+        <BuyABCSheet
+          onClose={() => setBuyOpen(false)}
+          onOpenExchange={() => { setBuyOpen(false); setExchangeOpen(true); }}
+          onSubmit={(payload) => setBuySubmitted(payload)}
+        />
+      )}
       {devOpen && <DevPanel onClose={() => setDevOpen(false)} onTrigger={(amt) => setDevModal(amt)} />}
       {devModal !== null && <SubsidyResultModal subsidyAmount={devModal} orderTotal={9} onClose={() => setDevModal(null)} />}
       {devVisible && (

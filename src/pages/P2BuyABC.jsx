@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Minus, Plus, ArrowLeftRight } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import InfoTip from '../components/InfoTip';
+import ExchangeSubmittedSheet from '../components/ExchangeSubmittedSheet';
 
 const SC_BALANCE = 32.11;
 const PRICES = { A: 5, B: 3, C: 1 };
@@ -16,7 +17,7 @@ const TOKEN_V = { A: 'a', B: 'b', C: 'c' };
 export default function P2BuyABC() {
   const navigate = useNavigate();
   const [counts, setCounts] = useState({ A: 0, B: 0, C: 0 });
-  const [phase, setPhase] = useState('cart'); // 'cart' | 'confirm'
+  const [submitted, setSubmitted] = useState(null);
 
   const total = Object.entries(counts).reduce((s, [k, v]) => s + v * PRICES[k], 0);
   const isEmpty = total === 0;
@@ -27,20 +28,16 @@ export default function P2BuyABC() {
   }
 
   function handleConfirm() {
-    if (phase === 'cart') {
-      if (!isEmpty) setPhase('confirm');
-      return;
-    }
-    if (insufficient) return;
-    navigate('/lottery', { state: { counts, total, combo: Object.entries(counts).filter(([,v]) => v > 0).map(([k,v]) => `${k}×${v}`).join('  ') } });
+    if (isEmpty || insufficient) return;
+    setSubmitted({
+      total,
+      combo: Object.entries(counts).filter(([,v]) => v > 0).map(([k,v]) => `${k}×${v}`).join('  '),
+    });
   }
 
   return (
     <>
-      <PageHeader
-        title="兑换首发权"
-        onBack={phase === 'confirm' ? () => setPhase('cart') : undefined}
-      />
+      <PageHeader title="兑换首发权" />
 
       <div className="px-4 pt-5 pb-8">
         {/* SC 余额 */}
@@ -75,27 +72,24 @@ export default function P2BuyABC() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  {phase === 'cart' || insufficient ? (
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => adjust(key, -1)}
-                        disabled={count === 0}
-                        className="flex h-8 w-8 items-center justify-center rounded-full border border-tokenBorder disabled:opacity-30"
-                      >
-                        <Minus className="h-4 w-4 text-tokenText" strokeWidth={2} />
-                      </button>
-                      <span className="font-num text-[20px] font-semibold text-tokenText w-8 text-center">{count}</span>
-                      <button
-                        onClick={() => adjust(key, 1)}
-                        className="flex h-8 w-8 items-center justify-center rounded-full text-white"
-                        style={{ background: `var(--token-${v}-from)` }}
-                      >
-                        <Plus className="h-4 w-4" strokeWidth={2.5} />
-                      </button>
-                    </div>
-                  ) : (
-                    <span className="font-num text-[20px] font-semibold text-tokenText">{count} 个</span>
-                  )}
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => adjust(key, -1)}
+                      disabled={count === 0}
+                      className="flex h-8 w-8 items-center justify-center rounded-full border border-tokenBorder disabled:opacity-30"
+                    >
+                      <Minus className="h-4 w-4 text-tokenText" strokeWidth={2} />
+                    </button>
+                    <span className="font-num text-[20px] font-semibold text-tokenText w-8 text-center">{count}</span>
+                    <button
+                      onClick={() => adjust(key, 1)}
+                      disabled={total + PRICES[key] > SC_BALANCE}
+                      className="flex h-8 w-8 items-center justify-center rounded-full text-white disabled:opacity-30"
+                      style={{ background: total + PRICES[key] > SC_BALANCE ? 'var(--color-danger)' : `var(--token-${v}-from)` }}
+                    >
+                      <Plus className="h-4 w-4" strokeWidth={2.5} />
+                    </button>
+                  </div>
                   {subtotal > 0 && (
                     <span className="font-num text-[13px] font-medium text-tokenSub">= {subtotal} 亿 SC</span>
                   )}
@@ -105,46 +99,43 @@ export default function P2BuyABC() {
           );
         })}
 
-        {/* 确认订单摘要（phase confirm） */}
-        {phase === 'confirm' && (
-          <div className="mb-4 rounded-xl px-4 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[13px] text-tokenSub">扣除 SC</span>
-              <span className="font-num text-[18px] font-semibold text-tokenDanger">-{total} 亿</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-[13px] text-tokenSub">SC 余额（兑换后）</span>
-              <span className={`font-num text-[15px] font-semibold ${insufficient ? 'text-tokenDanger' : 'text-tokenPrimary'}`}>
-                {(SC_BALANCE - total).toFixed(2)} 亿
-              </span>
-            </div>
-            {insufficient && (
-              <div className="mt-3 flex items-center justify-between rounded-lg px-3 py-2" style={{ background: 'var(--color-danger-soft)' }}>
-                <span className="text-[12px] text-tokenDanger">SC 余额不足</span>
-                <button onClick={() => navigate('/exchange')} className="text-[12px] font-semibold text-tokenDanger underline">去兑换 SC</button>
-              </div>
-            )}
+        <div className="mb-4 flex items-center justify-between px-1">
+          <span className="text-[13px] font-medium text-tokenSub">合计消耗 SC</span>
+          <span className="font-num text-[16px] font-semibold text-tokenText">{total} 亿 SC</span>
+        </div>
+
+        {insufficient && (
+          <div className="mb-4 flex items-center justify-between rounded-lg px-3 py-2" style={{ background: 'var(--color-danger-soft)' }}>
+            <span className="text-[12px] text-tokenDanger">SC 余额不足</span>
+            <button onClick={() => navigate('/exchange')} className="text-[12px] font-semibold text-tokenDanger underline">去兑换 SC</button>
           </div>
         )}
 
         {/* CTA */}
         <button
           onClick={handleConfirm}
-          disabled={isEmpty || (phase === 'confirm' && insufficient)}
+          disabled={isEmpty || insufficient}
           className="w-full py-[14px] text-[15px] font-semibold text-white"
           style={{
             borderRadius: 'var(--radius-md)',
-            background: isEmpty || (phase === 'confirm' && insufficient) ? 'var(--color-border)' : 'var(--color-primary)',
-            color: isEmpty || (phase === 'confirm' && insufficient) ? 'var(--color-text-hint)' : '#fff',
-            boxShadow: !isEmpty && !(phase === 'confirm' && insufficient) ? '0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent)' : 'none',
+            background: isEmpty || insufficient ? 'var(--color-border)' : 'var(--color-primary)',
+            color: isEmpty || insufficient ? 'var(--color-text-hint)' : '#fff',
+            boxShadow: !isEmpty && !insufficient ? '0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent)' : 'none',
           }}
         >
           <span className="flex items-center justify-center gap-2">
             <ArrowLeftRight className="h-4 w-4" strokeWidth={2.5} />
-            {phase === 'cart' ? `去结算（共 ${total} 亿 SC）` : '确认支付'}
+            兑换首发权
           </span>
         </button>
       </div>
+
+      {submitted && (
+        <ExchangeSubmittedSheet
+          detail={`${submitted.combo} · 扣除 ${submitted.total} 亿 SC`}
+          onClose={() => setSubmitted(null)}
+        />
+      )}
     </>
   );
 }
