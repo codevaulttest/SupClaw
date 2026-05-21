@@ -396,7 +396,7 @@ export default function P0Wallet() {
   const navigate = useNavigate();
   const [lang, setLang] = useState('zh');
   const [exchangeOpen, setExchangeOpen] = useState(false);
-  const [exchangeToast, setExchangeToast] = useState(null); // null | 'loading' | 'success'
+  const [exchangeToast, setExchangeToast] = useState(false);
   const [buyOpen, setBuyOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
   const [devVisible, setDevVisible] = useState(true);
@@ -434,23 +434,17 @@ export default function P0Wallet() {
       {exchangeOpen && (
         <ExchangeSCSheet
           onClose={() => setExchangeOpen(false)}
-          onSubmit={() => {
-            setExchangeToast('loading');
-            setTimeout(() => setExchangeToast('success'), 3000);
-          }}
+          onSubmit={() => setExchangeToast(true)}
         />
       )}
-      {exchangeToast === 'loading' && (
-        <Toast type="loading" message="兑换处理中…" />
+      {exchangeToast && (
+        <Toast type="info" message="兑换已提交，可在记录页查看状态" duration={3000} onDone={() => setExchangeToast(false)} />
       )}
-      {exchangeToast === 'success' && (
-        <Toast type="success" message="兑换成功，SC 已到账" duration={2500} onDone={() => setExchangeToast(null)} />
-      )}}
       {buyOpen && <BuyABCSheet onClose={() => setBuyOpen(false)} onOpenExchange={() => { setBuyOpen(false); setExchangeOpen(true); }} />}
       {devOpen && <DevPanel onClose={() => setDevOpen(false)} onTrigger={(amt) => setDevModal(amt)} />}
       {devModal !== null && <SubsidyResultModal subsidyAmount={devModal} orderTotal={9} onClose={() => setDevModal(null)} />}
       {devVisible && (
-        <div className="fixed bottom-[72px] right-4 z-40 flex flex-col items-end gap-1">
+        <div className="fixed bottom-[82px] right-4 z-40 flex flex-col items-end gap-1">
           <button onClick={() => setDevVisible(false)} className="flex h-4 w-4 items-center justify-center rounded-full text-white/70" style={{ background: 'rgba(13,21,39,0.4)', fontSize: 10 }}>×</button>
           <button onClick={() => setDevOpen(true)} className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: 'rgba(13,21,39,0.55)', backdropFilter: 'blur(6px)', boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}>
             <span className="font-num text-[11px] font-bold text-white">Dev</span>
