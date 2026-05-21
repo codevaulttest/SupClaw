@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import BuyABCSheet from '../components/BuyABCSheet';
 import ExchangeSCSheet from '../components/ExchangeSCSheet';
-import Toast from '../components/Toast';
+import ExchangeSubmittedSheet from '../components/ExchangeSubmittedSheet';
 import {
   ArrowDownLeft, ArrowUpRight, ArrowLeftRight, ChevronRight, Clock, History,
   PlayCircle, ShoppingCart, Wallet,
@@ -412,7 +412,7 @@ export default function P0Wallet() {
   const navigate = useNavigate();
   const [lang, setLang] = useState('zh');
   const [exchangeOpen, setExchangeOpen] = useState(false);
-  const [exchangeToast, setExchangeToast] = useState(false);
+  const [exchangeSubmitted, setExchangeSubmitted] = useState(null); // null | number (amount)
   const [buyOpen, setBuyOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
   const [devVisible, setDevVisible] = useState(true);
@@ -450,11 +450,11 @@ export default function P0Wallet() {
       {exchangeOpen && (
         <ExchangeSCSheet
           onClose={() => setExchangeOpen(false)}
-          onSubmit={() => setExchangeToast(true)}
+          onSubmit={(amt) => setExchangeSubmitted(amt)}
         />
       )}
-      {exchangeToast && (
-        <Toast type="info" message="兑换已提交，可在记录页查看状态" duration={3000} onDone={() => setExchangeToast(false)} />
+      {exchangeSubmitted !== null && (
+        <ExchangeSubmittedSheet amount={exchangeSubmitted} onClose={() => setExchangeSubmitted(null)} />
       )}
       {buyOpen && <BuyABCSheet onClose={() => setBuyOpen(false)} onOpenExchange={() => { setBuyOpen(false); setExchangeOpen(true); }} />}
       {devOpen && <DevPanel onClose={() => setDevOpen(false)} onTrigger={(amt) => setDevModal(amt)} />}
