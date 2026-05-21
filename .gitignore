@@ -1,0 +1,8 @@
+# Ignore everything
+*
+
+# Except app and package.json
+!app/
+!app/**
+!package.json
+!.gitignore
