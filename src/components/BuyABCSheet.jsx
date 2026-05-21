@@ -78,12 +78,6 @@ export default function BuyABCSheet({ onClose, onOpenExchange }) {
           </div>
 
           <div className="px-4 pb-6 pt-2">
-            {/* SC 余额 */}
-            <div className="mb-4 flex items-center justify-between rounded-xl px-4 py-3" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
-              <span className="text-[13px] text-tokenSub">SC 词元余额</span>
-              <span className="font-num text-[18px] font-semibold text-tokenPrimary">{SC_BALANCE} 亿</span>
-            </div>
-
             {/* ABC 行 */}
             {['A', 'B', 'C'].map(key => {
               const v = TOKEN_V[key];
@@ -122,8 +116,9 @@ export default function BuyABCSheet({ onClose, onOpenExchange }) {
                           <span className="w-8 text-center font-num text-[20px] font-semibold text-tokenText">{count}</span>
                           <button
                             onClick={() => adjust(key, 1)}
-                            className="flex h-8 w-8 items-center justify-center rounded-full text-white"
-                            style={{ background: `var(--token-${v}-from)` }}
+                            disabled={total + PRICES[key] > SC_BALANCE}
+                            className="flex h-8 w-8 items-center justify-center rounded-full text-white disabled:opacity-30"
+                            style={{ background: total + PRICES[key] > SC_BALANCE ? 'var(--color-danger)' : `var(--token-${v}-from)` }}
                           >
                             <Plus className="h-4 w-4" strokeWidth={2.5} />
                           </button>
@@ -139,6 +134,13 @@ export default function BuyABCSheet({ onClose, onOpenExchange }) {
                 </div>
               );
             })}
+
+            {phase === 'cart' && (
+              <div className="mb-4 flex items-center justify-between px-1">
+                <span className="text-[13px] font-medium text-tokenSub">合计消耗 SC</span>
+                <span className="font-num text-[16px] font-semibold text-tokenText">{total} 亿 SC</span>
+              </div>
+            )}
 
             {/* 确认订单摘要 */}
             {phase === 'confirm' && (
@@ -176,7 +178,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange }) {
             >
               <span className="flex items-center justify-center gap-2">
                 <ArrowLeftRight className="h-4 w-4" strokeWidth={2.5} />
-                {phase === 'cart' ? `去结算（共 ${total} 亿 SC）` : '确认支付'}
+                {phase === 'cart' ? '兑换首发权' : '确认支付'}
               </span>
             </button>
           </div>
