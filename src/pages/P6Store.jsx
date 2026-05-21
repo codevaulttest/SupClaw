@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, PlayCircle } from 'lucide-react';
+import { PlayCircle } from 'lucide-react';
 import HeaderActions from '../components/HeaderActions';
 
 const CATEGORIES = [
-  { id: 'classics',   name: '国学经典',   desc: '第 001–020 部 · 20 部作品', image: '/assets/booklist-classics.png' },
-  { id: 'business',   name: '商业经典',   desc: '第 021–040 部 · 20 部作品', image: '/assets/booklist-business.png' },
-  { id: 'humanities', name: '人文地理',   desc: '第 041–060 部 · 20 部作品', image: '/assets/booklist-humanities.png' },
-  { id: 'science',    name: '科技未来',   desc: '第 061–080 部 · 20 部作品', image: '/assets/booklist-science.png' },
-  { id: 'lifestyle',  name: '生活美学',   desc: '第 081–100 部 · 20 部作品', image: '/assets/booklist-lifestyle.png' },
+  { id: 'classics',   name: '国学经典',   image: '/assets/booklist-classics.png' },
+  { id: 'business',   name: '商业经典',   image: '/assets/booklist-business.png' },
+  { id: 'humanities', name: '人文地理',   image: '/assets/booklist-humanities.png' },
+  { id: 'science',    name: '科技未来',   image: '/assets/booklist-science.png' },
+  { id: 'lifestyle',  name: '生活美学',   image: '/assets/booklist-lifestyle.png' },
 ];
 
 export default function P6Store() {
@@ -33,17 +33,17 @@ export default function P6Store() {
       </div>
 
       {/* categories */}
-      <div className="flex-1 px-4 pb-[74px]">
+      <div className="flex-1 px-4 pb-[96px]">
         <p className="mb-3 text-[13px] font-semibold text-tokenSub">全部分类</p>
-        <div className="flex flex-col gap-3">
+        <div className="grid grid-cols-2 gap-3">
           {CATEGORIES.map(cat => (
             <button
               key={cat.id}
               onClick={() => navigate(`/ai/${cat.id}`)}
-              className="relative flex min-h-[112px] overflow-hidden bg-tokenCard text-left"
+              className="overflow-hidden bg-tokenCard text-left transition-transform duration-150 active:scale-[0.98]"
               style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}
             >
-              <div className="w-[136px] shrink-0 overflow-hidden">
+              <div className="aspect-[4/3] w-full overflow-hidden">
                 <img
                   src={cat.image}
                   alt=""
@@ -51,17 +51,9 @@ export default function P6Store() {
                   loading="lazy"
                 />
               </div>
-              <div className="flex min-w-0 flex-1 flex-col justify-center py-4 pl-4 pr-3">
-                <p className="text-[16px] font-semibold text-tokenText">{cat.name}</p>
-                <p className="mt-0.5 text-[13px] text-tokenHint">{cat.desc}</p>
-                <div className="mt-2 flex gap-1">
-                  {['A','B','C'].map(k => (
-                    <span key={k} className="rounded px-1.5 py-0.5 font-num text-[10px] font-bold text-white"
-                      style={{ background: `var(--token-${k.toLowerCase()}-from)` }}>{k}</span>
-                  ))}
-                </div>
+              <div className="px-3 py-3">
+                <p className="truncate text-[16px] font-semibold text-tokenText">{cat.name}</p>
               </div>
-              <ChevronRight className="mr-4 h-5 w-5 self-center text-tokenHint shrink-0" strokeWidth={2} />
             </button>
           ))}
         </div>
