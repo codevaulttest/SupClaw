@@ -4,6 +4,7 @@ import PageHeader from '../components/PageHeader';
 import ProductOrderSheet from '../components/ProductOrderSheet';
 import BuyABCSheet from '../components/BuyABCSheet';
 import ExchangeSCSheet from '../components/ExchangeSCSheet';
+import ProductCard from '../components/ProductCard';
 
 const CATEGORY_NAMES = {
   classics:   '国学经典',
@@ -80,35 +81,9 @@ export default function P6List() {
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          {visible.map(p => {
-            const info = TOKEN_INFO[p.type];
-            const v = p.type.toLowerCase();
-            return (
-              <button
-                key={p.id}
-                onClick={() => setSelectedProduct(p)}
-                className="overflow-hidden text-left"
-                style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}
-              >
-                {/* thumbnail */}
-                <div
-                  className="relative h-[80px] flex items-end px-3 pb-2"
-                  style={{ background: `linear-gradient(135deg, var(--token-${v}-from), var(--token-${v}-to))` }}
-                >
-                  <span className="absolute top-2 left-2 rounded px-1.5 py-0.5 text-[10px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.3)' }}>{p.type}</span>
-                  <span className="text-[10px] text-white/80">{p.duration}s / 个</span>
-                </div>
-                {/* info */}
-                <div className="px-3 py-2.5">
-                  <p className="truncate text-[13px] font-semibold text-tokenText mb-1">{p.title}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-medium" style={{ color: info.color }}>{info.label}</span>
-                    <span className="font-num text-[13px] font-bold" style={{ color: `var(--token-${v}-text)` }}>{p.price}亿</span>
-                  </div>
-                </div>
-              </button>
-            );
-          })}
+          {visible.map(p => (
+            <ProductCard key={p.id} product={p} onClick={() => setSelectedProduct(p)} />
+          ))}
         </div>
       </div>
 

@@ -3,11 +3,11 @@ import { ChevronRight, PlayCircle } from 'lucide-react';
 import HeaderActions from '../components/HeaderActions';
 
 const CATEGORIES = [
-  { id: 'classics',   name: '国学经典',   desc: 'BOOKLIST 001–020 · 20 部作品', image: '/assets/booklist-classics.png' },
-  { id: 'business',   name: '商业经典',   desc: 'BOOKLIST 021–040 · 20 部作品', image: '/assets/booklist-business.png' },
-  { id: 'humanities', name: '人文地理',   desc: 'BOOKLIST 041–060 · 20 部作品', image: '/assets/booklist-humanities.png' },
-  { id: 'science',    name: '科技未来',   desc: 'BOOKLIST 061–080 · 20 部作品', image: '/assets/booklist-science.png' },
-  { id: 'lifestyle',  name: '生活美学',   desc: 'BOOKLIST 081–100 · 20 部作品', image: '/assets/booklist-lifestyle.png' },
+  { id: 'classics',   name: '国学经典',   desc: '第 001–020 部 · 20 部作品', image: '/assets/booklist-classics.png' },
+  { id: 'business',   name: '商业经典',   desc: '第 021–040 部 · 20 部作品', image: '/assets/booklist-business.png' },
+  { id: 'humanities', name: '人文地理',   desc: '第 041–060 部 · 20 部作品', image: '/assets/booklist-humanities.png' },
+  { id: 'science',    name: '科技未来',   desc: '第 061–080 部 · 20 部作品', image: '/assets/booklist-science.png' },
+  { id: 'lifestyle',  name: '生活美学',   desc: '第 081–100 部 · 20 部作品', image: '/assets/booklist-lifestyle.png' },
 ];
 
 export default function P6Store() {
@@ -53,7 +53,7 @@ export default function P6Store() {
               </div>
               <div className="flex min-w-0 flex-1 flex-col justify-center py-4 pl-4 pr-3">
                 <p className="text-[16px] font-semibold text-tokenText">{cat.name}</p>
-                <p className="mt-0.5 text-[12px] text-tokenHint">{cat.desc}</p>
+                <p className="mt-0.5 text-[13px] text-tokenHint">{cat.desc}</p>
                 <div className="mt-2 flex gap-1">
                   {['A','B','C'].map(k => (
                     <span key={k} className="rounded px-1.5 py-0.5 font-num text-[10px] font-bold text-white"

@@ -5,6 +5,7 @@ import BuyABCSheet from '../components/BuyABCSheet';
 import ExchangeSCSheet from '../components/ExchangeSCSheet';
 import ExchangeSubmittedSheet from '../components/ExchangeSubmittedSheet';
 import ProductOrderSheet from '../components/ProductOrderSheet';
+import ProductCard from '../components/ProductCard';
 import {
   ArrowDownLeft, ArrowUpRight, ArrowLeftRight, ChevronRight, Clock, History,
   PlayCircle, ShoppingCart, Wallet,
@@ -32,10 +33,10 @@ const ORDERS = [
 ];
 
 const VIDEO_PRODUCTS = [
-  { id: 1, title: '星空延时·极光版', tag: '4K', dur: '30s', price: '1.5 亿', type: 'C', orderPrice: 2, duration: 30, grad: 'linear-gradient(135deg,#1a1a4e,#3b2d8a,#6c3fa0)' },
-  { id: 2, title: '海浪慢镜·日落',   tag: 'HD', dur: '15s', price: '0.8 亿', type: 'C', orderPrice: 2, duration: 15, grad: 'linear-gradient(135deg,#0d4f7c,#1a8fa8,#43c6b0)' },
-  { id: 3, title: '城市航拍·霓虹夜', tag: '4K', dur: '60s', price: '3 亿',   type: 'B', orderPrice: 6, duration: 60, grad: 'linear-gradient(135deg,#1a0533,#7b1fa2,#e040fb)' },
-  { id: 4, title: '樱花飘落·慢镜',   tag: 'HD', dur: '20s', price: '1 亿',   type: 'C', orderPrice: 2, duration: 20, grad: 'linear-gradient(135deg,#4a0010,#c2185b,#f48fb1)' },
+  { id: 1, title: '星空延时·极光版', tag: '4K', dur: '30s', displayPrice: '1.5 亿 SC', type: 'C', orderPrice: 2, duration: 30, grad: 'linear-gradient(135deg,#1a1a4e,#3b2d8a,#6c3fa0)' },
+  { id: 2, title: '海浪慢镜·日落',   tag: 'HD', dur: '15s', displayPrice: '0.8 亿 SC', type: 'C', orderPrice: 2, duration: 15, grad: 'linear-gradient(135deg,#0d4f7c,#1a8fa8,#43c6b0)' },
+  { id: 3, title: '城市航拍·霓虹夜', tag: '4K', dur: '60s', displayPrice: '3 亿 SC',   type: 'B', orderPrice: 6, duration: 60, grad: 'linear-gradient(135deg,#1a0533,#7b1fa2,#e040fb)' },
+  { id: 4, title: '樱花飘落·慢镜',   tag: 'HD', dur: '20s', displayPrice: '1 亿 SC',   type: 'C', orderPrice: 2, duration: 20, grad: 'linear-gradient(135deg,#4a0010,#c2185b,#f48fb1)' },
 ];
 
 // ── Sub-components ───────────────────────────────────────────
@@ -342,26 +343,13 @@ function AIVideoMallPreview({ onEnter, onProduct }) {
 
       <div className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
         {VIDEO_PRODUCTS.map(p => (
-          <button
+          <ProductCard
             key={p.id}
+            product={p}
             onClick={() => onProduct && onProduct(p)}
-            className="relative shrink-0 overflow-hidden text-left"
+            className="shrink-0"
             style={{ width: 140, borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-md)' }}
-          >
-            <div className="relative h-[88px] w-full" style={{ background: p.grad }}>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="grid h-8 w-8 place-items-center rounded-full" style={{ background: 'rgba(255,255,255,0.22)', backdropFilter: 'blur(4px)' }}>
-                  <svg viewBox="0 0 24 24" className="h-4 w-4 text-white" fill="currentColor"><polygon points="5,3 19,12 5,21" /></svg>
-                </div>
-              </div>
-              <span className="absolute left-2 top-2 rounded px-1.5 py-0.5 font-num text-[10px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.38)' }}>{p.tag}</span>
-              <span className="absolute bottom-2 right-2 font-num text-[10px] text-white/80">{p.dur}</span>
-            </div>
-            <div className="bg-tokenCard px-2.5 py-2">
-              <p className="truncate text-[12px] font-medium leading-[16px] text-tokenText">{p.title}</p>
-              <p className="mt-1 font-num text-[13px] font-semibold leading-[17px] text-tokenPrimary">{p.price} SC</p>
-            </div>
-          </button>
+          />
         ))}
         <button
           onClick={onEnter}
