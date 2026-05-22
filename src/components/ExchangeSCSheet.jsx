@@ -1,13 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { ArrowDownUp, X } from 'lucide-react';
+import { ArrowDownUp, X, ChevronDown, Check } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 
-const DOS_BALANCE = 50;
+const TOKENS = {
+  DOS: { balance: 50, rate: 1, unit: 'DOS' },
+  SCV: { balance: 1000, rate: 0.1, unit: 'SCV' },
+};
 const SC_BALANCE = 32.11;
 
 export default function ExchangeSCSheet({ onClose, onSubmit }) {
   const { lang } = useLanguage();
+  const [fromToken, setFromToken] = useState('DOS');
+  const [menuOpen, setMenuOpen] = useState(false);
   const [amount, setAmount] = useState('');
   const inputRef = useRef(null);
 
@@ -16,14 +21,20 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
     return () => clearTimeout(t);
   }, []);
 
+  const token = TOKENS[fromToken];
   const num = parseFloat(amount) || 0;
-  const willReceive = num; // 1 DOS = 1亿 SC
-  const insufficient = num > 0 && num > DOS_BALANCE;
+  const willReceive = num * token.rate;
+  const insufficient = num > 0 && num > token.balance;
   const canSubmit = num > 0 && !insufficient;
+
+  function selectToken(t) {
+    if (t !== fromToken) { setFromToken(t); setAmount(''); }
+    setMenuOpen(false);
+  }
 
   function handleSubmit() {
     if (!canSubmit) return;
-    onSubmit?.(num);
+    onSubmit?.(num, fromToken);
     onClose();
   }
 
@@ -63,9 +74,11 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
               <div className="mb-3 flex items-center justify-between">
                 <span className="text-[13px] font-medium text-tokenSub">{lang === 'zh' ? '从' : 'From'}</span>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[12px] text-tokenHint">{lang === 'zh' ? `余额：${DOS_BALANCE} DOS` : `Balance: ${DOS_BALANCE} DOS`}</span>
+                  <span className="text-[12px] text-tokenHint">
+                    {lang === 'zh' ? `余额：${token.balance} ${fromToken}` : `Balance: ${token.balance} ${fromToken}`}
+                  </span>
                   <button
-                    onClick={() => setAmount(String(DOS_BALANCE))}
+                    onClick={() => setAmount(String(token.balance))}
                     className="rounded px-1.5 py-0.5 text-[11px] font-semibold text-tokenPrimary"
                     style={{ background: 'var(--color-primary-soft)' }}
                   >
@@ -74,14 +87,48 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
                 </div>
               </div>
               <div
-                className="flex items-center gap-3 rounded-xl px-3 py-2.5 cursor-text"
+                className="flex items-center gap-3 rounded-xl px-3 py-2.5"
                 style={{ background: 'var(--color-bg-page)', border: `1.5px solid ${insufficient ? 'var(--color-danger)' : 'var(--color-primary)'}` }}
-                onClick={() => inputRef.current?.focus()}
               >
-                <div className="flex shrink-0 items-center gap-2">
-                  <img src="/assets/DOS.svg" alt="DOS" className="h-7 w-7 shrink-0" />
-                  <span className="text-[15px] font-semibold text-tokenText">DOS</span>
+                <div className="relative shrink-0">
+                  <button
+                    onClick={() => setMenuOpen(o => !o)}
+                    className="flex items-center gap-1.5 rounded-lg px-2 py-1 active:opacity-70"
+                    style={{ background: 'var(--color-bg-card)' }}
+                  >
+                    {fromToken === 'DOS' ? (
+                      <img src="/assets/DOS.svg" alt="DOS" className="h-6 w-6 shrink-0" />
+                    ) : (
+                      <div className="grid h-6 w-6 shrink-0 place-items-center rounded-full text-[11px] font-bold text-white" style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)' }}>V</div>
+                    )}
+                    <span className="text-[15px] font-semibold text-tokenText">{fromToken}</span>
+                    <ChevronDown className={`h-3.5 w-3.5 text-tokenSub transition-transform duration-150 ${menuOpen ? 'rotate-180' : ''}`} strokeWidth={2.5} />
+                  </button>
+                  {menuOpen && (
+                    <div
+                      className="absolute left-0 top-full z-10 mt-1.5 min-w-[130px] overflow-hidden rounded-xl py-1"
+                      style={{ background: 'var(--color-bg-page)', boxShadow: '0 4px 20px rgba(13,21,39,0.16)', border: '1px solid var(--color-border)' }}
+                    >
+                      {Object.keys(TOKENS).map(key => (
+                        <button
+                          key={key}
+                          onClick={() => selectToken(key)}
+                          className="flex w-full items-center gap-2.5 px-3 py-2.5 text-left active:opacity-70"
+                          style={{ background: key === fromToken ? 'var(--color-primary-soft)' : 'transparent' }}
+                        >
+                          {key === 'DOS' ? (
+                            <img src="/assets/DOS.svg" alt="DOS" className="h-5 w-5 shrink-0" />
+                          ) : (
+                            <div className="grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-bold text-white" style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)' }}>V</div>
+                          )}
+                          <span className="text-[14px] font-semibold text-tokenText">{key}</span>
+                          {key === fromToken && <Check className="ml-auto h-3.5 w-3.5 text-tokenPrimary" strokeWidth={2.5} />}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
+                <div className="flex-1 cursor-text" onClick={() => { setMenuOpen(false); inputRef.current?.focus(); }}>
                 <input
                   ref={inputRef}
                   type="number"
@@ -89,9 +136,10 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
                   value={amount}
                   onChange={e => setAmount(e.target.value)}
                   placeholder={lang === 'zh' ? '输入数量' : 'Enter amount'}
-                  className="min-w-0 flex-1 bg-transparent text-right font-num text-[26px] font-semibold outline-none placeholder:text-[18px] placeholder:text-tokenHint"
+                  className="min-w-0 w-full bg-transparent text-right font-num text-[26px] font-semibold outline-none placeholder:text-[18px] placeholder:text-tokenHint"
                   style={{ color: insufficient ? 'var(--color-danger)' : 'var(--color-text-primary)' }}
                 />
+                </div>
               </div>
               {insufficient && (
                 <p className="mt-1.5 text-right text-[11px] text-tokenDanger">{lang === 'zh' ? '余额不足' : 'Insufficient balance'}</p>
@@ -126,7 +174,11 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
             {/* 汇率 */}
             <div className="mt-3 flex items-center justify-center gap-1.5">
               <ArrowDownUp className="h-3 w-3 text-tokenHint" strokeWidth={2} />
-              <span className="text-[12px] text-tokenHint">{lang === 'zh' ? '1 DOS ≈ 1 亿 SC' : '1 DOS ≈ 1B SC'}</span>
+              <span className="text-[12px] text-tokenHint">
+                {lang === 'zh'
+                  ? `1 ${fromToken} ≈ ${token.rate} 亿 SC`
+                  : `1 ${fromToken} ≈ ${token.rate}B SC`}
+              </span>
             </div>
 
             {/* 提交 */}

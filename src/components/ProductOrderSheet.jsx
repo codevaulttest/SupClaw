@@ -144,7 +144,7 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
 
             <div className="mb-4 rounded-xl px-4 py-3" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)', border: `1px solid ${!emailValid && email ? 'var(--color-danger)' : 'transparent'}` }}>
               <p className="mb-2 text-[13px] font-semibold text-tokenText">
-                {lang === 'zh' ? '接收邮箱' : 'Delivery Email'}
+                {lang === 'zh' ? '视频接收邮箱' : 'Delivery Email'}
                 <span className="ml-1 text-tokenDanger">*</span>
               </p>
               <div className="flex items-center gap-2">
