@@ -57,7 +57,7 @@ export default function SubsidyResultModal({ onClose, subsidyAmount = 3.11, orde
 
           <div className="relative mx-auto mb-0 flex h-[132px] w-[204px] justify-center">
             <img
-              src="/assets/mascot-lobster.png"
+              src="/assets/mascot-subsidy.png"
               alt=""
               className="h-[132px] w-[132px] object-contain"
               style={{ animation: 'popIn 420ms 80ms cubic-bezier(0.34,1.56,0.64,1) both' }}
