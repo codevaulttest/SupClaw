@@ -17,6 +17,20 @@ const TOKENS = [
 const RATES = { DOS: 1 };   // 1 DOS = 1 亿 SC
 const SC_TO_DOS = 0.8;       // 1 亿 SC = 0.8 DOS
 
+function trimNumber(value, decimals = 2) {
+  return Number(value.toFixed(decimals)).toString();
+}
+
+function formatScAmount(yiAmount, lang) {
+  if (lang === 'zh') return { value: trimNumber(yiAmount), unit: '亿 SC', text: `${trimNumber(yiAmount)} 亿 SC` };
+  if (yiAmount >= 10) {
+    const value = trimNumber(yiAmount / 10, 3);
+    return { value, unit: 'B SC', text: `${value}B SC` };
+  }
+  const value = trimNumber(yiAmount * 100);
+  return { value, unit: 'M SC', text: `${value}M SC` };
+}
+
 // 模拟激活码校验（实际对接 API 时在此替换）
 // forceInvalid: 开发者面板强制走失败分支
 function mockValidateCode(raw, forceInvalid = false) {
@@ -136,7 +150,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
   let errorMsg = null;
   if (!isSCV && !isSCFrom && insuffDOS) errorMsg = lang === 'zh' ? '余额不足' : 'Insufficient balance';
   if (isSCFrom && insuffSC)             errorMsg = lang === 'zh' ? '余额不足' : 'Insufficient balance';
-  if (isSCFrom && belowMin && !insuffSC) errorMsg = lang === 'zh' ? '最小兑换单位为 1 亿 SC' : 'Minimum amount: 1B SC';
+  if (isSCFrom && belowMin && !insuffSC) errorMsg = lang === 'zh' ? '最小兑换单位为 1 亿 SC' : 'Minimum amount: 100M SC';
 
   function handleSubmit() {
     if (!canSubmit) return;
@@ -148,22 +162,28 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
 
   // ── "到" 面板数据 ──
   const toToken = isSCFrom ? 'DOS' : 'SC';
+  const scBalanceDisplay = formatScAmount(scToken.balance, lang);
   const toBalanceLabel = isSCFrom
     ? (lang === 'zh' ? `余额：${dosToken.balance} DOS` : `Balance: ${dosToken.balance} DOS`)
-    : (lang === 'zh' ? `余额：${scToken.balance} 亿 SC` : `Balance: ${scToken.balance}B SC`);
+    : (lang === 'zh' ? `余额：${scBalanceDisplay.text}` : `Balance: ${scBalanceDisplay.text}`);
+
+  const toScYiAmount = isSCV
+    ? (codeResult?.valid ? codeResult.amount : 0)
+    : (!isSCFrom && canDOS ? numDos * RATES.DOS : 0);
+  const toScDisplay = formatScAmount(toScYiAmount, lang);
 
   const toAmountStr = isSCV
-    ? (codeResult?.valid ? String(codeResult.amount) : '0.00')
+    ? (codeResult?.valid ? toScDisplay.value : '0.00')
     : isSCFrom
       ? (canSC ? (numSC * SC_TO_DOS).toFixed(2) : '0.00')
-      : (canDOS ? (numDos * RATES.DOS).toFixed(2) : '0.00');
+      : (canDOS ? toScDisplay.value : '0.00');
   const toAmountActive = isSCV ? canSCV : isSCFrom ? canSC : canDOS;
 
   // 汇率行
   const showRate = !isSCV;
   const rateLabel = isSCFrom
-    ? (lang === 'zh' ? `1 亿 SC ≈ ${SC_TO_DOS} DOS` : `1B SC ≈ ${SC_TO_DOS} DOS`)
-    : (lang === 'zh' ? `1 DOS ≈ ${RATES.DOS} 亿 SC` : `1 DOS ≈ ${RATES.DOS}B SC`);
+    ? (lang === 'zh' ? `1 亿 SC ≈ ${SC_TO_DOS} DOS` : `100M SC ≈ ${SC_TO_DOS} DOS`)
+    : (lang === 'zh' ? `1 DOS ≈ ${RATES.DOS} 亿 SC` : `1 DOS ≈ 100M SC`);
 
   const cardStyle = { background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' };
 
@@ -204,7 +224,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
                   <div className="flex items-center gap-1.5">
                     <span className="text-[12px] text-tokenHint">
                       {isSCFrom
-                        ? (lang === 'zh' ? `余额：${scToken.balance} 亿 SC` : `Balance: ${scToken.balance}B SC`)
+                        ? (lang === 'zh' ? `余额：${scBalanceDisplay.text}` : `Balance: ${scBalanceDisplay.text}`)
                         : (lang === 'zh' ? `余额：${dosToken.balance} DOS` : `Balance: ${dosToken.balance} DOS`)}
                     </span>
                     <button
@@ -283,7 +303,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
                       style={{ color: fromInvalid ? 'var(--color-danger)' : 'var(--color-text-primary)' }}
                     />
                     {isSCFrom && (
-                      <span className="shrink-0 text-[16px] font-medium text-tokenSub">{lang === 'zh' ? '亿' : 'B'}</span>
+                      <span className="shrink-0 text-[14px] font-medium text-tokenSub">{lang === 'zh' ? '亿' : '×100M SC'}</span>
                     )}
                   </>
                 )}
@@ -308,7 +328,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
                     <>
                       <CircleCheck className="h-3.5 w-3.5 shrink-0" strokeWidth={2} style={{ color: 'var(--color-success, #10b981)' }} />
                       <span className="text-[12px] font-medium" style={{ color: 'var(--color-success, #10b981)' }}>
-                        {lang === 'zh' ? `可用 · 充值额度 ${codeResult.amount} 亿 SC` : `Valid · ${codeResult.amount}B SC`}
+                        {lang === 'zh' ? `可用 · 充值额度 ${codeResult.amount} 亿 SC` : `Valid · ${formatScAmount(codeResult.amount, lang).text}`}
                       </span>
                     </>
                   )}
@@ -388,7 +408,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
                   <span className="font-num text-[26px] font-semibold" style={{ color: toAmountActive ? 'var(--color-primary)' : 'var(--color-text-secondary)' }}>
                     {toAmountStr}
                   </span>
-                  {!isSCFrom && <span className="text-[14px] font-medium text-tokenSub">{lang === 'zh' ? '亿' : 'B'}</span>}
+                  {!isSCFrom && <span className="text-[14px] font-medium text-tokenSub">{toScDisplay.unit}</span>}
                 </div>
               </div>
             </div>
