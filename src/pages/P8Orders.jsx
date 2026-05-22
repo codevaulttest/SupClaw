@@ -97,15 +97,15 @@ export default function P8Orders() {
             subtitle={EMPTY_LABELS[tab][lang === 'zh' ? 'zh' : 'en'][1]}
           />
         ) : (
-          <div className="flex flex-col gap-3">
-            {localizedItems.map(order => {
+          <div key={tab} className="flex flex-col gap-3">
+            {localizedItems.map((order, i) => {
               const tabInfo = tabs.find(t => t.key === tab);
               return (
                 <button
                   key={order.id}
                   onClick={() => tab === 'done' && navigate(`/orders/${order.id}`)}
-                  className="w-full text-left overflow-hidden"
-                  style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}
+                  className="enter w-full text-left overflow-hidden"
+                  style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)', animationDelay: `${i * 45}ms` }}
                 >
                   <div className="flex items-center gap-3 px-4 py-3.5">
                     <div className="relative shrink-0 h-11 w-11 rounded-xl overflow-hidden" style={{ background: `linear-gradient(135deg, var(--token-${order.type.toLowerCase()}-from), var(--token-${order.type.toLowerCase()}-to))` }}>

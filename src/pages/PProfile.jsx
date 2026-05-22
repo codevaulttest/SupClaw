@@ -27,7 +27,7 @@ function WalletRow() {
       <span className="font-num text-[13px] text-tokenSub">{short}</span>
       <button onClick={handleCopy} className="flex items-center">
         {copied
-          ? <Check className="h-4 w-4" style={{ color: 'var(--color-primary)' }} strokeWidth={2.5} />
+          ? <Check className="h-4 w-4" style={{ color: 'var(--color-primary)', animation: 'popIn 200ms cubic-bezier(0.22,1,0.36,1) both' }} strokeWidth={2.5} />
           : <Copy className="h-4 w-4 text-tokenHint" strokeWidth={1.8} />}
       </button>
     </div>
@@ -109,7 +109,7 @@ function InviteCodeRow() {
       <button onClick={handleCopy} className="flex items-center gap-1.5">
         <span className="font-num text-[14px] font-semibold" style={{ color: 'var(--color-primary)' }}>{MOCK_INVITE_CODE}</span>
         {copied
-          ? <Check className="h-4 w-4" style={{ color: 'var(--color-primary)' }} strokeWidth={2.5} />
+          ? <Check className="h-4 w-4" style={{ color: 'var(--color-primary)', animation: 'popIn 200ms cubic-bezier(0.22,1,0.36,1) both' }} strokeWidth={2.5} />
           : <Copy className="h-4 w-4 text-tokenHint" strokeWidth={1.8} />}
       </button>
     </div>
@@ -175,19 +175,21 @@ export default function PProfile() {
       </header>
       <div className="no-scrollbar h-[calc(100vh-68px-58px)] overflow-y-auto px-4 pb-8 pt-3">
 
-      <div className="mb-4 w-fit overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
+      <div className="enter mb-4 w-fit overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)', animationDelay: '0ms' }}>
         <WalletRow />
       </div>
 
-      <div className="mb-4">
+      <div className="enter mb-4" style={{ animationDelay: '60ms' }}>
         <MemberCard onOpen={() => setMembershipOpen(true)} />
       </div>
 
-      <div className="mb-4 overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
+      <div className="enter mb-4 overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)', animationDelay: '120ms' }}>
         <InviteCodeRow />
       </div>
 
-      <HelpSection />
+      <div className="enter" style={{ animationDelay: '180ms' }}>
+        <HelpSection />
+      </div>
     </div>
 
     {membershipOpen && (
