@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import BottomNav from './components/BottomNav';
 import P0Wallet  from './pages/P0Wallet';
 import P1Exchange from './pages/P1Exchange';
-import P2BuyABC  from './pages/P2BuyABC';
 import P3Lottery  from './pages/P3Lottery';
 import P4Result   from './pages/P4Result';
 import P5History  from './pages/P5History';
@@ -50,7 +49,6 @@ export default function App() {
           {/* Sub-pages — no bottom nav */}
           <Route element={<SubLayout />}>
             <Route path="/exchange"              element={<P1Exchange />} />
-            <Route path="/buy"                   element={<P2BuyABC />} />
             <Route path="/lottery"               element={<P3Lottery />} />
             <Route path="/result"                element={<P4Result />} />
             <Route path="/history"               element={<P5History />} />

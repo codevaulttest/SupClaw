@@ -142,36 +142,35 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <button
-                          onClick={() => adjust(key, -1)}
-                          disabled={count === 0}
-                          className="flex h-8 w-8 items-center justify-center rounded-full border border-tokenBorder disabled:opacity-30"
-                        >
-                          <Minus className="h-4 w-4 text-tokenText" strokeWidth={2} />
-                        </button>
-                        <input
-                          type="number"
-                          inputMode="numeric"
-                          min="0"
-                          value={inputValue}
-                          onFocus={() => setFocusedKey(key)}
-                          onChange={e => handleInput(key, e.target.value)}
-                          onBlur={() => handleBlur(key)}
-                          className="h-8 w-12 bg-transparent text-center font-num text-[20px] font-semibold leading-8 text-tokenText outline-none"
-                        />
-                        <button
-                          onClick={() => adjust(key, 1)}
-                          disabled={total + PRICES[key] > SC_BALANCE}
-                          className="flex h-8 w-8 items-center justify-center rounded-full text-white disabled:opacity-30"
-                          style={{ background: total + PRICES[key] > SC_BALANCE ? 'var(--color-danger)' : `var(--token-${v}-from)` }}
-                        >
-                          <Plus className="h-4 w-4" strokeWidth={2.5} />
-                        </button>
-                      </div>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => adjust(key, -1)}
+                        disabled={count === 0}
+                        className="flex h-8 w-8 items-center justify-center rounded-full border border-tokenBorder disabled:opacity-30"
+                      >
+                        <Minus className="h-4 w-4 text-tokenText" strokeWidth={2} />
+                      </button>
+                      <input
+                        type="number"
+                        inputMode="numeric"
+                        min="0"
+                        value={inputValue}
+                        onFocus={() => setFocusedKey(key)}
+                        onChange={e => handleInput(key, e.target.value)}
+                        onBlur={() => handleBlur(key)}
+                        className="h-8 bg-transparent text-center font-num text-[20px] font-semibold leading-8 text-tokenText outline-none"
+                        style={{ width: '7rem' }}
+                      />
+                      <button
+                        onClick={() => adjust(key, 1)}
+                        disabled={total + PRICES[key] > SC_BALANCE}
+                        className="flex h-8 w-8 items-center justify-center rounded-full text-white disabled:opacity-30"
+                        style={{ background: total + PRICES[key] > SC_BALANCE ? 'var(--color-danger)' : `var(--token-${v}-from)`, marginLeft: '10px' }}
+                      >
+                        <Plus className="h-4 w-4" strokeWidth={2.5} />
+                      </button>
                       {subtotal > 0 && (
-                        <span className="font-num text-[13px] font-medium text-tokenSub">= {subtotal} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
+                        <span className="font-num text-[13px] font-medium text-tokenSub ml-1">= {subtotal} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
                       )}
                     </div>
                   </div>
