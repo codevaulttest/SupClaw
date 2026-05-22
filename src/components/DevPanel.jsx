@@ -1,4 +1,5 @@
 import { createPortal } from 'react-dom';
+import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 import { useUser } from './UserContext';
@@ -6,6 +7,7 @@ import { useDev } from './DevContext';
 
 export default function DevPanel({ onClose }) {
   const { lang } = useLanguage();
+  const [emptyOpen, setEmptyOpen] = useState(false);
   const { isMember, memberExpiry, toggleMembership } = useUser();
   const {
     devScvInvalid, toggleDevScvInvalid, setSubsidyTrigger,
@@ -73,16 +75,20 @@ export default function DevPanel({ onClose }) {
             </button>
           </div>
 
-          <div className="px-4 pb-1 pt-3">
+          <button
+            onClick={() => setEmptyOpen(v => !v)}
+            className="flex w-full items-center justify-between border-t border-tokenBorderSubtle px-4 py-3"
+          >
             <p className="text-[11px] font-semibold uppercase tracking-wide text-tokenHint">{lang === 'zh' ? '空状态' : 'Empty States'}</p>
-          </div>
+            <ChevronRight className="h-[14px] w-[14px] text-tokenHint transition-transform duration-200" style={{ transform: emptyOpen ? 'rotate(90deg)' : 'rotate(0deg)' }} />
+          </button>
 
-          {[
+          {emptyOpen && [
             { label: lang === 'zh' ? '订单列表' : 'Orders', sub: lang === 'zh' ? '订单页三个 tab 全部清空' : 'Clear all order tabs', value: emptyOrders, toggle: toggleEmptyOrders },
             { label: lang === 'zh' ? '历史记录' : 'History', sub: lang === 'zh' ? 'SC收支 & 首发权记录清空' : 'SC activity & premiere orders', value: emptyHistory, toggle: toggleEmptyHistory },
             { label: lang === 'zh' ? '商品列表' : 'Product List', sub: lang === 'zh' ? 'AI 商品分类列表清空' : 'AI category product list', value: emptyProductList, toggle: toggleEmptyProductList },
           ].map((item, i, arr) => (
-            <div key={i} className={`flex items-center justify-between px-4 py-3.5${i < arr.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>
+            <div key={i} className={`flex items-center justify-between px-4 py-3.5 border-t border-tokenBorderSubtle${i === arr.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>
               <div>
                 <p className="text-[14px] font-medium text-tokenText">{item.label}</p>
                 <p className="text-[12px] text-tokenHint">{item.sub}</p>

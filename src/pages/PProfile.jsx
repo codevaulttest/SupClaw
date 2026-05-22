@@ -1,12 +1,38 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Crown, Copy, Check, ChevronRight, HelpCircle, Gift } from 'lucide-react';
+import { Crown, Copy, Check, ChevronRight, HelpCircle, Gift, Wallet } from 'lucide-react';
 import { useLanguage } from '../components/LanguageContext';
 import { useUser } from '../components/UserContext';
 import HeaderActions from '../components/HeaderActions';
 import MembershipSheet from '../components/MembershipSheet';
 
 const MOCK_INVITE_CODE = 'SUPRA-8X4K';
+const MOCK_WALLET = '0x3f2a8b1c9e4d7f0a5b3c2e1d8f6a9b4c7e2d5f8a';
+
+function WalletRow() {
+  const { lang } = useLanguage();
+  const [copied, setCopied] = useState(false);
+
+  const short = `${MOCK_WALLET.slice(0, 6)}...${MOCK_WALLET.slice(-4)}`;
+
+  function handleCopy() {
+    navigator.clipboard.writeText(MOCK_WALLET).catch(() => {});
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <div className="flex items-center gap-2.5 px-4 py-3">
+      <Wallet className="h-4 w-4 shrink-0 text-tokenHint" strokeWidth={1.8} />
+      <span className="font-num text-[13px] text-tokenSub">{short}</span>
+      <button onClick={handleCopy} className="flex items-center">
+        {copied
+          ? <Check className="h-4 w-4" style={{ color: 'var(--color-primary)' }} strokeWidth={2.5} />
+          : <Copy className="h-4 w-4 text-tokenHint" strokeWidth={1.8} />}
+      </button>
+    </div>
+  );
+}
 
 function MemberCard({ onOpen }) {
   const { lang } = useLanguage();
@@ -148,6 +174,10 @@ export default function PProfile() {
         <HeaderActions />
       </header>
       <div className="no-scrollbar h-[calc(100vh-68px-58px)] overflow-y-auto px-4 pb-8 pt-3">
+
+      <div className="mb-4 w-fit overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
+        <WalletRow />
+      </div>
 
       <div className="mb-4">
         <MemberCard onOpen={() => setMembershipOpen(true)} />
