@@ -21,9 +21,9 @@ import { formatScAmount } from '../utils/formatSc';
 
 // ── Mock data ────────────────────────────────────────────────
 const ABC_BALANCES = [
-  { key: 'A', v: 'a', label: 'ASC', value: 8, tip: '用 ASC 解锁 A 类 AI 视频，换 1 个 ASC 需消耗 5 亿 SC。' },
-  { key: 'B', v: 'b', label: 'BSC', value: 16, tip: '用 BSC 解锁 B 类 AI 视频，换 1 个 BSC 需消耗 3 亿 SC。' },
-  { key: 'C', v: 'c', label: 'CSC', value: 32, tip: '用 CSC 解锁 C 类 AI 视频，换 1 个 CSC 需消耗 1 亿 SC。' },
+  { key: 'A', v: 'a', label: 'ASC', value: 3, tip: '用 ASC 解锁 A 类 AI 视频，换 1 个 ASC 需消耗 5 亿 SC。' },
+  { key: 'B', v: 'b', label: 'BSC', value: 5, tip: '用 BSC 解锁 B 类 AI 视频，换 1 个 BSC 需消耗 3 亿 SC。' },
+  { key: 'C', v: 'c', label: 'CSC', value: 8, tip: '用 CSC 解锁 C 类 AI 视频，换 1 个 CSC 需消耗 1 亿 SC。' },
 ];
 
 const SC_FLOWS = [
