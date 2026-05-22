@@ -72,12 +72,8 @@ export default function SubsidyResultModal({ onClose, subsidyAmount = 3.11, orde
           </p>
           <p className="mb-6 text-center text-[13px] text-tokenHint">SC</p>
 
-          <div className="mb-5 flex gap-3">
-            <div className="flex-1 rounded-xl py-3 text-center" style={{ background: 'var(--color-bg-page)' }}>
-              <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '本次扣除' : 'Deducted'}</p>
-              <p className="mt-0.5 text-[13px] font-semibold text-tokenText">{orderTotal} {lang === 'zh' ? '亿 SC' : 'B SC'}</p>
-            </div>
-            <div className="flex-1 rounded-xl py-3 text-center" style={{ background: 'var(--color-bg-page)' }}>
+          <div className="mb-5">
+            <div className="rounded-xl py-3 text-center" style={{ background: 'var(--color-bg-page)' }}>
               <p className="text-[11px] text-tokenHint">{lang === 'zh' ? (isZherang ? '本轮折让' : '本轮补贴') : (isZherang ? 'Discount' : 'Subsidy')}</p>
               <p className="mt-0.5 text-[13px] font-semibold" style={{ color: isZherang ? 'var(--color-primary)' : 'var(--color-success)' }}>
                 {isZherang ? '' : '+'}{pct}%
