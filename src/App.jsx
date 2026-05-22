@@ -12,6 +12,8 @@ import P7Product  from './pages/P7Product';
 import P8Orders   from './pages/P8Orders';
 import P9Video    from './pages/P9Video';
 import { LanguageProvider } from './components/LanguageContext';
+import { UserProvider } from './components/UserContext';
+import PMembership from './pages/PMembership';
 
 const SHELL = 'mx-auto min-h-screen w-full max-w-[480px] overflow-x-hidden font-ui text-tokenText';
 
@@ -35,6 +37,7 @@ function SubLayout() {
 export default function App() {
   return (
     <LanguageProvider>
+      <UserProvider>
       <BrowserRouter>
         <Routes>
           {/* Pages with bottom nav */}
@@ -54,9 +57,11 @@ export default function App() {
             <Route path="/ai/:category"          element={<P6List />} />
             <Route path="/ai/:category/:id"      element={<P7Product />} />
             <Route path="/orders/:orderId"       element={<P9Video />} />
+            <Route path="/membership"            element={<PMembership />} />
           </Route>
         </Routes>
       </BrowserRouter>
+      </UserProvider>
     </LanguageProvider>
   );
 }

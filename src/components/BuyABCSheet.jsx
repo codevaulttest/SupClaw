@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Minus, Plus, ArrowLeftRight, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Minus, Plus, ArrowLeftRight, X, Crown } from 'lucide-react';
 import InfoTip from './InfoTip';
 import { useLanguage } from './LanguageContext';
+import { useUser } from './UserContext';
 
 const SC_BALANCE = 32.11;
 const PRICES = { A: 5, B: 3, C: 1 };
@@ -14,7 +16,9 @@ const TIPS = {
 const TOKEN_V = { A: 'a', B: 'b', C: 'c' };
 
 export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
+  const navigate = useNavigate();
   const { lang } = useLanguage();
+  const { isMember, memberExpiry } = useUser();
   const [counts, setCounts] = useState({ A: 0, B: 0, C: 0 });
   const [drafts, setDrafts] = useState({ A: '', B: '', C: '' });
   const [focusedKey, setFocusedKey] = useState(null);
@@ -82,6 +86,32 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
           </div>
 
           <div className="px-4 pb-6 pt-2">
+            {/* 会员门槛 */}
+            {!isMember ? (
+              <div className="flex flex-col items-center py-8 text-center">
+                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full" style={{ background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)' }}>
+                  <Crown className="h-7 w-7" style={{ color: 'var(--color-primary)' }} strokeWidth={1.5} />
+                </div>
+                <p className="mb-1.5 text-[17px] font-bold text-tokenText">{lang === 'zh' ? '仅限会员' : 'Members Only'}</p>
+                <p className="mb-6 text-[13px] leading-relaxed text-tokenSub">
+                  {lang === 'zh'
+                    ? '兑换首发权是超级龙虾会员专属权益，开通后即可使用。'
+                    : 'Premiere access redemption is exclusive to SupClaw annual members.'}
+                </p>
+                <button
+                  onClick={() => { navigate('/membership'); onClose(); }}
+                  className="w-full py-[13px] text-[14px] font-semibold text-white"
+                  style={{
+                    borderRadius: 'var(--radius-md)',
+                    background: 'var(--color-primary)',
+                    boxShadow: '0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent)',
+                  }}
+                >
+                  {lang === 'zh' ? '立即开通会员' : 'Activate Annual Membership'}
+                </button>
+              </div>
+            ) : (
+            <>
             {/* ABC 行 */}
             {['A', 'B', 'C'].map(key => {
               const v = TOKEN_V[key];
@@ -178,6 +208,8 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
                 {lang === 'zh' ? '兑换首发权' : 'Swap for Premiere Access'}
               </span>
             </button>
+            </>
+            )}
           </div>
         </div>
       </div>

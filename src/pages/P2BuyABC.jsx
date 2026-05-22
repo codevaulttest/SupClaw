@@ -90,35 +90,33 @@ export default function P2BuyABC() {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={() => adjust(key, -1)}
-                      disabled={count === 0}
-                      className="flex h-8 w-8 items-center justify-center rounded-full border border-tokenBorder disabled:opacity-30"
-                    >
-                      <Minus className="h-4 w-4 text-tokenText" strokeWidth={2} />
-                    </button>
-                    <input
-                      type="number"
-                      min="0"
-                      value={drafts[key] !== '' ? drafts[key] : count === 0 ? '' : count}
-                      onChange={e => handleInput(key, e.target.value)}
-                      onBlur={() => handleBlur(key)}
-                      placeholder="0"
-                      className="font-num text-[20px] font-semibold text-tokenText text-center bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                      style={{ width: '8rem', flexShrink: 0 }}
-                    />
-                    <button
-                      onClick={() => adjust(key, 1)}
-                      className="flex h-8 w-8 items-center justify-center rounded-full text-white"
-                      style={{ background: `var(--token-${v}-from)` }}
-                    >
-                      <Plus className="h-4 w-4" strokeWidth={2.5} />
-                    </button>
-                  </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => adjust(key, -1)}
+                    disabled={count === 0}
+                    className="flex h-8 w-8 items-center justify-center rounded-full border border-tokenBorder disabled:opacity-30"
+                  >
+                    <Minus className="h-4 w-4 text-tokenText" strokeWidth={2} />
+                  </button>
+                  <input
+                    type="number"
+                    min="0"
+                    value={drafts[key] !== '' ? drafts[key] : count === 0 ? '' : count}
+                    onChange={e => handleInput(key, e.target.value)}
+                    onBlur={() => handleBlur(key)}
+                    placeholder="0"
+                    className="font-num text-[20px] font-semibold text-tokenText text-center bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    style={{ width: '7rem' }}
+                  />
+                  <button
+                    onClick={() => adjust(key, 1)}
+                    className="flex h-8 w-8 items-center justify-center rounded-full text-white"
+                    style={{ background: `var(--token-${v}-from)` }}
+                  >
+                    <Plus className="h-4 w-4" strokeWidth={2.5} />
+                  </button>
                   {subtotal > 0 && (
-                    <span className="font-num text-[13px] font-medium text-tokenSub">= {subtotal} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
+                    <span className="font-num text-[13px] font-medium text-tokenSub ml-1">= {subtotal} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
                   )}
                 </div>
               </div>
