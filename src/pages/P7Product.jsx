@@ -8,7 +8,7 @@ import { getProductsByCategory } from '../data/booklists';
 // mock balances
 const BALANCES = { A: 5.20, B: 3.00, C: 1.80 };
 const SC_BALANCE = 32.11;
-// per-type price (亿 ABC / unit)
+// per-type price (ABC / unit)
 const UNIT_PRICE  = { A: 1, B: 1, C: 1 };
 // SC rate: 1 ASC = 5亿 SC; 10% of that = 0.5亿 SC per ASC
 const SC_RATE     = { A: 5, B: 3, C: 1 };
@@ -73,7 +73,7 @@ export default function P7Product() {
             <div className="w-px h-8 bg-tokenBorder" />
             <div>
               <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '单价' : 'Unit Price'}</p>
-              <p className="font-num text-[16px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>{unitABC}{lang === 'zh' ? '亿' : 'B'} {type}SC + {(unitABC * SC_RATE[type] * 0.1).toFixed(1)}{lang === 'zh' ? '亿' : 'B'} SC</p>
+              <p className="font-num text-[16px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>{unitABC} {type}SC + {(unitABC * SC_RATE[type] * 0.1).toFixed(1)}{lang === 'zh' ? '亿' : 'B'} SC</p>
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@ export default function P7Product() {
           <div className="flex items-center justify-between mb-2">
             <span className="text-[13px] text-tokenSub">{type}SC</span>
             <span className="font-num text-[15px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>
-              {totalABC} {lang === 'zh' ? '亿' : 'B'} {type}SC
+              {totalABC} {type}SC
             </span>
           </div>
           <div className="flex items-center justify-between mb-3">

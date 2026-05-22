@@ -86,7 +86,7 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
                 <p className="mt-0.5 text-[12px] text-tokenHint">
                   {lang === 'zh' ? info.label : { A: 'Brand Custom', B: 'Creative Copy', C: 'Surprise Drop' }[type]}
                   {' · '}{product.duration}{lang === 'zh' ? '秒' : 's'}
-                  {' · '}<span style={{ color: `var(--token-${v}-text)` }}>{unitABC}{lang === 'zh' ? '亿' : 'B'} {type}SC</span>
+                  {' · '}<span style={{ color: `var(--token-${v}-text)` }}>{unitABC} {type}SC</span>
                 </p>
               </div>
             </div>
@@ -114,7 +114,7 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
               <p className="mb-3 text-[13px] font-semibold text-tokenText">{lang === 'zh' ? '组合支付' : 'Split Payment'}</p>
               <div className="mb-2 flex items-center justify-between">
                 <span className="text-[13px] text-tokenSub">{type}SC</span>
-                <span className="font-num text-[15px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>{totalABC} {lang === 'zh' ? '亿' : 'B'} {type}SC</span>
+                <span className="font-num text-[15px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>{totalABC} {type}SC</span>
               </div>
               <div className="mb-3 flex items-center justify-between">
                 <span className="text-[13px] text-tokenSub">SC (+10%)</span>

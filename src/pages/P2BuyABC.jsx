@@ -9,9 +9,9 @@ import { useLanguage } from '../components/LanguageContext';
 const SC_BALANCE = 32.11;
 const PRICES = { A: 5, B: 3, C: 1 };
 const TIPS = {
-  A: '持有 ASC 可兑换 A 类 AI 视频；从 SC 兑换时，5 亿 SC 可换 1 亿 ASC；兑换视频时另扣 10% SC',
-  B: '持有 BSC 可兑换 B 类 AI 视频；从 SC 兑换时，3 亿 SC 可换 1 亿 BSC；兑换视频时另扣 10% SC',
-  C: '持有 CSC 可兑换 C 类 AI 视频；从 SC 兑换时，1 亿 SC 可换 1 亿 CSC；兑换视频时另扣 10% SC',
+  A: '持有 ASC 可兑换 A 类 AI 视频；从 SC 兑换时，5 亿 SC 可换 1 ASC；兑换视频时另扣 10% SC',
+  B: '持有 BSC 可兑换 B 类 AI 视频；从 SC 兑换时，3 亿 SC 可换 1 BSC；兑换视频时另扣 10% SC',
+  C: '持有 CSC 可兑换 C 类 AI 视频；从 SC 兑换时，1 亿 SC 可换 1 CSC；兑换视频时另扣 10% SC',
 };
 const TOKEN_V = { A: 'a', B: 'b', C: 'c' };
 
@@ -68,9 +68,9 @@ export default function P2BuyABC() {
                   </div>
                   <span className="text-[15px] font-semibold text-tokenText">{lang === 'zh' ? `${key}SC 首发权` : `${key}SC Premiere Access`}</span>
                   <InfoTip text={lang === 'zh' ? TIPS[key] : {
-                    A: 'Hold ASC to swap for Type A AI videos. 5B SC swaps into 1B ASC, and swapping for the video also consumes an extra 10% in SC.',
-                    B: 'Hold BSC to swap for Type B AI videos. 3B SC swaps into 1B BSC, and swapping for the video also consumes an extra 10% in SC.',
-                    C: 'Hold CSC to swap for Type C AI videos. 1B SC swaps into 1B CSC, and swapping for the video also consumes an extra 10% in SC.',
+                    A: 'Hold ASC to swap for Type A AI videos. 5B SC swaps into 1 ASC, and swapping for the video also consumes an extra 10% in SC.',
+                    B: 'Hold BSC to swap for Type B AI videos. 3B SC swaps into 1 BSC, and swapping for the video also consumes an extra 10% in SC.',
+                    C: 'Hold CSC to swap for Type C AI videos. 1B SC swaps into 1 CSC, and swapping for the video also consumes an extra 10% in SC.',
                   }[key]} />
                   <span className="ml-auto font-num text-[13px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>
                     {PRICES[key]} {lang === 'zh' ? '亿 SC / 个' : 'B SC / unit'}

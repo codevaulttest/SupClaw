@@ -4,23 +4,21 @@ import { createPortal } from 'react-dom';
 import BuyABCSheet from '../components/BuyABCSheet';
 import ExchangeSCSheet from '../components/ExchangeSCSheet';
 import ExchangeSubmittedSheet from '../components/ExchangeSubmittedSheet';
-import ProductOrderSheet from '../components/ProductOrderSheet';
-import ProductCard from '../components/ProductCard';
 import {
   ArrowDownLeft, ArrowUpRight, ArrowLeftRight, ChevronRight, Clock, History,
-  PlayCircle, ShoppingCart, Wallet,
+  PlayCircle, ShoppingCart, Wallet, Lock,
 } from 'lucide-react';
 import InfoTip from '../components/InfoTip';
 import SubsidyResultModal from '../components/SubsidyResultModal';
 import HeaderActions from '../components/HeaderActions';
 import { useLanguage } from '../components/LanguageContext';
-import { getFeaturedProducts } from '../data/booklists';
+import { VISIBLE_CATEGORIES } from '../data/booklists';
 
 // ── Mock data ────────────────────────────────────────────────
 const ABC_BALANCES = [
-  { key: 'A', v: 'a', label: 'ASC', value: '5.20', tip: '持有 ASC 可兑换 A 类 AI 视频；从 SC 兑换时，5 亿 SC 可换 1 亿 ASC；兑换视频时另扣 10% SC' },
-  { key: 'B', v: 'b', label: 'BSC', value: '3.00', tip: '持有 BSC 可兑换 B 类 AI 视频；从 SC 兑换时，3 亿 SC 可换 1 亿 BSC；兑换视频时另扣 10% SC' },
-  { key: 'C', v: 'c', label: 'CSC', value: '1.80', tip: '持有 CSC 可兑换 C 类 AI 视频；从 SC 兑换时，1 亿 SC 可换 1 亿 CSC；兑换视频时另扣 10% SC' },
+  { key: 'A', v: 'a', label: 'ASC', value: '5.20', tip: '持有 ASC 可兑换 A 类 AI 视频；从 SC 兑换时，5 亿 SC 可换 1 ASC；兑换视频时另扣 10% SC' },
+  { key: 'B', v: 'b', label: 'BSC', value: '3.00', tip: '持有 BSC 可兑换 B 类 AI 视频；从 SC 兑换时，3 亿 SC 可换 1 BSC；兑换视频时另扣 10% SC' },
+  { key: 'C', v: 'c', label: 'CSC', value: '1.80', tip: '持有 CSC 可兑换 C 类 AI 视频；从 SC 兑换时，1 亿 SC 可换 1 CSC；兑换视频时另扣 10% SC' },
 ];
 
 const SC_FLOWS = [
@@ -34,14 +32,6 @@ const ORDERS = [
   { combo: 'A×2  B×1',        amount: '−13 亿 SC', time: '昨天 20:11' },
 ];
 
-const VIDEO_PRODUCTS = getFeaturedProducts().map((product) => ({
-  ...product,
-  tag: product.type,
-  dur: `${product.duration}s`,
-  displayPrice: `${product.price} 亿 ${product.type}SC`,
-  displayPriceEn: `${product.price}B ${product.type}SC`,
-  grad: `linear-gradient(135deg, var(--token-${product.type.toLowerCase()}-from), var(--token-${product.type.toLowerCase()}-to))`,
-}));
 
 // ── Sub-components ───────────────────────────────────────────
 function SloganBanner() {
@@ -162,9 +152,9 @@ function ABCCard({ onBuy }) {
                 {item.label}
               </span>
               <InfoTip text={lang === 'zh' ? item.tip : {
-                A: 'Hold ASC to swap for Type A AI videos. 5B SC swaps into 1B ASC, and swapping for the video also consumes an extra 10% in SC.',
-                B: 'Hold BSC to swap for Type B AI videos. 3B SC swaps into 1B BSC, and swapping for the video also consumes an extra 10% in SC.',
-                C: 'Hold CSC to swap for Type C AI videos. 1B SC swaps into 1B CSC, and swapping for the video also consumes an extra 10% in SC.',
+                A: 'Hold ASC to swap for Type A AI videos. 5B SC swaps into 1 ASC, and swapping for the video also consumes an extra 10% in SC.',
+                B: 'Hold BSC to swap for Type B AI videos. 3B SC swaps into 1 BSC, and swapping for the video also consumes an extra 10% in SC.',
+                C: 'Hold CSC to swap for Type C AI videos. 1B SC swaps into 1 CSC, and swapping for the video also consumes an extra 10% in SC.',
               }[item.key]} />
             </div>
             <p className="mb-0.5 text-[10px] leading-[13px] text-tokenHint">{lang === 'zh' ? '数量' : 'Balance'}</p>
@@ -342,7 +332,7 @@ function WalletHistory({ onMore }) {
                 <p className="mt-0.5 truncate text-[12px] leading-[16px] text-tokenSub">{lang === 'zh' ? '首发权' : 'Premiere Access'}</p>
               </div>
               <div className="shrink-0 text-right">
-                <p className="font-num text-[15px] font-semibold leading-[20px] text-tokenSub">{item.amount}</p>
+                <p className="font-num text-[15px] font-semibold leading-[20px] text-tokenDanger">{item.amount}</p>
                 <p className="mt-0.5 text-[11px] leading-[15px] text-tokenHint">{item.time}</p>
               </div>
             </div>
@@ -353,13 +343,8 @@ function WalletHistory({ onMore }) {
   );
 }
 
-function AIVideoMallPreview({ onEnter, onProduct }) {
+function AIVideoMallPreview({ onEnter, onCategory }) {
   const { lang } = useLanguage();
-  const products = VIDEO_PRODUCTS.map((product) => ({
-    ...product,
-    title: lang === 'zh' ? product.title : product.titleEn,
-    displayPrice: lang === 'zh' ? product.displayPrice : product.displayPriceEn,
-  }));
   return (
     <section className="mt-6">
       <div className="mb-3 flex items-center justify-between">
@@ -373,25 +358,35 @@ function AIVideoMallPreview({ onEnter, onProduct }) {
       </div>
 
       <div className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
-        {products.map(p => (
-          <ProductCard
-            key={p.id}
-            product={p}
-            onClick={() => onProduct && onProduct(p)}
-            className="shrink-0"
-            style={{ width: 140, borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-md)' }}
-          />
+        {VISIBLE_CATEGORIES.map(cat => (
+          <button
+            key={cat.id}
+            onClick={() => !cat.locked && onCategory && onCategory(cat.id)}
+            className="relative shrink-0 overflow-hidden text-left"
+            style={{ width: 130, borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-md)', background: 'var(--color-bg-card)' }}
+          >
+            <div className="relative h-[86px] w-full overflow-hidden" style={{ borderRadius: 'var(--radius-md) var(--radius-md) 0 0' }}>
+              <img
+                src={cat.image}
+                alt={lang === 'zh' ? cat.name : cat.nameEn}
+                className="h-full w-full object-cover"
+              />
+              {cat.locked && (
+                <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'rgba(13,21,39,0.38)', backdropFilter: 'blur(2px)' }}>
+                  <Lock className="h-5 w-5 text-white/80" strokeWidth={2} />
+                </div>
+              )}
+            </div>
+            <div className="px-2.5 py-2">
+              <p className="truncate text-[12px] font-semibold leading-[16px] text-tokenText">
+                {lang === 'zh' ? cat.name : cat.nameEn}
+              </p>
+              {cat.locked && (
+                <p className="mt-0.5 text-[10px] leading-[13px] text-tokenHint">{lang === 'zh' ? '敬请期待' : 'Coming soon'}</p>
+              )}
+            </div>
+          </button>
         ))}
-        <button
-          onClick={onEnter}
-          className="flex shrink-0 flex-col items-center justify-center gap-1.5 bg-tokenCard text-tokenSub"
-          style={{ width: 72, borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-sm)' }}
-        >
-          <div className="grid h-9 w-9 place-items-center rounded-full" style={{ background: 'var(--color-primary-soft)' }}>
-            <ChevronRight className="h-4 w-4 text-tokenPrimary" strokeWidth={2.4} />
-          </div>
-          <span className="text-[11px] leading-[14px]">{lang === 'zh' ? '更多' : 'More'}</span>
-        </button>
       </div>
     </section>
   );
@@ -436,20 +431,9 @@ export default function P0Wallet() {
   const [exchangeSubmitted, setExchangeSubmitted] = useState(null); // null | number (amount)
   const [buySubmitted, setBuySubmitted] = useState(null);
   const [buyOpen, setBuyOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const [devOpen, setDevOpen] = useState(false);
   const [devVisible, setDevVisible] = useState(true);
   const [devModal, setDevModal] = useState(null);
-
-  function handlePreviewProduct(product) {
-    setSelectedProduct({
-      id: `home-${product.id}`,
-      title: product.title,
-      type: product.type,
-      price: product.orderPrice,
-      duration: product.duration,
-    });
-  }
 
   return (
     <>
@@ -476,7 +460,7 @@ export default function P0Wallet() {
           <WalletHistory onMore={() => navigate('/history')} />
         </div>
         <div className="enter" style={{ animationDelay: '380ms' }}>
-          <AIVideoMallPreview onEnter={() => navigate('/ai')} onProduct={handlePreviewProduct} />
+          <AIVideoMallPreview onEnter={() => navigate('/ai')} onCategory={(id) => navigate(`/ai/${id}`)} />
         </div>
       </main>
 
@@ -493,20 +477,6 @@ export default function P0Wallet() {
         <ExchangeSubmittedSheet
           detail={lang === 'zh' ? `${buySubmitted.combo} · 扣除 ${buySubmitted.total} 亿 SC` : `${buySubmitted.combo} · ${buySubmitted.total}B SC deducted`}
           onClose={() => setBuySubmitted(null)}
-        />
-      )}
-      {selectedProduct && (
-        <ProductOrderSheet
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-          onOpenBuy={() => {
-            setSelectedProduct(null);
-            setBuyOpen(true);
-          }}
-          onOpenExchange={() => {
-            setSelectedProduct(null);
-            setExchangeOpen(true);
-          }}
         />
       )}
       {buyOpen && (
