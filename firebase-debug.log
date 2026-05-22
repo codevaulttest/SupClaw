@@ -1,0 +1,21 @@
+[debug] [2026-05-22T08:51:56.134Z] ----------------------------------------------------------------------
+[debug] [2026-05-22T08:51:56.136Z] Command:       /opt/homebrew/Cellar/node/23.7.0/bin/node /opt/homebrew/bin/firebase deploy
+[debug] [2026-05-22T08:51:56.136Z] CLI Version:   15.14.0
+[debug] [2026-05-22T08:51:56.136Z] Platform:      darwin
+[debug] [2026-05-22T08:51:56.136Z] Node Version:  v23.7.0
+[debug] [2026-05-22T08:51:56.137Z] Time:          Fri May 22 2026 16:51:56 GMT+0800 (Singapore Standard Time)
+[debug] [2026-05-22T08:51:56.137Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-05-22T08:51:57.178Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-05-22T08:51:57.178Z] > authorizing via signed-in user (lusicong22@gmail.com)
+[debug] [2026-05-22T08:51:57.178Z] [iam] checking project lunchbuddy-fee94 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-05-22T08:51:57.179Z] Checked if tokens are valid: false, expires at: 1779440530819
+[debug] [2026-05-22T08:51:57.179Z] Checked if tokens are valid: false, expires at: 1779440530819
+[debug] [2026-05-22T08:51:57.179Z] > refreshing access token with scopes: []
+[debug] [2026-05-22T08:51:57.180Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-05-22T08:51:57.180Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-05-22T08:51:57.285Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-05-22T08:51:57.285Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-05-22T08:51:57.303Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/lunchbuddy-fee94:testIamPermissions [none]
+[debug] [2026-05-22T08:51:57.303Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/lunchbuddy-fee94:testIamPermissions  x-goog-user-project=lunchbuddy-fee94
+[debug] [2026-05-22T08:51:57.303Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/lunchbuddy-fee94:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}

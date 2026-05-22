@@ -297,7 +297,6 @@ function WalletHistory({ onMore, onMemberRequired }) {
           <button
             key={t.key}
             onClick={() => {
-              if (t.key === 'order' && !isMember) { onMemberRequired?.(); return; }
               setTab(t.key);
             }}
             className="mr-5 pb-2 text-[14px] font-semibold leading-[20px] transition-colors"
