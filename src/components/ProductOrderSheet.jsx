@@ -84,17 +84,16 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-semibold text-tokenText">{formatBookTitle(product.title)}</p>
-                <p className="mt-0.5 text-[12px] text-tokenHint">
+                <p className="mt-0.5 text-[12px]" style={{ color: `var(--token-${v}-text)` }}>
                   {lang === 'zh' ? info.label : { A: 'Brand Custom', B: 'Creative Copy', C: 'Surprise Drop' }[type]}
-                  {' · '}{product.duration}{lang === 'zh' ? '秒' : 's'}
-                  {' · '}<span style={{ color: `var(--token-${v}-text)` }}>{unitABC} {type}SC</span>
+                  <span className="text-tokenHint"> · {lang === 'zh' ? '每' : 'per'} {product.duration}{lang === 'zh' ? '秒需' : 's'} {lang === 'zh' ? '' : 'costs '}{unitABC} {type}SC</span>
                 </p>
               </div>
             </div>
 
             <div className="mb-4 flex items-center justify-between rounded-xl px-5 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
               <div className="min-w-0">
-                <p className="text-[13px] text-tokenSub">{lang === 'zh' ? '兑换数量' : 'Quantity'}</p>
+                <p className="text-[13px] text-tokenSub">{lang === 'zh' ? '视频时长' : 'Video Length'}</p>
                 <p className="mt-1 flex items-baseline gap-1 whitespace-nowrap">
                   <span className="font-num text-[28px] font-bold leading-none" style={{ color: `var(--token-${v}-from)` }}>{duration}</span>
                   <span className="text-[15px] font-semibold" style={{ color: `var(--token-${v}-from)` }}>{lang === 'zh' ? '秒视频' : 'sec video'}</span>
@@ -124,7 +123,7 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
             </div>
 
             <div className="mb-4 rounded-xl px-5 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
-              <p className="mb-3 text-[13px] font-semibold text-tokenText">{lang === 'zh' ? '组合支付' : 'Split Payment'}</p>
+              <p className="mb-3 text-[13px] font-semibold text-tokenText">{lang === 'zh' ? '费用明细' : 'Payment Summary'}</p>
               <div className="mb-2 flex items-center justify-between">
                 <span className="text-[13px] text-tokenSub">{type}SC</span>
                 <span className="font-num text-[15px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>{totalABC} {type}SC</span>

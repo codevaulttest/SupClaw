@@ -178,7 +178,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit, onOpenM
             })}
 
             <div className="mb-4 flex items-center justify-between px-1">
-              <span className="text-[13px] font-medium text-tokenSub">{lang === 'zh' ? '合计消耗 SC' : 'Total SC Cost'}</span>
+              <span className="text-[13px] font-medium text-tokenSub">{lang === 'zh' ? '合计花费 SC' : 'Total SC'}</span>
               <span className="font-num text-[16px] font-semibold text-tokenText">{total} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
             </div>
 

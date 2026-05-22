@@ -67,12 +67,12 @@ export default function P7Product() {
           </div>
           <div className="bg-tokenCard flex items-center gap-4 px-5 py-3">
             <div>
-              <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '每单时长' : 'Duration per Order'}</p>
+              <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '视频时长' : 'Video Length'}</p>
               <p className="font-num text-[16px] font-semibold text-tokenText">10 {lang === 'zh' ? '秒' : 's'}</p>
             </div>
             <div className="w-px h-8 bg-tokenBorder" />
             <div>
-              <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '单价' : 'Unit Price'}</p>
+              <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '兑换费用' : 'Cost'}</p>
               <p className="font-num text-[16px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>{unitABC} {type}SC + {(unitABC * SC_RATE[type] * 0.1).toFixed(1)}{lang === 'zh' ? '亿' : 'B'} SC</p>
             </div>
           </div>
@@ -81,7 +81,7 @@ export default function P7Product() {
         {/* 数量 */}
         <div className="mb-4 flex items-center justify-between rounded-xl px-5 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
           <div className="min-w-0">
-            <p className="text-[13px] text-tokenSub">{lang === 'zh' ? '兑换数量' : 'Quantity'}</p>
+            <p className="text-[13px] text-tokenSub">{lang === 'zh' ? '视频时长' : 'Video Length'}</p>
             <p className="mt-1 flex items-baseline gap-1 whitespace-nowrap">
               <span className="font-num text-[28px] font-bold leading-none" style={{ color: `var(--token-${v}-from)` }}>{duration}</span>
               <span className="text-[15px] font-semibold" style={{ color: `var(--token-${v}-from)` }}>{lang === 'zh' ? '秒视频' : 'sec video'}</span>
@@ -100,7 +100,7 @@ export default function P7Product() {
 
         {/* 支付摘要 */}
         <div className="mb-4 rounded-xl px-5 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
-          <p className="mb-3 text-[13px] font-semibold text-tokenText">{lang === 'zh' ? '组合支付' : 'Split Payment'}</p>
+          <p className="mb-3 text-[13px] font-semibold text-tokenText">{lang === 'zh' ? '费用明细' : 'Payment Summary'}</p>
           <div className="flex items-center justify-between mb-2">
             <span className="text-[13px] text-tokenSub">{type}SC</span>
             <span className="font-num text-[15px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>
