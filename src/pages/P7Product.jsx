@@ -134,13 +134,13 @@ export default function P7Product() {
           </div>
         )}
 
-        {/* 下单按钮 */}
+        {/* 兑换按钮 */}
         {ordered ? (
           <div className="flex items-center justify-center gap-2 rounded-xl py-4" style={{ background: 'var(--color-success-soft)', border: '1px solid var(--color-primary-border)' }}>
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="var(--color-success)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12"/>
             </svg>
-            <span className="text-[15px] font-semibold text-tokenSuccess">{lang === 'zh' ? '下单成功，跳转订单…' : 'Order placed. Redirecting to Orders…'}</span>
+            <span className="text-[15px] font-semibold text-tokenSuccess">{lang === 'zh' ? '兑换成功，跳转订单…' : 'Order placed. Redirecting to Orders…'}</span>
           </div>
         ) : (
           <button
@@ -154,7 +154,7 @@ export default function P7Product() {
               boxShadow: canOrder ? 'var(--shadow-sm)' : 'none',
             }}
           >
-            {lang === 'zh' ? `确认下单 · ${duration} 秒视频` : `Confirm Order · ${duration}s video`}
+            {lang === 'zh' ? `确认兑换 · ${duration} 秒视频` : `Confirm Order · ${duration}s video`}
           </button>
         )}
       </div>

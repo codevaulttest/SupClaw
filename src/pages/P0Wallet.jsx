@@ -400,8 +400,8 @@ function AIVideoMallPreview({ onEnter, onProduct }) {
 function DevPanel({ onClose, onTrigger }) {
   const { lang } = useLanguage();
   const scenarios = [
-    { label: lang === 'zh' ? '折让演示' : 'Discount Demo', sub: lang === 'zh' ? '补贴 3.11 亿 < 下单 9 亿' : 'Subsidy 3.11B < order 9B', amount: 3.11 },
-    { label: lang === 'zh' ? '补贴演示' : 'Subsidy Demo', sub: lang === 'zh' ? '补贴 10.5 亿 > 下单 9 亿' : 'Subsidy 10.5B > order 9B', amount: 10.5 },
+    { label: lang === 'zh' ? '折让演示' : 'Discount Demo', sub: lang === 'zh' ? '补贴 3.11 亿 < 兑换 9 亿' : 'Subsidy 3.11B < order 9B', amount: 3.11 },
+    { label: lang === 'zh' ? '补贴演示' : 'Subsidy Demo', sub: lang === 'zh' ? '补贴 10.5 亿 > 兑换 9 亿' : 'Subsidy 10.5B > order 9B', amount: 10.5 },
   ];
   return createPortal(
     <div className="fixed inset-0 z-[60] flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.3)' }} onClick={onClose}>

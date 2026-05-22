@@ -150,7 +150,7 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="var(--color-success)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span className="text-[15px] font-semibold text-tokenSuccess">{lang === 'zh' ? '下单成功，跳转订单…' : 'Order placed. Redirecting to Orders…'}</span>
+                <span className="text-[15px] font-semibold text-tokenSuccess">{lang === 'zh' ? '兑换成功，跳转订单…' : 'Order placed. Redirecting to Orders…'}</span>
               </div>
             ) : (
               <button
@@ -164,7 +164,7 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
                   boxShadow: canOrder ? 'var(--shadow-sm)' : 'none',
                 }}
               >
-                {lang === 'zh' ? `确认下单 · ${duration} 秒视频` : `Confirm Order · ${duration}s video`}
+                {lang === 'zh' ? `确认兑换 · ${duration} 秒视频` : `Confirm Order · ${duration}s video`}
               </button>
             )}
           </div>
