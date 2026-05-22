@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, PlayCircle, ReceiptText } from 'lucide-react';
+import { Home, PlayCircle, ReceiptText, UserCircle2 } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 
 const FilledHome = () => (
@@ -17,6 +17,11 @@ const FilledOrders = () => (
     <path d="M19.5 3.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2v16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V2l-1.5 1.5zM17 18H7v-1h10v1zm0-3H7v-1h10v1zm0-3H7v-1h10v1z"/>
   </svg>
 );
+const FilledProfile = () => (
+  <svg viewBox="0 0 24 24" className="h-[22px] w-[22px]" fill="currentColor">
+    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+  </svg>
+);
 
 export default function BottomNav() {
   const navigate = useNavigate();
@@ -26,6 +31,7 @@ export default function BottomNav() {
     { label: t('首页', 'Home'), path: '/', Icon: Home, FilledIcon: FilledHome },
     { label: t('AI 生成', 'Create'), path: '/ai', Icon: PlayCircle, FilledIcon: FilledPlay },
     { label: t('订单', 'Orders'), path: '/orders', Icon: ReceiptText, FilledIcon: FilledOrders },
+    { label: t('我的', 'Me'), path: '/profile', Icon: UserCircle2, FilledIcon: FilledProfile },
   ];
 
   const isActive = (path) =>
@@ -37,7 +43,7 @@ export default function BottomNav() {
       style={{ bottom: 'max(14px, env(safe-area-inset-bottom))' }}
     >
       <nav
-        className="pointer-events-auto grid h-[68px] grid-cols-3 overflow-hidden rounded-full p-1.5"
+        className="pointer-events-auto grid h-[68px] grid-cols-4 overflow-hidden rounded-full p-1.5"
         style={{
           background: 'linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.58))',
           backdropFilter: 'saturate(190%) blur(28px)',

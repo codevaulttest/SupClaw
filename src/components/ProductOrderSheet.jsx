@@ -115,7 +115,7 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
                   }}
                   onBlur={() => { setQtyDraft(''); if (qty < 1) setQty(1); }}
                   className="text-center font-num text-[22px] font-semibold text-tokenText bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                  style={{ width: '6rem' }}
+                  style={{ width: '4rem' }}
                 />
                 <button onClick={() => { setQty(q => q + 1); setQtyDraft(''); }} className="flex h-9 w-9 items-center justify-center rounded-full text-white" style={{ background: `var(--token-${v}-from)` }}>
                   <Plus className="h-4 w-4" strokeWidth={2.5} />

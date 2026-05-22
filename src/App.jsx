@@ -10,6 +10,7 @@ import P6List     from './pages/P6List';
 import P7Product  from './pages/P7Product';
 import P8Orders   from './pages/P8Orders';
 import P9Video    from './pages/P9Video';
+import PProfile   from './pages/PProfile';
 import { LanguageProvider } from './components/LanguageContext';
 import { UserProvider } from './components/UserContext';
 import PMembership from './pages/PMembership';
@@ -41,9 +42,10 @@ export default function App() {
         <Routes>
           {/* Pages with bottom nav */}
           <Route element={<MainLayout />}>
-            <Route path="/"       element={<P0Wallet />} />
-            <Route path="/ai"     element={<P6Store />} />
-            <Route path="/orders" element={<P8Orders />} />
+            <Route path="/"        element={<P0Wallet />} />
+            <Route path="/ai"      element={<P6Store />} />
+            <Route path="/orders"  element={<P8Orders />} />
+            <Route path="/profile" element={<PProfile />} />
           </Route>
 
           {/* Sub-pages — no bottom nav */}

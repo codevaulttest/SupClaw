@@ -160,7 +160,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
                           onChange={e => handleInput(key, e.target.value)}
                           onBlur={() => handleBlur(key)}
                           className="h-8 bg-transparent text-center font-num text-[20px] font-semibold leading-8 text-tokenText outline-none"
-                          style={{ width: '5rem' }}
+                          style={{ width: '4rem' }}
                         />
                         <button
                           onClick={() => adjust(key, 1)}
