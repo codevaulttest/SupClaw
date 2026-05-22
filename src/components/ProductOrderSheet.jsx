@@ -5,7 +5,7 @@ import { useLanguage } from './LanguageContext';
 import { formatScAmount } from '../utils/formatSc';
 
 const USER_EMAIL = 'zhangsan@gmail.com';
-const BALANCES = { A: 5.20, B: 3.00, C: 1.80 };
+const BALANCES = { A: 8, B: 16, C: 32 };
 const SC_BALANCE = 32.11;
 const SC_RATE = { A: 5, B: 3, C: 1 };
 const TYPE_INFO = {

@@ -7,7 +7,7 @@ import { getProductsByCategory } from '../data/booklists';
 import { formatScAmount } from '../utils/formatSc';
 
 // mock balances
-const BALANCES = { A: 5.20, B: 3.00, C: 1.80 };
+const BALANCES = { A: 8, B: 16, C: 32 };
 const SC_BALANCE = 32.11;
 // per-type price (ABC / unit)
 const UNIT_PRICE  = { A: 1, B: 1, C: 1 };
