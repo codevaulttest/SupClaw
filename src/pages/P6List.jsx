@@ -80,7 +80,7 @@ export default function P6List() {
                   boxShadow: active ? 'var(--shadow-sm)' : 'none',
                 }}
               >
-                {f === 'all' ? (lang === 'zh' ? '推荐' : 'Recommended') : `${f} · ${lang === 'zh' ? TOKEN_INFO[f].label : { A: 'Brand Custom', B: 'Creative Copy', C: 'Surprise Drop' }[f]}`}
+                {f === 'all' ? (lang === 'zh' ? '推荐' : 'Recommended') : (lang === 'zh' ? TOKEN_INFO[f].label : { A: 'Type A', B: 'Type B', C: 'Type C' }[f])}
               </button>
             );
           })}

@@ -13,9 +13,9 @@ const UNIT_PRICE  = { A: 1, B: 1, C: 1 };
 // SC rate: 1 ASC = 5亿 SC; 10% of that = 0.5亿 SC per ASC
 const SC_RATE     = { A: 5, B: 3, C: 1 };
 const TYPE_INFO   = {
-  A: { label: '品牌定制版', color: 'var(--token-a-text)', bg: 'var(--token-a-soft)', v: 'a' },
-  B: { label: '创意文案版', color: 'var(--token-b-text)', bg: 'var(--token-b-soft)', v: 'b' },
-  C: { label: '极速盲盒版', color: 'var(--token-c-text)', bg: 'var(--token-c-soft)', v: 'c' },
+  A: { label: 'A 类视频', color: 'var(--token-a-text)', bg: 'var(--token-a-soft)', v: 'a' },
+  B: { label: 'B 类视频', color: 'var(--token-b-text)', bg: 'var(--token-b-soft)', v: 'b' },
+  C: { label: 'C 类视频', color: 'var(--token-c-text)', bg: 'var(--token-c-soft)', v: 'c' },
 };
 
 function guessType(productId) {

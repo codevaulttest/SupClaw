@@ -1,7 +1,7 @@
 export const TOKEN_LABELS = {
-  A: '品牌定制版',
-  B: '创意文案版',
-  C: '极速盲盒版',
+  A: 'A 类视频',
+  B: 'B 类视频',
+  C: 'C 类视频',
 };
 
 export const VISIBLE_CATEGORIES = [

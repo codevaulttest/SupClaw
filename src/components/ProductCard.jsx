@@ -1,9 +1,9 @@
 import { Play, ChevronRight } from 'lucide-react';
 
 const TOKEN_INFO = {
-  A: { label: '品牌定制版', color: 'var(--token-a-text)' },
-  B: { label: '创意文案版', color: 'var(--token-b-text)' },
-  C: { label: '极速盲盒版', color: 'var(--token-c-text)' },
+  A: { label: 'A 类视频', color: 'var(--token-a-text)' },
+  B: { label: 'B 类视频', color: 'var(--token-b-text)' },
+  C: { label: 'C 类视频', color: 'var(--token-c-text)' },
 };
 
 function formatBookTitle(title) {

@@ -8,9 +8,9 @@ const BALANCES = { A: 5.20, B: 3.00, C: 1.80 };
 const SC_BALANCE = 32.11;
 const SC_RATE = { A: 5, B: 3, C: 1 };
 const TYPE_INFO = {
-  A: { label: '品牌定制版', v: 'a' },
-  B: { label: '创意文案版', v: 'b' },
-  C: { label: '极速盲盒版', v: 'c' },
+  A: { label: 'A 类视频', v: 'a' },
+  B: { label: 'B 类视频', v: 'b' },
+  C: { label: 'C 类视频', v: 'c' },
 };
 
 function formatBookTitle(title) {
