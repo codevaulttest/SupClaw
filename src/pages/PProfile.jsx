@@ -91,9 +91,9 @@ function InviteCodeRow() {
 
 const HELP_ITEMS = [
   { zhLabel: '什么是首发权？', enLabel: 'What is Premiere Access?', zhContent: 'ASC / BSC / CSC 是用于抢先兑换 AI 视频的权益凭证，分别对应 A / B / C 三类视频。持有首发权才能参与视频兑换。' },
-  { zhLabel: '如何获得 SC？', enLabel: 'How to get SC?', zhContent: '你可以通过将 DOS 兑换为 SC，或参与 100 秒补贴活动获得 SC 奖励。SC 是平台的基础词元，可用于兑换首发权及支付手续费。' },
-  { zhLabel: '补贴是怎么计算的？', enLabel: 'How is subsidy calculated?', zhContent: '在 100 秒结算窗口结束后，系统将根据你的订单金额随机发放补贴。补贴金额可能高于或低于你的兑换花费，最终以到账为准。' },
-  { zhLabel: '会员有哪些权益？', enLabel: 'What are member benefits?', zhContent: '年会员可使用兑换首发权功能（ASC / BSC / CSC），更多专属权益正在规划中，敬请期待。' },
+  { zhLabel: '如何获得 SC？', enLabel: 'How to get SC?', zhContent: '你可以通过将 DOS 或 SCV 兑换为 SC，或参与 100 秒补贴活动获得 SC 奖励。SC 是平台的基础词元，可用于兑换首发权及支付手续费。' },
+  { zhLabel: '补贴是怎么计算的？', enLabel: 'How is subsidy calculated?', zhContent: '在 100 秒结算窗口结束后，系统将根据你的订单金额随机发放补贴。' },
+  { zhLabel: '会员有哪些权益？', enLabel: 'What are member benefits?', zhContent: '年会员可使用 SC 兑换首发权（ASC / BSC / CSC），更多专属权益正在规划中，敬请期待。' },
 ];
 
 function HelpSection() {
