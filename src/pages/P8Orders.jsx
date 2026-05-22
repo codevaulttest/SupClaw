@@ -7,6 +7,7 @@ import EmptyState from '../components/EmptyState';
 import { useLanguage } from '../components/LanguageContext';
 import { useDev } from '../components/DevContext';
 import { formatScText } from '../utils/formatSc';
+import { getBookTitleEn } from '../data/booklists';
 
 const MOCK = {
   pending: [
@@ -147,7 +148,7 @@ export default function P8Orders() {
 
   const rawItems = emptyOrders ? [] : (MOCK[tab] ?? []);
   const items = useMemo(
-    () => lang === 'zh' ? rawItems : rawItems.map(o => ({ ...o, cost: formatScText(o.cost, lang) })),
+    () => lang === 'zh' ? rawItems : rawItems.map(o => ({ ...o, title: getBookTitleEn(o.title), cost: formatScText(o.cost, lang) })),
     [rawItems, lang],
   );
 

@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { Download, Play } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { useLanguage } from '../components/LanguageContext';
+import { getBookTitleEn } from '../data/booklists';
 
 const MOCK_ORDERS = {
   o004: { title: '人文地理学导论 × 2', type: 'B', duration: '20s', time: '2026-05-20 10:15' },
@@ -14,8 +15,8 @@ export default function P9Video() {
   const order = lang === 'zh'
     ? (MOCK_ORDERS[orderId] ?? { title: '视频订单', type: 'A', duration: '10s', time: '-' })
     : ({
-      o004: { title: '人文地理学导论 × 2', type: 'B', duration: '20s', time: '2026-05-20 10:15' },
-      o005: { title: '地理学思想史 × 4', type: 'C', duration: '40s', time: '2026-05-19 09:30' },
+      o004: { title: getBookTitleEn('人文地理学导论 × 2'), type: 'B', duration: '20s', time: '2026-05-20 10:15' },
+      o005: { title: getBookTitleEn('地理学思想史 × 4'), type: 'C', duration: '40s', time: '2026-05-19 09:30' },
     }[orderId] ?? { title: 'Video Order', type: 'A', duration: '10s', time: '-' });
   const v = order.type.toLowerCase();
 

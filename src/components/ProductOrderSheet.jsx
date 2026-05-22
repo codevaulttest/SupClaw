@@ -15,7 +15,7 @@ const TYPE_INFO = {
 };
 
 function formatBookTitle(title) {
-  if (!title || title.startsWith('《') || /^[A-Za-z0-9\s',:.-]+$/.test(title)) return title;
+  if (!title || title.startsWith('《') || !/[\u4e00-\u9fff]/.test(title)) return title;
   return `《${title}》`;
 }
 
