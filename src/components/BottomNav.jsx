@@ -24,16 +24,16 @@ const FilledPlay = () => (
 const FilledOrders = () => (
   <svg viewBox="0 0 24 24" className="h-[22px] w-[22px]" aria-hidden="true">
     <path
-      d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"
+      d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"
       fill="currentColor"
     />
     <path
-      d="M8 8h6M8 12h8M8 16h5"
+      d="M8.5 8h7M8.5 12h7M8.5 16h5"
       fill="none"
       stroke={iconCutout}
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth="2"
+      strokeWidth="1.8"
     />
   </svg>
 );
