@@ -216,24 +216,40 @@ function SubsidyCountdown({ onTrigger }) {
       )}
       {!done && (
         <section
-          className="mt-3 flex items-center gap-4 px-4 py-3.5"
-          style={{ borderRadius: 'var(--radius-lg)', background: 'linear-gradient(135deg,#fff8ee 0%,#fff1d6 100%)', boxShadow: '0 4px 16px rgba(255,173,0,0.12)', border: '1px solid rgba(255,173,0,0.2)' }}
+          className="shimmer-loop mt-3 flex items-center gap-4 px-4 py-4"
+          style={{
+            borderRadius: 'var(--radius-lg)',
+            background: 'linear-gradient(135deg,#fffae8 0%,#ffe9b0 60%,#ffd475 100%)',
+            border: '1.5px solid rgba(255,173,0,0.55)',
+            animation: 'border-glow 2s ease-in-out infinite',
+          }}
         >
           <div className="min-w-0 flex-1">
-            <div className="mb-1 flex items-center gap-2">
-              <span className="inline-block h-2 w-2 rounded-full" style={{ background: '#ffad00', boxShadow: '0 0 6px #ffad00', animation: 'pulse 1.2s ease-in-out infinite' }} />
-              <span className="text-[15px] font-bold" style={{ color: '#7a4800' }}>{lang === 'zh' ? '补贴结算中' : 'Settlement in Progress'}</span>
+            <div className="mb-1.5 flex items-center gap-2">
+              <span
+                className="inline-block h-2.5 w-2.5 rounded-full"
+                style={{ background: '#ff9500', boxShadow: '0 0 0 3px rgba(255,149,0,0.25)', animation: 'pulse 1s ease-in-out infinite' }}
+              />
+              <span className="text-[16px] font-extrabold tracking-tight" style={{ color: '#7a3800' }}>
+                {lang === 'zh' ? '补贴结算中' : 'Settlement in Progress'}
+              </span>
             </div>
-            <p className="text-[12px] leading-[17px]" style={{ color: 'rgba(122,72,0,0.7)' }}>A×12  B×7  C×23</p>
+            <p className="text-[12px] font-medium leading-[17px]" style={{ color: 'rgba(122,56,0,0.75)' }}>A×12  B×7  C×23</p>
           </div>
-          <div className="relative shrink-0" style={{ width: 68, height: 68 }}>
-            <svg width="68" height="68" viewBox="0 0 68 68" style={{ transform: 'rotate(-90deg)' }}>
-              <circle cx="34" cy="34" r={R} fill="none" stroke="rgba(255,173,0,0.18)" strokeWidth={SW} />
-              <circle cx="34" cy="34" r={R} fill="none" stroke="#ffad00" strokeWidth={SW} strokeLinecap="round"
+          <div className="relative shrink-0" style={{ width: 72, height: 72, animation: 'ring-glow 2s ease-in-out infinite' }}>
+            <svg width="72" height="72" viewBox="0 0 72 72" style={{ transform: 'rotate(-90deg)' }}>
+              <circle cx="36" cy="36" r={R} fill="none" stroke="rgba(255,173,0,0.22)" strokeWidth={SW + 2} />
+              <circle cx="36" cy="36" r={R} fill="none" stroke="url(#timerGrad)" strokeWidth={SW + 2} strokeLinecap="round"
                 strokeDasharray={circ} strokeDashoffset={offset} style={{ transition: 'stroke-dashoffset 1s linear' }} />
+              <defs>
+                <linearGradient id="timerGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#ffcc00" />
+                  <stop offset="100%" stopColor="#ff8c00" />
+                </linearGradient>
+              </defs>
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="font-num text-[13px] font-bold leading-none" style={{ color: '#7a4800' }}>{mm}:{ss}</span>
+              <span className="font-num text-[14px] font-extrabold leading-none" style={{ color: '#7a3800' }}>{mm}:{ss}</span>
             </div>
           </div>
         </section>
