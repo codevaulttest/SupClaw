@@ -490,6 +490,7 @@ export default function P0Wallet() {
           onClose={() => setBuyOpen(false)}
           onOpenExchange={() => { setBuyOpen(false); setExchangeOpen(true); }}
           onSubmit={(payload) => setBuySubmitted(payload)}
+          onOpenMembership={() => { setBuyOpen(false); setMembershipOpen(true); }}
         />
       )}
       {devModal !== null && <SubsidyResultModal subsidyAmount={devModal} orderTotal={9} onClose={() => setDevModal(null)} />}

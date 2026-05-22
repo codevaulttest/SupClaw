@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
 import { Minus, Plus, ArrowLeftRight, X, Crown } from 'lucide-react';
 import InfoTip from './InfoTip';
 import { useLanguage } from './LanguageContext';
@@ -15,8 +14,7 @@ const TIPS = {
 };
 const TOKEN_V = { A: 'a', B: 'b', C: 'c' };
 
-export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
-  const navigate = useNavigate();
+export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit, onOpenMembership }) {
   const { lang } = useLanguage();
   const { isMember, memberExpiry } = useUser();
   const [counts, setCounts] = useState({ A: 0, B: 0, C: 0 });
@@ -99,7 +97,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
                     : 'Premiere access redemption is exclusive to SupClaw annual members.'}
                 </p>
                 <button
-                  onClick={() => { navigate('/membership'); onClose(); }}
+                  onClick={() => { onClose(); onOpenMembership?.(); }}
                   className="w-full py-[13px] text-[14px] font-semibold text-white"
                   style={{
                     borderRadius: 'var(--radius-md)',
