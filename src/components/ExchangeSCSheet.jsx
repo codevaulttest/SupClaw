@@ -154,7 +154,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
               </div>
 
               <div
-                className="flex items-center gap-3 rounded-xl px-3 py-2.5"
+                className="flex items-end gap-3 rounded-xl px-3 py-2.5"
                 style={{ background: 'var(--color-bg-page)', border: `1.5px solid ${fromInvalid ? 'var(--color-danger)' : 'var(--color-primary)'}` }}
               >
                 {/* Token dropdown */}
@@ -199,7 +199,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
                   onChange={e => { setMenuOpen(false); setAmount(e.target.value); }}
                   onFocus={() => setMenuOpen(false)}
                   placeholder={lang === 'zh' ? '输入数量' : 'Enter amount'}
-                  className="min-w-0 flex-1 bg-transparent text-right font-num text-[26px] font-semibold outline-none placeholder:text-[18px] placeholder:text-tokenHint"
+                  className="min-w-0 flex-1 bg-transparent text-right font-num text-[26px] font-semibold leading-none outline-none placeholder:text-[18px] placeholder:text-tokenHint"
                   style={{ color: fromInvalid ? 'var(--color-danger)' : 'var(--color-text-primary)' }}
                 />
                 {isSCFrom && (
@@ -214,7 +214,19 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
 
             {/* 方向箭头 */}
             <div className="flex justify-center py-3">
-              <ArrowDownUp className="h-5 w-5 text-tokenSub" strokeWidth={1.8} />
+              <button
+                disabled={fromToken === 'SCV'}
+                onClick={() => { setFromToken(t => t === 'SC' ? 'DOS' : 'SC'); setAmount(''); }}
+                className="flex h-9 w-9 items-center justify-center rounded-full transition-opacity"
+                style={{
+                  background: 'var(--color-bg-card)',
+                  boxShadow: 'var(--shadow-sm)',
+                  opacity: fromToken === 'SCV' ? 0.35 : 1,
+                  cursor: fromToken === 'SCV' ? 'not-allowed' : 'pointer',
+                }}
+              >
+                <ArrowDownUp className="h-4 w-4 text-tokenSub" strokeWidth={1.8} />
+              </button>
             </div>
 
             {/* 到 */}
