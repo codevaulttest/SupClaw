@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { ArrowDownLeft, ShoppingCart } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { useLanguage } from '../components/LanguageContext';
+import { useUser } from '../components/UserContext';
+import MembershipSheet from '../components/MembershipSheet';
 
 const SC_FLOWS = [
   { label: '补贴到账', sub: '本轮补贴 3.11 亿（+3.7%）',   amount: '+3.11 亿 SC', time: '今天 16:40',  color: 'success' },
@@ -23,7 +25,9 @@ const TABS = [{ key: 'sc', label: '词元收支明细' }, { key: 'order', label:
 
 export default function P5History() {
   const { lang } = useLanguage();
+  const { isMember } = useUser();
   const [tab, setTab] = useState('sc');
+  const [showMembership, setShowMembership] = useState(false);
   const tabs = [
     { key: 'sc', label: lang === 'zh' ? '词元收支明细' : 'SC Activity' },
     { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Premiere Access Orders' },
@@ -53,7 +57,10 @@ export default function P5History() {
           {tabs.map(t => (
             <button
               key={t.key}
-              onClick={() => setTab(t.key)}
+              onClick={() => {
+                if (t.key === 'order' && !isMember) { setShowMembership(true); return; }
+                setTab(t.key);
+              }}
               className="mr-5 pb-2 text-[14px] font-semibold leading-[20px]"
               style={{
                 color: tab === t.key ? 'var(--color-primary)' : 'var(--color-text-secondary)',
@@ -106,6 +113,13 @@ export default function P5History() {
           </div>
         )}
       </div>
+
+      {showMembership && (
+        <MembershipSheet
+          onClose={() => setShowMembership(false)}
+          onActivate={() => setTab('order')}
+        />
+      )}
     </>
   );
 }

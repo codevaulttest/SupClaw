@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Crown, Copy, Check, ChevronRight, HelpCircle, Gift } from 'lucide-react';
 import { useLanguage } from '../components/LanguageContext';
 import { useUser } from '../components/UserContext';
 import HeaderActions from '../components/HeaderActions';
+import MembershipSheet from '../components/MembershipSheet';
 
 const MOCK_INVITE_CODE = 'SUPRA-8X4K';
 
-function MemberCard() {
-  const navigate = useNavigate();
+function MemberCard({ onOpen }) {
   const { lang } = useLanguage();
   const { isMember, memberExpiry } = useUser();
 
@@ -39,7 +38,7 @@ function MemberCard() {
 
   return (
     <button
-      onClick={() => navigate('/membership')}
+      onClick={onOpen}
       className="w-full overflow-hidden rounded-2xl px-5 py-5 text-left"
       style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-md)' }}
     >
@@ -137,6 +136,7 @@ function HelpSection() {
 
 export default function PProfile() {
   const { lang } = useLanguage();
+  const [membershipOpen, setMembershipOpen] = useState(false);
 
   return (
     <>
@@ -148,7 +148,7 @@ export default function PProfile() {
       <div className="no-scrollbar h-[calc(100vh-68px-58px)] overflow-y-auto px-4 pb-8 pt-3">
 
       <div className="mb-4">
-        <MemberCard />
+        <MemberCard onOpen={() => setMembershipOpen(true)} />
       </div>
 
       <div className="mb-4 overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
@@ -157,6 +157,8 @@ export default function PProfile() {
 
       <HelpSection />
     </div>
+
+    {membershipOpen && <MembershipSheet onClose={() => setMembershipOpen(false)} />}
     </>
   );
 }

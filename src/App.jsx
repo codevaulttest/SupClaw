@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import BottomNav from './components/BottomNav';
 import P0Wallet  from './pages/P0Wallet';
@@ -11,17 +12,31 @@ import P7Product  from './pages/P7Product';
 import P8Orders   from './pages/P8Orders';
 import P9Video    from './pages/P9Video';
 import PProfile   from './pages/PProfile';
+import PMembership from './pages/PMembership';
 import { LanguageProvider } from './components/LanguageContext';
 import { UserProvider } from './components/UserContext';
-import PMembership from './pages/PMembership';
+import { DevProvider } from './components/DevContext';
+import DevPanel from './components/DevPanel';
 
 const SHELL = 'mx-auto min-h-screen w-full max-w-[480px] overflow-x-hidden font-ui text-tokenText';
 
 function MainLayout() {
+  const [devOpen, setDevOpen] = useState(false);
+  const [devVisible, setDevVisible] = useState(true);
+
   return (
     <div className={SHELL} style={{ background: 'var(--color-bg-page)' }}>
       <Outlet />
       <BottomNav />
+      {devVisible && (
+        <div className="fixed bottom-[82px] right-4 z-[70] flex flex-col items-end gap-1">
+          <button onClick={() => setDevVisible(false)} className="flex h-4 w-4 items-center justify-center rounded-full text-white/70" style={{ background: 'rgba(13,21,39,0.4)', fontSize: 10 }}>×</button>
+          <button onClick={() => setDevOpen(true)} className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: 'rgba(13,21,39,0.55)', backdropFilter: 'blur(6px)', boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}>
+            <span className="font-num text-[11px] font-bold text-white">Dev</span>
+          </button>
+        </div>
+      )}
+      {devOpen && <DevPanel onClose={() => setDevOpen(false)} />}
     </div>
   );
 }
@@ -38,29 +53,31 @@ export default function App() {
   return (
     <LanguageProvider>
       <UserProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Pages with bottom nav */}
-          <Route element={<MainLayout />}>
-            <Route path="/"        element={<P0Wallet />} />
-            <Route path="/ai"      element={<P6Store />} />
-            <Route path="/orders"  element={<P8Orders />} />
-            <Route path="/profile" element={<PProfile />} />
-          </Route>
+        <DevProvider>
+          <BrowserRouter>
+            <Routes>
+              {/* Pages with bottom nav */}
+              <Route element={<MainLayout />}>
+                <Route path="/"        element={<P0Wallet />} />
+                <Route path="/ai"      element={<P6Store />} />
+                <Route path="/orders"  element={<P8Orders />} />
+                <Route path="/profile" element={<PProfile />} />
+              </Route>
 
-          {/* Sub-pages — no bottom nav */}
-          <Route element={<SubLayout />}>
-            <Route path="/exchange"              element={<P1Exchange />} />
-            <Route path="/lottery"               element={<P3Lottery />} />
-            <Route path="/result"                element={<P4Result />} />
-            <Route path="/history"               element={<P5History />} />
-            <Route path="/ai/:category"          element={<P6List />} />
-            <Route path="/ai/:category/:id"      element={<P7Product />} />
-            <Route path="/orders/:orderId"       element={<P9Video />} />
-            <Route path="/membership"            element={<PMembership />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+              {/* Sub-pages — no bottom nav */}
+              <Route element={<SubLayout />}>
+                <Route path="/exchange"              element={<P1Exchange />} />
+                <Route path="/lottery"               element={<P3Lottery />} />
+                <Route path="/result"                element={<P4Result />} />
+                <Route path="/history"               element={<P5History />} />
+                <Route path="/ai/:category"          element={<P6List />} />
+                <Route path="/ai/:category/:id"      element={<P7Product />} />
+                <Route path="/orders/:orderId"       element={<P9Video />} />
+                <Route path="/membership"            element={<PMembership />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </DevProvider>
       </UserProvider>
     </LanguageProvider>
   );

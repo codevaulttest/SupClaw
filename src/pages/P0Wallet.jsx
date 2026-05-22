@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import BuyABCSheet from '../components/BuyABCSheet';
+import MembershipSheet from '../components/MembershipSheet';
 import ExchangeSCSheet from '../components/ExchangeSCSheet';
 import ExchangeSubmittedSheet from '../components/ExchangeSubmittedSheet';
 import {
@@ -13,6 +14,7 @@ import SubsidyResultModal from '../components/SubsidyResultModal';
 import HeaderActions from '../components/HeaderActions';
 import { useLanguage } from '../components/LanguageContext';
 import { useUser } from '../components/UserContext';
+import { useDev } from '../components/DevContext';
 import { VISIBLE_CATEGORIES } from '../data/booklists';
 
 // ── Mock data ────────────────────────────────────────────────
@@ -239,8 +241,9 @@ function SubsidyCountdown({ onTrigger }) {
   );
 }
 
-function WalletHistory({ onMore }) {
+function WalletHistory({ onMore, onMemberRequired }) {
   const { lang } = useLanguage();
+  const { isMember } = useUser();
   const [tab, setTab] = useState('sc');
   const TABS = [
     { key: 'sc', label: lang === 'zh' ? '词元收支明细' : 'SC Activity' },
@@ -272,7 +275,10 @@ function WalletHistory({ onMore }) {
         {TABS.map(t => (
           <button
             key={t.key}
-            onClick={() => setTab(t.key)}
+            onClick={() => {
+              if (t.key === 'order' && !isMember) { onMemberRequired?.(); return; }
+              setTab(t.key);
+            }}
             className="mr-5 pb-2 text-[14px] font-semibold leading-[20px] transition-colors"
             style={{
               color: tab === t.key ? 'var(--color-primary)' : 'var(--color-text-secondary)',
@@ -415,86 +421,24 @@ function AIVideoMallPreview({ onEnter, onCategory }) {
   );
 }
 
-function DevPanel({ onClose, onTrigger, scvInvalid, onToggleScvInvalid }) {
-  const { lang } = useLanguage();
-  const { isMember, memberExpiry, toggleMembership } = useUser();
-  const scenarios = [
-    { label: lang === 'zh' ? '折让演示' : 'Discount Demo', sub: lang === 'zh' ? '补贴 3.11 亿 < 兑换 9 亿' : 'Subsidy 3.11B < order 9B', amount: 3.11 },
-    { label: lang === 'zh' ? '补贴演示' : 'Subsidy Demo', sub: lang === 'zh' ? '补贴 10.5 亿 > 兑换 9 亿' : 'Subsidy 10.5B > order 9B', amount: 10.5 },
-  ];
-  return createPortal(
-    <div className="fixed inset-0 z-[60] flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.3)' }} onClick={onClose}>
-      <div className="w-full max-w-[480px] px-4 pb-6" style={{ animation: 'sheetUp 260ms cubic-bezier(0.22,1,0.36,1) both' }} onClick={e => e.stopPropagation()}>
-        <div className="overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-lg)' }}>
-          <div className="flex items-center justify-between border-b border-tokenBorderSubtle px-4 py-3">
-            <span className="text-[13px] font-semibold text-tokenSub">{lang === 'zh' ? '🛠 开发者演示' : 'Developer Demo'}</span>
-            <button onClick={onClose} className="text-[13px] text-tokenHint">{lang === 'zh' ? '关闭' : 'Close'}</button>
-          </div>
-          {scenarios.map((s, i) => (
-            <button key={i} onClick={() => { onTrigger(s.amount); onClose(); }}
-              className="flex items-center justify-between px-4 py-3.5 w-full text-left border-b border-tokenBorderSubtle">
-              <div>
-                <p className="text-[14px] font-medium text-tokenText">{s.label}</p>
-                <p className="text-[12px] text-tokenHint">{s.sub}</p>
-              </div>
-              <ChevronRight className="h-[15px] w-[15px] text-tokenHint" />
-            </button>
-          ))}
-          <div className="flex items-center justify-between border-b border-tokenBorderSubtle px-4 py-3.5">
-            <div>
-              <p className="text-[14px] font-medium text-tokenText">{lang === 'zh' ? '激活码校验结果' : 'SCV Code Result'}</p>
-              <p className="text-[12px] text-tokenHint">{lang === 'zh' ? '兑换面板 SCV 校验走失败分支' : 'Force SCV verify to fail'}</p>
-            </div>
-            <button
-              onClick={onToggleScvInvalid}
-              className="relative h-[28px] w-[48px] shrink-0 rounded-full transition-colors duration-200"
-              style={{ background: scvInvalid ? 'var(--color-danger)' : 'var(--color-border)' }}
-            >
-              <span
-                className="absolute top-[3px] h-[22px] w-[22px] rounded-full bg-white shadow-sm transition-transform duration-200"
-                style={{ left: 3, transform: scvInvalid ? 'translateX(20px)' : 'translateX(0)' }}
-              />
-            </button>
-          </div>
-          <div className="flex items-center justify-between px-4 py-3.5">
-            <div>
-              <p className="text-[14px] font-medium text-tokenText">{lang === 'zh' ? '年会员状态' : 'Annual Membership'}</p>
-              <p className="text-[12px]" style={{ color: isMember ? 'var(--color-success, #16a34a)' : 'var(--color-text-hint)' }}>
-                {isMember
-                  ? (lang === 'zh' ? `已开通 · 有效期至 ${memberExpiry}` : `Active · Expires ${memberExpiry}`)
-                  : (lang === 'zh' ? '未开通' : 'Inactive')}
-              </p>
-            </div>
-            <button
-              onClick={toggleMembership}
-              className="relative h-[28px] w-[48px] shrink-0 rounded-full transition-colors duration-200"
-              style={{ background: isMember ? 'var(--color-primary)' : 'var(--color-border)' }}
-            >
-              <span
-                className="absolute top-[3px] h-[22px] w-[22px] rounded-full bg-white shadow-sm transition-transform duration-200"
-                style={{ left: 3, transform: isMember ? 'translateX(20px)' : 'translateX(0)' }}
-              />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>,
-    document.body
-  );
-}
-
 // ── Page ─────────────────────────────────────────────────────
 export default function P0Wallet() {
   const navigate = useNavigate();
   const { lang } = useLanguage();
+  const { subsidyTrigger, setSubsidyTrigger, devScvInvalid } = useDev();
   const [exchangeOpen, setExchangeOpen] = useState(false);
-  const [exchangeSubmitted, setExchangeSubmitted] = useState(null); // null | number (amount)
+  const [exchangeSubmitted, setExchangeSubmitted] = useState(null);
   const [buySubmitted, setBuySubmitted] = useState(null);
   const [buyOpen, setBuyOpen] = useState(false);
-  const [devOpen, setDevOpen] = useState(false);
-  const [devVisible, setDevVisible] = useState(true);
   const [devModal, setDevModal] = useState(null);
-  const [devScvInvalid, setDevScvInvalid] = useState(false);
+  const [membershipOpen, setMembershipOpen] = useState(false);
+
+  useEffect(() => {
+    if (subsidyTrigger !== null) {
+      setDevModal(subsidyTrigger);
+      setSubsidyTrigger(null);
+    }
+  }, [subsidyTrigger, setSubsidyTrigger]);
 
   return (
     <>
@@ -518,7 +462,7 @@ export default function P0Wallet() {
           <SubsidyCountdown onTrigger={devModal} />
         </div>
         <div className="enter" style={{ animationDelay: '300ms' }}>
-          <WalletHistory onMore={() => navigate('/history')} />
+          <WalletHistory onMore={() => navigate('/history')} onMemberRequired={() => setMembershipOpen(true)} />
         </div>
         <div className="enter" style={{ animationDelay: '380ms' }}>
           <AIVideoMallPreview onEnter={() => navigate('/ai')} onCategory={(id) => navigate(`/ai/${id}`)} />
@@ -548,16 +492,8 @@ export default function P0Wallet() {
           onSubmit={(payload) => setBuySubmitted(payload)}
         />
       )}
-      {devOpen && <DevPanel onClose={() => setDevOpen(false)} onTrigger={(amt) => setDevModal(amt)} scvInvalid={devScvInvalid} onToggleScvInvalid={() => setDevScvInvalid(v => !v)} />}
       {devModal !== null && <SubsidyResultModal subsidyAmount={devModal} orderTotal={9} onClose={() => setDevModal(null)} />}
-      {devVisible && (
-        <div className="fixed bottom-[82px] right-4 z-[70] flex flex-col items-end gap-1">
-          <button onClick={() => setDevVisible(false)} className="flex h-4 w-4 items-center justify-center rounded-full text-white/70" style={{ background: 'rgba(13,21,39,0.4)', fontSize: 10 }}>×</button>
-          <button onClick={() => setDevOpen(true)} className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: 'rgba(13,21,39,0.55)', backdropFilter: 'blur(6px)', boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}>
-            <span className="font-num text-[11px] font-bold text-white">Dev</span>
-          </button>
-        </div>
-      )}
+      {membershipOpen && <MembershipSheet onClose={() => setMembershipOpen(false)} />}
     </>
   );
 }
