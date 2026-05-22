@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
+import { formatScAmount } from '../utils/formatSc';
 
 export default function P4Result() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function P4Result() {
 
   const [displayVal, setDisplayVal] = useState(0);
   const [ready, setReady] = useState(false);
+  const subsidyDisplay = formatScAmount(displayVal, lang);
 
   useEffect(() => {
     const dur = 900, start = performance.now();
@@ -61,7 +63,7 @@ export default function P4Result() {
           {lang === 'zh' ? (isZherang ? '本轮折让已到账' : '本轮补贴已到账') : (isZherang ? 'Round discount credited' : 'Round subsidy credited')}
         </p>
         <p className="mb-1 text-center font-num text-[42px] font-bold leading-none" style={{ color: 'var(--color-success)' }}>
-          +{displayVal.toFixed(2)} {lang === 'zh' ? '亿' : 'B'}
+          +{subsidyDisplay.value} {lang === 'zh' ? '亿' : subsidyDisplay.unit.replace(' SC', '')}
         </p>
         <p className="mb-6 text-center text-[13px] text-tokenHint">SC</p>
 

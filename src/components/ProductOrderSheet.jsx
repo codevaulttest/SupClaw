@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Mail, Minus, Play, Plus, X } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
+import { formatScAmount } from '../utils/formatSc';
 
 const USER_EMAIL = 'zhangsan@gmail.com';
 const BALANCES = { A: 5.20, B: 3.00, C: 1.80 };
@@ -31,6 +32,8 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
   const unitABC = product.price;
   const totalABC = qty * unitABC;
   const totalSC = +(totalABC * SC_RATE[type] * 0.1).toFixed(2);
+  const totalScDisplay = formatScAmount(totalSC, lang);
+  const scBalanceDisplay = formatScAmount(SC_BALANCE, lang);
   const duration = qty * product.duration;
 
   const abcBal = BALANCES[type];
@@ -130,13 +133,13 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
               </div>
               <div className="mb-3 flex items-center justify-between">
                 <span className="text-[13px] text-tokenSub">SC (+10%)</span>
-                <span className="font-num text-[15px] font-semibold text-tokenPrimary">{totalSC} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
+                <span className="font-num text-[15px] font-semibold text-tokenPrimary">{totalScDisplay.text}</span>
               </div>
               <div className="mb-3 h-px bg-tokenBorderSubtle" />
               <div className="flex items-center justify-between">
                 <span className="text-[12px] text-tokenHint">{lang === 'zh' ? `${type}SC 余额 / SC 余额` : `${type}SC Balance / SC Balance`}</span>
                 <span className="text-[12px]" style={{ color: abcInsufficient || scInsufficient ? 'var(--color-danger)' : 'var(--color-success)' }}>
-                  {abcBal} {type}SC / {SC_BALANCE} {lang === 'zh' ? '亿 SC' : 'B SC'}
+                  {abcBal} {type}SC / {scBalanceDisplay.text}
                 </span>
               </div>
             </div>

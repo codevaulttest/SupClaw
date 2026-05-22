@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeftRight } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { useLanguage } from '../components/LanguageContext';
+import { formatScAmount } from '../utils/formatSc';
 
 const DOS_BALANCE = 50;
 const SC_BALANCE  = 32.11;
@@ -15,6 +16,8 @@ export default function P1Exchange() {
 
   const num = parseFloat(amount) || 0;
   const willReceive = num;
+  const scBalanceDisplay = formatScAmount(SC_BALANCE, lang);
+  const receiveDisplay = formatScAmount(willReceive, lang);
   const insufficient = num > 0 && num > DOS_BALANCE;
   const canSubmit = num > 0 && !insufficient;
 
@@ -37,14 +40,14 @@ export default function P1Exchange() {
           </div>
           <div className="flex-1 rounded-xl px-4 py-3" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
             <p className="text-[11px] text-tokenHint">{lang === 'zh' ? 'SC 余额' : 'SC Balance'}</p>
-            <p className="mt-1 font-num text-[20px] font-semibold text-tokenPrimary">{SC_BALANCE} <span className="text-[13px] font-normal">{lang === 'zh' ? '亿 SC' : 'B SC'}</span></p>
+            <p className="mt-1 font-num text-[20px] font-semibold text-tokenPrimary">{scBalanceDisplay.value} <span className="text-[13px] font-normal">{scBalanceDisplay.unit}</span></p>
           </div>
         </div>
 
         {/* 汇率 */}
         <div className="mb-4 flex items-center gap-2 rounded-xl px-4 py-3" style={{ background: 'var(--color-primary-soft)', border: '1px solid var(--color-primary-border)' }}>
           <ArrowLeftRight className="h-4 w-4 text-tokenPrimary shrink-0" strokeWidth={2} />
-          <p className="text-[13px] text-tokenPrimary font-medium">{lang === 'zh' ? '兑换汇率：1 DOS = 1 亿 SC' : 'Rate: 1 DOS = 1B SC'}</p>
+          <p className="text-[13px] text-tokenPrimary font-medium">{lang === 'zh' ? '兑换汇率：1 DOS = 1 亿 SC' : 'Rate: 1 DOS = 100M SC'}</p>
         </div>
 
         {/* 输入框 */}
@@ -72,7 +75,7 @@ export default function P1Exchange() {
         {num > 0 && !insufficient && (
           <div className="mb-5 rounded-xl px-4 py-3" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
             <p className="text-[12px] text-tokenHint">{lang === 'zh' ? '预计获得' : 'You will receive'}</p>
-            <p className="mt-1 font-num text-[22px] font-semibold text-tokenPrimary">{willReceive} <span className="text-[14px] font-normal">{lang === 'zh' ? '亿 SC' : 'B SC'}</span></p>
+            <p className="mt-1 font-num text-[22px] font-semibold text-tokenPrimary">{receiveDisplay.value} <span className="text-[14px] font-normal">{receiveDisplay.unit}</span></p>
           </div>
         )}
 

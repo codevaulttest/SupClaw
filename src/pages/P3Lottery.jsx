@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import { useLanguage } from '../components/LanguageContext';
+import { formatScAmount } from '../utils/formatSc';
 
 const TOTAL_SECS = 100;
 const SETTLE_WINDOW = 10; // last 10s → delayed to next round
@@ -46,7 +47,7 @@ export default function P3Lottery() {
         <div className="w-full mb-8 rounded-xl px-5 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-md)' }}>
           <p className="text-[12px] text-tokenHint mb-1">{lang === 'zh' ? '本次订单' : 'Current Order'}</p>
           <p className="text-[16px] font-semibold text-tokenText">{combo}</p>
-          <p className="mt-1 font-num text-[14px] text-tokenSub">{lang === 'zh' ? `消耗 ${total} 亿 SC` : `${total}B SC spent`}</p>
+          <p className="mt-1 font-num text-[14px] text-tokenSub">{lang === 'zh' ? `消耗 ${total} 亿 SC` : `${formatScAmount(total, lang).text} spent`}</p>
         </div>
 
         {/* 倒计时环 */}

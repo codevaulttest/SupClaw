@@ -4,6 +4,7 @@ import { Minus, Plus } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { useLanguage } from '../components/LanguageContext';
 import { getProductsByCategory } from '../data/booklists';
+import { formatScAmount } from '../utils/formatSc';
 
 // mock balances
 const BALANCES = { A: 5.20, B: 3.00, C: 1.80 };
@@ -39,6 +40,9 @@ export default function P7Product() {
   const unitABC = UNIT_PRICE[type];
   const totalABC = qty * unitABC;
   const totalSC  = +(totalABC * SC_RATE[type] * 0.1).toFixed(2);
+  const unitScDisplay = formatScAmount(unitABC * SC_RATE[type] * 0.1, lang);
+  const totalScDisplay = formatScAmount(totalSC, lang);
+  const scBalanceDisplay = formatScAmount(SC_BALANCE, lang);
   const duration = qty * 10;
 
   const abcBal = BALANCES[type];
@@ -73,7 +77,7 @@ export default function P7Product() {
             <div className="w-px h-8 bg-tokenBorder" />
             <div>
               <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '兑换费用' : 'Cost'}</p>
-              <p className="font-num text-[16px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>{unitABC} {type}SC + {(unitABC * SC_RATE[type] * 0.1).toFixed(1)}{lang === 'zh' ? '亿' : 'B'} SC</p>
+              <p className="font-num text-[16px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>{unitABC} {type}SC + {unitScDisplay.text}</p>
             </div>
           </div>
         </div>
@@ -109,13 +113,13 @@ export default function P7Product() {
           </div>
           <div className="flex items-center justify-between mb-3">
             <span className="text-[13px] text-tokenSub">SC (+10%)</span>
-            <span className="font-num text-[15px] font-semibold text-tokenPrimary">{totalSC} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
+            <span className="font-num text-[15px] font-semibold text-tokenPrimary">{totalScDisplay.text}</span>
           </div>
           <div className="h-px bg-tokenBorderSubtle mb-3" />
           <div className="flex items-center justify-between">
             <span className="text-[12px] text-tokenHint">{lang === 'zh' ? `${type}SC 余额 / SC 余额` : `${type}SC Balance / SC Balance`}</span>
             <span className="text-[12px]" style={{ color: abcInsufficient || scInsufficient ? 'var(--color-danger)' : 'var(--color-success)' }}>
-              {abcBal} {type}SC / {SC_BALANCE} {lang === 'zh' ? '亿 SC' : 'B SC'}
+              {abcBal} {type}SC / {scBalanceDisplay.text}
             </span>
           </div>
         </div>

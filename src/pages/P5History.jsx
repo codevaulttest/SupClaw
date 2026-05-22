@@ -6,6 +6,7 @@ import { useLanguage } from '../components/LanguageContext';
 import { useUser } from '../components/UserContext';
 import { useDev } from '../components/DevContext';
 import MembershipSheet from '../components/MembershipSheet';
+import { formatScAmount } from '../utils/formatSc';
 
 const SC_FLOWS = [
   { label: '补贴到账', sub: '本轮补贴 +3.7%',              amount: '+3.11 亿 SC', time: '2026-05-22 16:40', color: 'success' },
@@ -36,18 +37,18 @@ export default function P5History() {
     { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Early Access Orders' },
   ];
   const flows = lang === 'zh' ? SC_FLOWS : [
-    { label: 'Subsidy Received', sub: 'Round subsidy 3.11B (+3.7%)', amount: '+3.11B SC', time: '2026-05-22 16:40' },
-    { label: 'SC Swap', sub: '10 DOS -> 10B SC', amount: '+10B SC', time: '2026-05-22 14:23' },
-    { label: 'Subsidy Received', sub: 'Round discount 36%', amount: '+5.20B SC', time: '2026-05-21 20:08' },
-    { label: 'SC Swap', sub: '5 DOS -> 5B SC', amount: '+5B SC', time: '2026-05-21 10:15' },
-    { label: 'Subsidy Received', sub: 'Round subsidy 2.88B (+2.1%)', amount: '+2.88B SC', time: '2026-05-19 18:33' },
-    { label: 'SC Swap', sub: '20 DOS -> 20B SC', amount: '+20B SC', time: '2026-05-19 09:00' },
+    { label: 'Subsidy Received', sub: `Round subsidy ${formatScAmount(3.11, lang).text} (+3.7%)`, amount: `+${formatScAmount(3.11, lang).text}`, time: '2026-05-22 16:40' },
+    { label: 'SC Swap', sub: `10 DOS -> ${formatScAmount(10, lang).text}`, amount: `+${formatScAmount(10, lang).text}`, time: '2026-05-22 14:23' },
+    { label: 'Subsidy Received', sub: 'Round discount 36%', amount: `+${formatScAmount(5.2, lang).text}`, time: '2026-05-21 20:08' },
+    { label: 'SC Swap', sub: `5 DOS -> ${formatScAmount(5, lang).text}`, amount: `+${formatScAmount(5, lang).text}`, time: '2026-05-21 10:15' },
+    { label: 'Subsidy Received', sub: `Round subsidy ${formatScAmount(2.88, lang).text} (+2.1%)`, amount: `+${formatScAmount(2.88, lang).text}`, time: '2026-05-19 18:33' },
+    { label: 'SC Swap', sub: `20 DOS -> ${formatScAmount(20, lang).text}`, amount: `+${formatScAmount(20, lang).text}`, time: '2026-05-19 09:00' },
   ];
   const orders = lang === 'zh' ? ORDERS : [
-    { combo: 'A×12  B×7  C×23', amount: '-9B SC', time: '2026-05-22 16:42' },
-    { combo: 'A×2  B×1', amount: '-13B SC', time: '2026-05-21 20:11' },
-    { combo: 'B×5  C×10', amount: '-25B SC', time: '2026-05-20 14:05' },
-    { combo: 'A×3', amount: '-15B SC', time: '2026-05-19 19:22' },
+    { combo: 'A×12  B×7  C×23', amount: `-${formatScAmount(9, lang).text}`, time: '2026-05-22 16:42' },
+    { combo: 'A×2  B×1', amount: `-${formatScAmount(13, lang).text}`, time: '2026-05-21 20:11' },
+    { combo: 'B×5  C×10', amount: `-${formatScAmount(25, lang).text}`, time: '2026-05-20 14:05' },
+    { combo: 'A×3', amount: `-${formatScAmount(15, lang).text}`, time: '2026-05-19 19:22' },
   ];
 
   return (

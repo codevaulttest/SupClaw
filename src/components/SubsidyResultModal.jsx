@@ -1,11 +1,13 @@
 import { useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useLanguage } from './LanguageContext';
+import { formatScAmount } from '../utils/formatSc';
 
 export default function SubsidyResultModal({ onClose, subsidyAmount = 3.11, orderTotal = 9 }) {
   const { lang } = useLanguage();
   const [displayVal, setDisplayVal] = useState(0);
   const [phase, setPhase] = useState('counting');
+  const subsidyDisplay = formatScAmount(displayVal, lang);
   const isZherang = subsidyAmount < orderTotal;
   const pct = (subsidyAmount / orderTotal * 100).toFixed(1);
 
@@ -68,14 +70,14 @@ export default function SubsidyResultModal({ onClose, subsidyAmount = 3.11, orde
             {lang === 'zh' ? '恭喜获得词元补贴' : 'Token Subsidy Awarded'}
           </p>
           <p className="mb-2 text-center font-num text-[40px] font-bold leading-none" style={{ color: 'var(--color-success)' }}>
-            +{displayVal.toFixed(2)} {lang === 'zh' ? '亿' : 'B'}
+            +{subsidyDisplay.value} {lang === 'zh' ? '亿' : subsidyDisplay.unit.replace(' SC', '')}
           </p>
           <p className="mb-6 text-center text-[13px] text-tokenHint">SC</p>
 
           <div className="mb-5">
-            <div className="rounded-xl py-3 text-center" style={{ background: 'var(--color-bg-page)' }}>
+            <div className="flex items-center justify-between rounded-xl px-4 py-3" style={{ background: 'var(--color-bg-page)' }}>
               <p className="text-[11px] text-tokenHint">{lang === 'zh' ? (isZherang ? '本轮折让' : '本轮补贴') : (isZherang ? 'Discount' : 'Subsidy')}</p>
-              <p className="mt-0.5 text-[13px] font-semibold" style={{ color: isZherang ? 'var(--color-primary)' : 'var(--color-success)' }}>
+              <p className="text-[13px] font-semibold" style={{ color: isZherang ? 'var(--color-primary)' : 'var(--color-success)' }}>
                 {isZherang ? '' : '+'}{pct}%
               </p>
             </div>

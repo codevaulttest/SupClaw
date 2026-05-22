@@ -4,6 +4,7 @@ import { ChevronRight } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 import { useUser } from './UserContext';
 import { useDev } from './DevContext';
+import { formatScAmount } from '../utils/formatSc';
 
 export default function DevPanel({ onClose }) {
   const { lang } = useLanguage();
@@ -17,8 +18,8 @@ export default function DevPanel({ onClose }) {
   } = useDev();
 
   const scenarios = [
-    { label: lang === 'zh' ? '折让演示' : 'Discount Demo', sub: lang === 'zh' ? '补贴 3.11 亿 < 兑换 9 亿' : 'Subsidy 3.11B < order 9B', amount: 3.11 },
-    { label: lang === 'zh' ? '补贴演示' : 'Subsidy Demo', sub: lang === 'zh' ? '补贴 10.5 亿 > 兑换 9 亿' : 'Subsidy 10.5B > order 9B', amount: 10.5 },
+    { label: lang === 'zh' ? '折让演示' : 'Discount Demo', sub: lang === 'zh' ? '补贴 3.11 亿 < 兑换 9 亿' : `Subsidy ${formatScAmount(3.11, lang).text} < order ${formatScAmount(9, lang).text}`, amount: 3.11 },
+    { label: lang === 'zh' ? '补贴演示' : 'Subsidy Demo', sub: lang === 'zh' ? '补贴 10.5 亿 > 兑换 9 亿' : `Subsidy ${formatScAmount(10.5, lang).text} > order ${formatScAmount(9, lang).text}`, amount: 10.5 },
   ];
 
   return createPortal(

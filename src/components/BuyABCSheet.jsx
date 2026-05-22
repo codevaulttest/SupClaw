@@ -4,6 +4,7 @@ import { Minus, Plus, ArrowLeftRight, X, Crown } from 'lucide-react';
 import InfoTip from './InfoTip';
 import { useLanguage } from './LanguageContext';
 import { useUser } from './UserContext';
+import { formatScAmount } from '../utils/formatSc';
 
 const SC_BALANCE = 32.11;
 const PRICES = { A: 5, B: 3, C: 1 };
@@ -131,12 +132,12 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit, onOpenM
                       </div>
                       <span className="text-[15px] font-semibold text-tokenText">{lang === 'zh' ? `${key}SC 首发权` : `${key}SC Early Access`}</span>
                       <InfoTip text={lang === 'zh' ? TIPS[key] : {
-                        A: 'Use ASC to redeem Type A AI videos. 5B SC gets 1 ASC. Video redemption also costs an extra 10% in SC.',
-                        B: 'Use BSC to redeem Type B AI videos. 3B SC gets 1 BSC. Video redemption also costs an extra 10% in SC.',
-                        C: 'Use CSC to redeem Type C AI videos. 1B SC gets 1 CSC. Video redemption also costs an extra 10% in SC.',
+                        A: 'Use ASC to redeem Type A AI videos. 500M SC gets 1 ASC. Video redemption also costs an extra 10% in SC.',
+                        B: 'Use BSC to redeem Type B AI videos. 300M SC gets 1 BSC. Video redemption also costs an extra 10% in SC.',
+                        C: 'Use CSC to redeem Type C AI videos. 100M SC gets 1 CSC. Video redemption also costs an extra 10% in SC.',
                       }[key]} />
                       <span className="ml-auto font-num text-[13px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>
-                        {PRICES[key]} {lang === 'zh' ? '亿 SC / 个' : 'B SC / unit'}
+                        {lang === 'zh' ? `${PRICES[key]} 亿 SC / 个` : `${formatScAmount(PRICES[key], lang).text} / unit`}
                       </span>
                     </div>
 
@@ -169,7 +170,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit, onOpenM
                         </button>
                       </div>
                       {subtotal > 0 && (
-                        <span className="font-num text-[13px] font-medium text-tokenSub text-right">= {subtotal} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
+                        <span className="font-num text-[13px] font-medium text-tokenSub text-right">= {formatScAmount(subtotal, lang).text}</span>
                       )}
                     </div>
                   </div>
@@ -179,7 +180,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit, onOpenM
 
             <div className="mb-4 flex items-center justify-between px-1">
               <span className="text-[13px] font-medium text-tokenSub">{lang === 'zh' ? '合计花费 SC' : 'Total SC'}</span>
-              <span className="font-num text-[16px] font-semibold text-tokenText">{total} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
+              <span className="font-num text-[16px] font-semibold text-tokenText">{formatScAmount(total, lang).text}</span>
             </div>
 
             {insufficient && (

@@ -6,6 +6,7 @@ import HeaderActions from '../components/HeaderActions';
 import EmptyState from '../components/EmptyState';
 import { useLanguage } from '../components/LanguageContext';
 import { useDev } from '../components/DevContext';
+import { formatScText } from '../utils/formatSc';
 
 const MOCK = {
   pending: [
@@ -146,7 +147,7 @@ export default function P8Orders() {
 
   const rawItems = emptyOrders ? [] : (MOCK[tab] ?? []);
   const items = useMemo(
-    () => lang === 'zh' ? rawItems : rawItems.map(o => ({ ...o, cost: o.cost.replaceAll('亿', 'B') })),
+    () => lang === 'zh' ? rawItems : rawItems.map(o => ({ ...o, cost: formatScText(o.cost, lang) })),
     [rawItems, lang],
   );
 

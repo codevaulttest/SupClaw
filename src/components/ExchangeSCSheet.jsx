@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowDownUp, X, ChevronDown, Check, CircleCheck, CircleX, Loader } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
+import { formatScAmount } from '../utils/formatSc';
 
 // fromToken drives direction:
 //   DOS  →  SC  (1 DOS = 1 亿 SC)
@@ -16,20 +17,6 @@ const TOKENS = [
 
 const RATES = { DOS: 1 };   // 1 DOS = 1 亿 SC
 const SC_TO_DOS = 0.8;       // 1 亿 SC = 0.8 DOS
-
-function trimNumber(value, decimals = 2) {
-  return Number(value.toFixed(decimals)).toString();
-}
-
-function formatScAmount(yiAmount, lang) {
-  if (lang === 'zh') return { value: trimNumber(yiAmount), unit: '亿 SC', text: `${trimNumber(yiAmount)} 亿 SC` };
-  if (yiAmount >= 10) {
-    const value = trimNumber(yiAmount / 10, 3);
-    return { value, unit: 'B SC', text: `${value}B SC` };
-  }
-  const value = trimNumber(yiAmount * 100);
-  return { value, unit: 'M SC', text: `${value}M SC` };
-}
 
 // 模拟激活码校验（实际对接 API 时在此替换）
 // forceInvalid: 开发者面板强制走失败分支

@@ -17,6 +17,7 @@ import { useLanguage } from '../components/LanguageContext';
 import { useUser } from '../components/UserContext';
 import { useDev } from '../components/DevContext';
 import { VISIBLE_CATEGORIES } from '../data/booklists';
+import { formatScAmount } from '../utils/formatSc';
 
 // ── Mock data ────────────────────────────────────────────────
 const ABC_BALANCES = [
@@ -86,6 +87,8 @@ function SCHeroCard({ onExchange }) {
     return () => cancelAnimationFrame(frameId);
   }, []);
 
+  const balanceDisplay = formatScAmount(val, lang);
+
   return (
     <section
       className="relative overflow-hidden px-4 pb-3 pt-3"
@@ -112,8 +115,8 @@ function SCHeroCard({ onExchange }) {
         </div>
 
         <div className="flex items-end gap-1.5 text-tokenText">
-          <span className="font-num text-[34px] font-semibold leading-none tracking-[-1px]">{val.toFixed(2)}</span>
-          <span className="pb-1 text-[16px] font-medium">{lang === 'zh' ? '亿' : 'B'}</span>
+          <span className="font-num text-[34px] font-semibold leading-none tracking-[-1px]">{balanceDisplay.value}</span>
+          <span className="pb-1 text-[16px] font-medium">{lang === 'zh' ? '亿' : balanceDisplay.unit.replace(' SC', '')}</span>
         </div>
       </div>
     </section>
@@ -156,9 +159,9 @@ function ABCCard({ onBuy }) {
                 {item.label}
               </span>
               <InfoTip text={lang === 'zh' ? item.tip : {
-                A: 'Use ASC to unlock Type A AI videos. 1 ASC costs 5B SC.',
-                B: 'Use BSC to unlock Type B AI videos. 1 BSC costs 3B SC.',
-                C: 'Use CSC to unlock Type C AI videos. 1 CSC costs 1B SC.',
+                A: 'Use ASC to unlock Type A AI videos. 1 ASC costs 500M SC.',
+                B: 'Use BSC to unlock Type B AI videos. 1 BSC costs 300M SC.',
+                C: 'Use CSC to unlock Type C AI videos. 1 CSC costs 100M SC.',
               }[item.key]} />
             </div>
             <p className="mb-0.5 text-[10px] leading-[13px] text-tokenHint">{lang === 'zh' ? '数量' : 'Balance'}</p>
@@ -268,13 +271,13 @@ function WalletHistory({ onMore, onMemberRequired }) {
     { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Early Access Orders' },
   ];
   const flows = lang === 'zh' ? SC_FLOWS : [
-    { dir: 'in', label: 'SC Swap', sub: '5 DOS -> 5B SC', amount: '+5B SC', time: '2026-05-22 17:02' },
-    { dir: 'in', label: 'Subsidy Received', sub: 'Round subsidy 3.11B (+3.7%)', amount: '+3.11B SC', time: '2026-05-22 16:40' },
-    { dir: 'out', label: 'Early Access', sub: 'A×2  B×1', amount: '-13B SC', time: '2026-05-22 14:23' },
+    { dir: 'in', label: 'SC Swap', sub: `5 DOS -> ${formatScAmount(5, lang).text}`, amount: `+${formatScAmount(5, lang).text}`, time: '2026-05-22 17:02' },
+    { dir: 'in', label: 'Subsidy Received', sub: `Round subsidy ${formatScAmount(3.11, lang).text} (+3.7%)`, amount: `+${formatScAmount(3.11, lang).text}`, time: '2026-05-22 16:40' },
+    { dir: 'out', label: 'Early Access', sub: 'A×2  B×1', amount: `-${formatScAmount(13, lang).text}`, time: '2026-05-22 14:23' },
   ];
   const orders = lang === 'zh' ? ORDERS : [
-    { combo: 'A×12  B×7  C×23', amount: '-9B SC', time: '2026-05-22 16:42' },
-    { combo: 'A×2  B×1', amount: '-13B SC', time: '2026-05-21 20:11' },
+    { combo: 'A×12  B×7  C×23', amount: `-${formatScAmount(9, lang).text}`, time: '2026-05-22 16:42' },
+    { combo: 'A×2  B×1', amount: `-${formatScAmount(13, lang).text}`, time: '2026-05-21 20:11' },
   ];
 
   return (
@@ -464,13 +467,13 @@ export default function P0Wallet() {
 
   return (
     <>
-      <header className="flex h-[68px] items-center px-4">
+      <header className="flex h-[68px] items-center px-4 bg-white border-b border-tokenBorderSubtle">
         <div className="w-[86px]" />
         <h1 className="flex-1 text-center text-[20px] font-semibold text-tokenText">{lang === 'zh' ? '超级龙虾' : 'SupClaw'}</h1>
         <HeaderActions />
       </header>
 
-      <main className="no-scrollbar h-[calc(100vh-68px-58px)] overflow-y-auto px-4 pb-8 pt-1">
+      <main className="no-scrollbar h-[calc(100vh-68px-58px)] overflow-y-auto px-4 pb-8 pt-[9px]">
         <div className="enter" style={{ animationDelay: '0ms' }}>
           <SloganBanner />
         </div>
@@ -503,7 +506,7 @@ export default function P0Wallet() {
       )}
       {buySubmitted && (
         <ExchangeSubmittedSheet
-          detail={lang === 'zh' ? `${buySubmitted.combo} · 扣除 ${buySubmitted.total} 亿 SC` : `${buySubmitted.combo} · ${buySubmitted.total}B SC spent`}
+          detail={lang === 'zh' ? `${buySubmitted.combo} · 扣除 ${buySubmitted.total} 亿 SC` : `${buySubmitted.combo} · ${formatScAmount(buySubmitted.total, lang).text} spent`}
           onClose={() => setBuySubmitted(null)}
         />
       )}

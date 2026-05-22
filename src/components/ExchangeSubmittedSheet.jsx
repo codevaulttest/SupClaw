@@ -2,6 +2,7 @@ import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { X, Clock, CheckCircle } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
+import { formatScAmount } from '../utils/formatSc';
 
 export default function ExchangeSubmittedSheet({
   amount, detail, onClose,
@@ -13,6 +14,7 @@ export default function ExchangeSubmittedSheet({
   const { lang } = useLanguage();
 
   const isSuccess = variant === 'success';
+  const amountDisplay = formatScAmount(amount || 0, lang);
   const resolvedTitle = title ?? (lang === 'zh' ? (isSuccess ? '兑换成功' : '兑换已提交') : (isSuccess ? 'Order Placed' : 'Request Submitted'));
   const resolvedHint = hint ?? (lang === 'zh'
     ? (isSuccess ? '视频正在生成中，可在订单页查看进度。' : '兑换正在处理中，到账时间取决于网络状态，可在记录页查看最新进度。')
@@ -52,7 +54,7 @@ export default function ExchangeSubmittedSheet({
             </div>
             <p className="text-[20px] font-semibold text-tokenText">{resolvedTitle}</p>
             {amount > 0 && (
-              <p className="mt-1.5 text-[14px] text-tokenSub">{amount} DOS → {amount} {lang === 'zh' ? '亿 SC' : 'B SC'}</p>
+              <p className="mt-1.5 text-[14px] text-tokenSub">{amount} DOS → {amountDisplay.text}</p>
             )}
             {detail && (
               <p className="mt-1.5 text-[14px] text-tokenSub">{detail}</p>
