@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Mail, Minus, Play, Plus, X } from 'lucide-react';
+import { Mail, Minus, Plus, X } from 'lucide-react';
+import TokenIcon from './TokenIcon';
 import { useLanguage } from './LanguageContext';
 import { formatScAmount } from '../utils/formatSc';
 
@@ -79,12 +80,7 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
 
           <div className="px-4 pb-6 pt-2">
             <div className="mb-5 flex items-center gap-3 rounded-xl px-4 py-3" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
-              <div className="relative shrink-0 h-12 w-12 rounded-xl overflow-hidden" style={{ background: `linear-gradient(135deg, var(--token-${v}-from), var(--token-${v}-to))` }}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Play className="h-5 w-5 fill-white text-white" strokeWidth={0} />
-                </div>
-                <span className="absolute left-1 top-1 rounded-full h-[18px] w-[18px] flex items-center justify-center text-[9px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.28)' }}>{type}</span>
-              </div>
+              <TokenIcon type={type} size="lg" />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-semibold text-tokenText">{formatBookTitle(product.title)}</p>
                 <p className="mt-0.5 text-[12px]" style={{ color: `var(--token-${v}-text)` }}>

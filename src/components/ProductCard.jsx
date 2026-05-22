@@ -1,4 +1,5 @@
-import { Play, ChevronRight } from 'lucide-react';
+import { ChevronRight, Play } from 'lucide-react';
+import TokenIcon from './TokenIcon';
 
 const TOKEN_INFO = {
   A: { label: 'A 类视频', color: 'var(--token-a-text)' },
@@ -25,12 +26,7 @@ export default function ProductCard({ product, onClick, list = false, className 
         className={`flex w-full items-center gap-3 px-4 py-3 text-left transition-colors active:bg-black/5 ${className}`}
         style={{ background: 'var(--color-bg-card)', ...style }}
       >
-        <div className="relative shrink-0 h-11 w-11 rounded-xl overflow-hidden" style={{ background }}>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Play className="h-4 w-4 fill-white text-white" strokeWidth={0} />
-          </div>
-          <span className="absolute left-1 top-1 rounded-full h-[18px] w-[18px] flex items-center justify-center text-[9px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.28)' }}>{badge}</span>
-        </div>
+        <TokenIcon type={badge} />
         <div className="min-w-0 flex-1">
           <p className="truncate text-[14px] font-semibold text-tokenText leading-snug">{formatBookTitle(product.title)}</p>
         </div>

@@ -1,6 +1,7 @@
 import { useRef, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Clock, Cog, CheckCircle2, Inbox, Play } from 'lucide-react';
+import TokenIcon from '../components/TokenIcon';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import HeaderActions from '../components/HeaderActions';
 import EmptyState from '../components/EmptyState';
@@ -92,15 +93,7 @@ function OrderCard({ order, tabInfo, tab, lang, navigate, index }) {
       }}
     >
       <div className="flex items-center gap-3 px-4 py-3.5">
-        <div
-          className="relative shrink-0 h-11 w-11 rounded-xl overflow-hidden"
-          style={{ background: `linear-gradient(135deg, var(--token-${order.type.toLowerCase()}-from), var(--token-${order.type.toLowerCase()}-to))` }}
-        >
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Play className="h-4 w-4 fill-white text-white" strokeWidth={0} />
-          </div>
-          <span className="absolute left-1 top-1 rounded-full h-[18px] w-[18px] flex items-center justify-center text-[9px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.28)' }}>{order.type}</span>
-        </div>
+        <TokenIcon type={order.type} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 min-w-0">
             <p className="truncate text-[14px] font-semibold text-tokenText">{order.title}</p>
