@@ -222,9 +222,7 @@ export default function P8Orders() {
               ))}
             </div>
             <p className="py-6 text-center text-[12px] text-tokenHint">
-              {lang === 'zh'
-                ? { pending: '队列已全部加载', making: '制作中订单已全部加载', done: '已完成订单已全部加载' }[tab]
-                : { pending: 'All queued orders loaded', making: 'All rendering orders loaded', done: 'All completed orders loaded' }[tab]}
+              {lang === 'zh' ? '已显示全部记录' : 'All records loaded'}
             </p>
           </>
         )}
