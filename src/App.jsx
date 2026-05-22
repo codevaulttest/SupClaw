@@ -30,11 +30,15 @@ function MainLayout() {
       <Outlet />
       <BottomNav />
       {devVisible && createPortal(
-        <div className="fixed bottom-[82px] right-4 z-[70] flex flex-col items-end gap-1">
-          <button onClick={() => setDevVisible(false)} className="flex h-4 w-4 items-center justify-center rounded-full text-white/70" style={{ background: 'rgba(13,21,39,0.4)', fontSize: 10 }}>×</button>
-          <button onClick={() => setDevOpen(true)} className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: 'rgba(13,21,39,0.55)', backdropFilter: 'blur(6px)', boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}>
+        <div
+          className="fixed bottom-[92px] right-4 z-[70] flex items-center overflow-hidden"
+          style={{ borderRadius: 999, background: 'rgba(13,21,39,0.55)', backdropFilter: 'blur(6px)', boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
+        >
+          <button onClick={() => setDevOpen(true)} className="flex h-9 items-center justify-center px-3.5">
             <span className="font-num text-[11px] font-bold text-white">Dev</span>
           </button>
+          <div className="w-px self-stretch" style={{ background: 'rgba(255,255,255,0.2)' }} />
+          <button onClick={() => setDevVisible(false)} className="flex h-9 w-9 items-center justify-center text-white/70" style={{ fontSize: 14 }}>×</button>
         </div>,
         document.body
       )}
