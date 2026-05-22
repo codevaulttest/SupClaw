@@ -1,0 +1,42 @@
+[debug] [2026-05-22T10:13:46.317Z] ----------------------------------------------------------------------
+[debug] [2026-05-22T10:13:46.319Z] Command:       /opt/homebrew/Cellar/node/23.7.0/bin/node /opt/homebrew/bin/firebase deploy
+[debug] [2026-05-22T10:13:46.319Z] CLI Version:   15.14.0
+[debug] [2026-05-22T10:13:46.320Z] Platform:      darwin
+[debug] [2026-05-22T10:13:46.320Z] Node Version:  v23.7.0
+[debug] [2026-05-22T10:13:46.320Z] Time:          Fri May 22 2026 18:13:46 GMT+0800 (Singapore Standard Time)
+[debug] [2026-05-22T10:13:46.320Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-05-22T10:13:47.095Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-05-22T10:13:47.095Z] > authorizing via signed-in user (lusicong22@gmail.com)
+[debug] [2026-05-22T10:13:47.095Z] [iam] checking project lunchbuddy-fee94 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-05-22T10:13:47.096Z] Checked if tokens are valid: true, expires at: 1779446323162
+[debug] [2026-05-22T10:13:47.096Z] Checked if tokens are valid: true, expires at: 1779446323162
+[debug] [2026-05-22T10:13:47.096Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/lunchbuddy-fee94:testIamPermissions [none]
+[debug] [2026-05-22T10:13:47.096Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/lunchbuddy-fee94:testIamPermissions  x-goog-user-project=lunchbuddy-fee94
+[debug] [2026-05-22T10:13:47.096Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/lunchbuddy-fee94:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-05-22T10:13:48.240Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/lunchbuddy-fee94:testIamPermissions 200
+[debug] [2026-05-22T10:13:48.241Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/lunchbuddy-fee94:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-05-22T10:13:48.241Z] Checked if tokens are valid: true, expires at: 1779446323162
+[debug] [2026-05-22T10:13:48.242Z] Checked if tokens are valid: true, expires at: 1779446323162
+[debug] [2026-05-22T10:13:48.242Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/lunchbuddy-fee94 [none]
+[debug] [2026-05-22T10:13:48.744Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/lunchbuddy-fee94 200
+[debug] [2026-05-22T10:13:48.744Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/lunchbuddy-fee94 {"projectId":"lunchbuddy-fee94","projectNumber":"692783124796","displayName":"Projects","name":"projects/lunchbuddy-fee94","resources":{"hostingSite":"lunchbuddy-fee94"},"state":"ACTIVE","etag":"1_0f6e9938-8f43-4d2b-bbc7-807ffd9167a4"}
+[info] 
+[info] === Deploying to 'lunchbuddy-fee94'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-05-22T10:13:48.750Z] Checked if tokens are valid: true, expires at: 1779446323162
+[debug] [2026-05-22T10:13:48.750Z] Checked if tokens are valid: true, expires at: 1779446323162
+[debug] [2026-05-22T10:13:48.750Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/supclaw/versions [none]
+[debug] [2026-05-22T10:13:48.750Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/supclaw/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2026-05-22T10:13:50.458Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/supclaw/versions 200
+[debug] [2026-05-22T10:13:50.459Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/supclaw/versions {"name":"projects/692783124796/sites/supclaw/versions/5eff78b04c351138","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[supclaw]: beginning deploy... 
+[info] i  hosting[supclaw]: found 13 files in app 
+[debug] [2026-05-22T10:13:50.480Z] [hosting] uploading with 200 concurrency
+[debug] [2026-05-22T10:13:50.540Z] Checked if tokens are valid: true, expires at: 1779446323162
+[debug] [2026-05-22T10:13:50.540Z] Checked if tokens are valid: true, expires at: 1779446323162
+[debug] [2026-05-22T10:13:50.543Z] [hosting] hash cache [YXBw] stored for 13 files
+[debug] [2026-05-22T10:13:50.543Z] [hosting][hash queue][FINAL] {"max":55,"min":6,"avg":30.076923076923077,"active":0,"complete":13,"success":13,"errored":0,"retried":0,"total":13,"elapsed":60}
+[debug] [2026-05-22T10:13:50.543Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/692783124796/sites/supclaw/versions/5eff78b04c351138:populateFiles [none]
+[debug] [2026-05-22T10:13:50.543Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/692783124796/sites/supclaw/versions/5eff78b04c351138:populateFiles {"files":{"/index.html":"0799b2884f060da44896202366bef0fa2b3fc549e52ecf1da0e268769d7aa747","/assets/index-DrqjJBKW.css":"40a918dbc8e792c75026036e3e50edc93cbf3ec323b71a03bf7f4b3157b5d83b","/assets/DOS.svg":"9dbb126ce2dc4d420f097d39a53248690795081bee2adeb3d41c7cd94e73c369","/assets/booklist-business.png":"8e44a498685f4bdcf6f8bd8a248f09a4b131f3ba10dbc964a6cf96b321cbfaf8","/assets/booklist-lifestyle.png":"7e5bd091c9a4b7543d2bc170abf9032c21476e62a228b60a2bd55cdb56d45048","/assets/booklist-classics.png":"9e62d1855836ed6831c7a35be6f6e9328d8d96306ae6e9e7775a9a72d6b89abb","/assets/booklist-science.png":"98867003738ba9e333ce8ff4c66ac6ded6aa0e847e039fb4c57460b788ce9a88","/assets/booklist-humanities.png":"7b302a12161c68804342a0ea6c9f45fdc2ec344b1884dac29a35bce41ee92f65","/assets/index-BvR6N7ed.js":"a8895c55e58aab89c02d4c281807a63cde897bf9b52f8ecd2da4d95308454311","/assets/sc-hero-illustration.png":"6e755c67547e19c49fe97df067341c3ac176aae2732fee33bc3e9e52900a1e4a","/assets/abc-tokens.png":"9274f85456da5c9cc77b61c11b27f15407fa1f4c40c9754c32ecd8407276091a","/assets/mascot-subsidy.png":"795b0a1334b10ff9d9df3f9cf666c32f9c65a8567de8fb36807119589d7bc728","/assets/mascot-lobster.png":"0a38259e286909c1bd6021ad1009144130e679a87444c1abcd58f3328f2c1e1c"}}

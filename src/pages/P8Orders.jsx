@@ -1,7 +1,7 @@
 import { useRef, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, Clock, Cog, CheckCircle2, Inbox, Play } from 'lucide-react';
-import TokenIcon from '../components/TokenIcon';
+import { Clock, Cog, CheckCircle2, Inbox, Play } from 'lucide-react';
+import OrderCard from '../components/OrderCard';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import HeaderActions from '../components/HeaderActions';
 import EmptyState from '../components/EmptyState';
@@ -79,52 +79,6 @@ const EMPTY_LABELS = {
 
 const ITEM_SIZE = { pending: 84, making: 84, done: 130 };
 
-function OrderCard({ order, tabInfo, tab, lang, navigate, index }) {
-  const animated = index < 10;
-  return (
-    <button
-      onClick={() => tab === 'done' && navigate(`/orders/${order.id}`)}
-      className={`${animated ? 'enter' : ''} w-full text-left overflow-hidden`}
-      style={{
-        borderRadius: 'var(--radius-lg)',
-        background: 'var(--color-bg-card)',
-        boxShadow: 'var(--shadow-sm)',
-        ...(animated ? { animationDelay: `${index * 45}ms` } : {}),
-      }}
-    >
-      <div className="flex items-center gap-3 px-4 py-3.5">
-        <TokenIcon type={order.type} />
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 min-w-0">
-            <p className="truncate text-[14px] font-semibold text-tokenText">{order.title}</p>
-            <span
-              className="shrink-0 flex items-center gap-0.5 rounded-full px-1.5 py-0.5 font-num"
-              style={{ background: 'var(--color-bg-subtle)', color: 'var(--color-text-secondary)', fontSize: '11px', fontWeight: 500, lineHeight: 1 }}
-            >
-              <Play className="h-2.5 w-2.5" strokeWidth={2.5} />
-              {order.duration}
-            </span>
-          </div>
-          <p className="mt-0.5 truncate text-[12px] text-tokenSub">{order.cost}</p>
-        </div>
-        <div className="shrink-0 text-right">
-          <div className="flex items-center gap-1 justify-end" style={{ color: tabInfo.color }}>
-            <tabInfo.Icon className="h-3.5 w-3.5" strokeWidth={2} />
-            <span className="text-[12px] font-semibold">{tabInfo.label}</span>
-          </div>
-          <p className="mt-0.5 text-[11px] text-tokenHint">{order.time}</p>
-        </div>
-      </div>
-      {tab === 'done' && (
-        <div className="flex items-center justify-center border-t border-tokenBorderSubtle px-4 py-2.5">
-          <span className="flex items-center gap-1 text-[12px] font-semibold text-tokenPrimary">
-            {lang === 'zh' ? '查看视频' : 'Watch Video'} <ChevronRight className="h-3.5 w-3.5" />
-          </span>
-        </div>
-      )}
-    </button>
-  );
-}
 
 export default function P8Orders() {
   const navigate = useNavigate();
@@ -208,9 +162,10 @@ export default function P8Orders() {
                     order={items[vItem.index]}
                     index={vItem.index}
                     tabInfo={tabInfo}
-                    tab={tab}
                     lang={lang}
-                    navigate={navigate}
+                    showLink={tab === 'done'}
+                    onClick={() => tab === 'done' && navigate(`/orders/${items[vItem.index].id}`)}
+                    animated={vItem.index < 10}
                   />
                 </div>
               ))}
