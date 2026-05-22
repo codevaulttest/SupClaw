@@ -38,8 +38,6 @@ const TABS = [
   { key: 'done',    label: '已完成', Icon: CheckCircle2, color: 'var(--color-success)',   bg: 'var(--color-success-soft)' },
 ];
 
-const TYPE_COLOR = { A: 'var(--token-a-text)', B: 'var(--token-b-text)', C: 'var(--token-c-text)' };
-const TYPE_BG    = { A: 'var(--token-a-soft)', B: 'var(--token-b-soft)', C: 'var(--token-c-soft)' };
 
 const EMPTY_LABELS = {
   pending: { zh: ['暂无待制作订单', '兑换后将在这里显示'], en: ['No queued orders', 'Your pending orders will appear here'] },
@@ -110,8 +108,11 @@ export default function P8Orders() {
                   style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}
                 >
                   <div className="flex items-center gap-3 px-4 py-3.5">
-                    <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full" style={{ background: TYPE_BG[order.type] }}>
-                      <span className="font-num text-[16px] font-bold" style={{ color: TYPE_COLOR[order.type] }}>{order.type}</span>
+                    <div className="relative shrink-0 h-11 w-11 rounded-xl overflow-hidden" style={{ background: `linear-gradient(135deg, var(--token-${order.type.toLowerCase()}-from), var(--token-${order.type.toLowerCase()}-to))` }}>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Play className="h-4 w-4 fill-white text-white" strokeWidth={0} />
+                      </div>
+                      <span className="absolute left-1 top-1 rounded px-1 py-0 text-[9px] font-bold text-white leading-4" style={{ background: 'rgba(0,0,0,0.28)' }}>{order.type}</span>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 min-w-0">
