@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { ArrowDownLeft, ShoppingCart } from 'lucide-react';
+import { ArrowDownLeft, ShoppingCart, History, ReceiptText } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
+import EmptyState from '../components/EmptyState';
 import { useLanguage } from '../components/LanguageContext';
 import { useUser } from '../components/UserContext';
+import { useDev } from '../components/DevContext';
 import MembershipSheet from '../components/MembershipSheet';
 
 const SC_FLOWS = [
@@ -21,15 +23,16 @@ const ORDERS = [
   { combo: 'A×3',             amount: '−15 亿 SC', time: '3天前 19:22' },
 ];
 
-const TABS = [{ key: 'sc', label: '词元收支明细' }, { key: 'order', label: '首发权兑换记录' }];
+const TABS = [{ key: 'sc', label: 'SC 收支明细' }, { key: 'order', label: '首发权兑换记录' }];
 
 export default function P5History() {
   const { lang } = useLanguage();
   const { isMember } = useUser();
+  const { emptyHistory } = useDev();
   const [tab, setTab] = useState('sc');
   const [showMembership, setShowMembership] = useState(false);
   const tabs = [
-    { key: 'sc', label: lang === 'zh' ? '词元收支明细' : 'SC Activity' },
+    { key: 'sc', label: lang === 'zh' ? 'SC 收支明细' : 'SC Activity' },
     { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Premiere Access Orders' },
   ];
   const flows = lang === 'zh' ? SC_FLOWS : [
@@ -74,43 +77,51 @@ export default function P5History() {
         </div>
 
         {tab === 'sc' && (
-          <div className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
-            {flows.map((item, i) => (
-              <div key={i} className={`flex items-center gap-3 px-4 py-3${i < SC_FLOWS.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>
-                <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={{ background: 'var(--color-success-soft)' }}>
-                  <ArrowDownLeft className="h-[18px] w-[18px] text-tokenSuccess" strokeWidth={2.2} />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-[14px] font-medium leading-[18px] text-tokenText">{item.label}</p>
-                  <p className="mt-0.5 truncate text-[12px] leading-[16px] text-tokenSub">{item.sub}</p>
-                </div>
-                <div className="shrink-0 text-right">
-                  <p className="font-num text-[15px] font-semibold leading-[20px] text-tokenSuccess">{item.amount}</p>
-                  <p className="mt-0.5 text-[11px] leading-[15px] text-tokenHint">{item.time}</p>
-                </div>
+          emptyHistory
+            ? <EmptyState icon={History} title={lang === 'zh' ? '暂无SC收支记录' : 'No SC activity yet'} subtitle={lang === 'zh' ? '兑换或补贴到账后将在此显示' : 'Swaps and subsidies will appear here'} />
+            : (
+              <div className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
+                {flows.map((item, i) => (
+                  <div key={i} className={`flex items-center gap-3 px-4 py-3${i < SC_FLOWS.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>
+                    <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={{ background: 'var(--color-success-soft)' }}>
+                      <ArrowDownLeft className="h-[18px] w-[18px] text-tokenSuccess" strokeWidth={2.2} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-[14px] font-medium leading-[18px] text-tokenText">{item.label}</p>
+                      <p className="mt-0.5 truncate text-[12px] leading-[16px] text-tokenSub">{item.sub}</p>
+                    </div>
+                    <div className="shrink-0 text-right">
+                      <p className="font-num text-[15px] font-semibold leading-[20px] text-tokenSuccess">{item.amount}</p>
+                      <p className="mt-0.5 text-[11px] leading-[15px] text-tokenHint">{item.time}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            )
         )}
 
         {tab === 'order' && (
-          <div className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
-            {orders.map((item, i) => (
-              <div key={i} className={`flex items-center gap-3 px-4 py-3${i < ORDERS.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>
-                <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={{ background: 'var(--color-danger-soft)' }}>
-                  <ShoppingCart className="h-[18px] w-[18px] text-tokenDanger" strokeWidth={2} />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-[14px] font-medium leading-[18px] text-tokenText">{item.combo}</p>
-                  <p className="mt-0.5 text-[12px] leading-[16px] text-tokenSub">{lang === 'zh' ? '首发权' : 'Premiere Access'}</p>
-                </div>
-                <div className="shrink-0 text-right">
-                  <p className="font-num text-[15px] font-semibold leading-[20px] text-tokenDanger">{item.amount}</p>
-                  <p className="mt-0.5 text-[11px] leading-[15px] text-tokenHint">{item.time}</p>
-                </div>
+          emptyHistory
+            ? <EmptyState icon={ReceiptText} title={lang === 'zh' ? '暂无首发权记录' : 'No premiere orders yet'} subtitle={lang === 'zh' ? '兑换首发权后将在此显示' : 'Premiere access orders will appear here'} />
+            : (
+              <div className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
+                {orders.map((item, i) => (
+                  <div key={i} className={`flex items-center gap-3 px-4 py-3${i < ORDERS.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>
+                    <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={{ background: 'var(--color-danger-soft)' }}>
+                      <ShoppingCart className="h-[18px] w-[18px] text-tokenDanger" strokeWidth={2} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-[14px] font-medium leading-[18px] text-tokenText">{item.combo}</p>
+                      <p className="mt-0.5 text-[12px] leading-[16px] text-tokenSub">{lang === 'zh' ? '首发权' : 'Premiere Access'}</p>
+                    </div>
+                    <div className="shrink-0 text-right">
+                      <p className="font-num text-[15px] font-semibold leading-[20px] text-tokenDanger">{item.amount}</p>
+                      <p className="mt-0.5 text-[11px] leading-[15px] text-tokenHint">{item.time}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            )
         )}
       </div>
 

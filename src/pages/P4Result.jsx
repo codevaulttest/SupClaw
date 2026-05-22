@@ -85,7 +85,7 @@ export default function P4Result() {
             onClick={() => navigate('/buy')}
             className="flex-1 py-3 text-[14px] font-semibold rounded-xl border border-tokenBorder text-tokenSub"
           >
-            {lang === 'zh' ? '继续购买' : 'Buy More'}
+            {lang === 'zh' ? '继续兑换' : 'Buy More'}
           </button>
           <button
             onClick={() => navigate('/history')}

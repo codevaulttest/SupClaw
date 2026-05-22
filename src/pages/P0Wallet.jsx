@@ -7,9 +7,10 @@ import ExchangeSCSheet from '../components/ExchangeSCSheet';
 import ExchangeSubmittedSheet from '../components/ExchangeSubmittedSheet';
 import {
   ArrowDownLeft, ArrowUpRight, ArrowLeftRight, ChevronRight, Clock, History,
-  PlayCircle, ShoppingCart, Wallet, Lock, Languages,
+  PlayCircle, ShoppingCart, Wallet, Lock, Languages, ReceiptText,
 } from 'lucide-react';
 import InfoTip from '../components/InfoTip';
+import EmptyState from '../components/EmptyState';
 import SubsidyResultModal from '../components/SubsidyResultModal';
 import HeaderActions from '../components/HeaderActions';
 import { useLanguage } from '../components/LanguageContext';
@@ -244,9 +245,10 @@ function SubsidyCountdown({ onTrigger }) {
 function WalletHistory({ onMore, onMemberRequired }) {
   const { lang } = useLanguage();
   const { isMember } = useUser();
+  const { emptyHistory } = useDev();
   const [tab, setTab] = useState('sc');
   const TABS = [
-    { key: 'sc', label: lang === 'zh' ? '词元收支明细' : 'SC Activity' },
+    { key: 'sc', label: lang === 'zh' ? 'SC 收支明细' : 'SC Activity' },
     { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Premiere Access Orders' },
   ];
   const flows = lang === 'zh' ? SC_FLOWS : [
@@ -292,7 +294,9 @@ function WalletHistory({ onMore, onMemberRequired }) {
       </div>
 
       {tab === 'sc' && (
-        <div key="sc" className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
+        emptyHistory
+          ? <EmptyState icon={History} title={lang === 'zh' ? '暂无SC收支记录' : 'No SC activity yet'} subtitle={lang === 'zh' ? '兑换或补贴到账后将在此显示' : 'Swaps and subsidies will appear here'} />
+          : <div key="sc" className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
           {flows.map((item, i) => {
             const pending = item.dir === 'pending';
             const out = item.dir === 'out';
@@ -328,23 +332,25 @@ function WalletHistory({ onMore, onMemberRequired }) {
       )}
 
       {tab === 'order' && (
-        <div key="order" className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
-          {orders.map((item, i) => (
-            <div key={i} className={`flex items-center gap-3 px-4 py-3${i < ORDERS.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>
-              <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={{ background: 'var(--color-danger-soft)' }}>
-                <ShoppingCart className="h-[18px] w-[18px] text-tokenDanger" strokeWidth={2} />
+        emptyHistory
+          ? <EmptyState icon={ReceiptText} title={lang === 'zh' ? '暂无首发权记录' : 'No premiere orders yet'} subtitle={lang === 'zh' ? '兑换首发权后将在此显示' : 'Premiere access orders will appear here'} />
+          : <div key="order" className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
+            {orders.map((item, i) => (
+              <div key={i} className={`flex items-center gap-3 px-4 py-3${i < ORDERS.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>
+                <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={{ background: 'var(--color-danger-soft)' }}>
+                  <ShoppingCart className="h-[18px] w-[18px] text-tokenDanger" strokeWidth={2} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-[14px] font-medium leading-[18px] text-tokenText">{item.combo}</p>
+                  <p className="mt-0.5 truncate text-[12px] leading-[16px] text-tokenSub">{lang === 'zh' ? '首发权' : 'Premiere Access'}</p>
+                </div>
+                <div className="shrink-0 text-right">
+                  <p className="font-num text-[15px] font-semibold leading-[20px] text-tokenDanger">{item.amount}</p>
+                  <p className="mt-0.5 text-[11px] leading-[15px] text-tokenHint">{item.time}</p>
+                </div>
               </div>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-[14px] font-medium leading-[18px] text-tokenText">{item.combo}</p>
-                <p className="mt-0.5 truncate text-[12px] leading-[16px] text-tokenSub">{lang === 'zh' ? '首发权' : 'Premiere Access'}</p>
-              </div>
-              <div className="shrink-0 text-right">
-                <p className="font-num text-[15px] font-semibold leading-[20px] text-tokenDanger">{item.amount}</p>
-                <p className="mt-0.5 text-[11px] leading-[15px] text-tokenHint">{item.time}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
       )}
     </section>
   );

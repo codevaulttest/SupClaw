@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Search, X } from 'lucide-react';
+import { Search, X, PackageSearch } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import ExchangeSubmittedSheet from '../components/ExchangeSubmittedSheet';
 import ProductOrderSheet from '../components/ProductOrderSheet';
 import BuyABCSheet from '../components/BuyABCSheet';
 import ExchangeSCSheet from '../components/ExchangeSCSheet';
 import ProductCard from '../components/ProductCard';
+import EmptyState from '../components/EmptyState';
 import { useLanguage } from '../components/LanguageContext';
+import { useDev } from '../components/DevContext';
 import { CATEGORY_NAME_BY_ID, CATEGORY_NAME_EN_BY_ID, TOKEN_LABELS, getProductsByCategory } from '../data/booklists';
 
 const TOKEN_INFO = {
@@ -18,6 +20,7 @@ const TOKEN_INFO = {
 
 export default function P6List() {
   const { lang } = useLanguage();
+  const { emptyProductList } = useDev();
   const { category } = useParams();
   const navigate = useNavigate();
   const [filter, setFilter] = useState('all');
@@ -27,7 +30,7 @@ export default function P6List() {
   const [exchangeOpen, setExchangeOpen] = useState(false);
   const [snack, setSnack] = useState(false);
 
-  const products = getProductsByCategory(category);
+  const products = emptyProductList ? [] : getProductsByCategory(category);
   const q = query.trim().toLowerCase();
   const visible = products
     .filter(p => filter === 'all' || p.type === filter)
@@ -84,7 +87,11 @@ export default function P6List() {
         </div>
 
         {visible.length === 0 && (
-          <p className="py-12 text-center text-[14px] text-tokenHint">{lang === 'zh' ? '没有找到相关内容' : 'No results found'}</p>
+          <EmptyState
+            icon={PackageSearch}
+            title={lang === 'zh' ? '没有找到相关内容' : 'No results found'}
+            subtitle={lang === 'zh' ? '换个关键词或筛选条件试试' : 'Try a different search or filter'}
+          />
         )}
         <div className="overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', boxShadow: visible.length ? 'var(--shadow-sm)' : 'none' }}>
           {visible.map((p, i) => (

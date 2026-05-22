@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, Clock, Cog, CheckCircle2 } from 'lucide-react';
+import { ChevronRight, Clock, Cog, CheckCircle2, Inbox } from 'lucide-react';
 import HeaderActions from '../components/HeaderActions';
+import EmptyState from '../components/EmptyState';
 import { useLanguage } from '../components/LanguageContext';
+import { useDev } from '../components/DevContext';
 
 const MOCK = {
   pending: [
@@ -39,11 +41,18 @@ const TABS = [
 const TYPE_COLOR = { A: 'var(--token-a-text)', B: 'var(--token-b-text)', C: 'var(--token-c-text)' };
 const TYPE_BG    = { A: 'var(--token-a-soft)', B: 'var(--token-b-soft)', C: 'var(--token-c-soft)' };
 
+const EMPTY_LABELS = {
+  pending: { zh: ['暂无待制作订单', '兑换后将在这里显示'], en: ['No queued orders', 'Your pending orders will appear here'] },
+  making:  { zh: ['暂无制作中订单', '制作开始后将在这里显示'], en: ['Nothing rendering', 'Orders in progress will appear here'] },
+  done:    { zh: ['暂无已完成订单', '完成的视频将在这里显示'], en: ['No completed orders', 'Finished videos will appear here'] },
+};
+
 export default function P8Orders() {
   const navigate = useNavigate();
   const { lang } = useLanguage();
+  const { emptyOrders } = useDev();
   const [tab, setTab] = useState('pending');
-  const items = MOCK[tab] ?? [];
+  const items = emptyOrders ? [] : (MOCK[tab] ?? []);
   const tabs = lang === 'zh' ? TABS : [
     { key: 'pending', label: 'Queued', Icon: Clock, color: 'var(--token-a-text)', bg: 'var(--token-a-soft)' },
     { key: 'making', label: 'Rendering', Icon: Cog, color: 'var(--token-b-text)', bg: 'var(--token-b-soft)' },
@@ -91,9 +100,11 @@ export default function P8Orders() {
 
       <div className="flex-1 px-4 pt-4 pb-[74px]">
         {localizedItems.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 text-tokenHint">
-            <p className="text-[14px]">{lang === 'zh' ? '暂无订单' : 'No orders yet'}</p>
-          </div>
+          <EmptyState
+            icon={Inbox}
+            title={EMPTY_LABELS[tab][lang === 'zh' ? 'zh' : 'en'][0]}
+            subtitle={EMPTY_LABELS[tab][lang === 'zh' ? 'zh' : 'en'][1]}
+          />
         ) : (
           <div className="flex flex-col gap-3">
             {localizedItems.map(order => {
