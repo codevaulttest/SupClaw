@@ -129,7 +129,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
             <div className="absolute top-3 left-1/2 -translate-x-1/2 h-1 w-10 rounded-full" style={{ background: 'var(--color-border)' }} />
             <div className="mt-4 flex w-full items-center justify-between">
               <div className="w-8" />
-              <span className="text-[17px] font-semibold text-tokenText">{lang === 'zh' ? '兑换 SC' : 'Swap SC'}</span>
+              <span className="text-[17px] font-semibold text-tokenText">{lang === 'zh' ? '兑换' : 'Swap'}</span>
               <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-full" style={{ background: 'var(--color-bg-card)' }}>
                 <X className="h-4 w-4 text-tokenSub" strokeWidth={2} />
               </button>
