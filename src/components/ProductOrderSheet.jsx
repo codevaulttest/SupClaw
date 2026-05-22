@@ -173,7 +173,7 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
                 boxShadow: canOrder ? 'var(--shadow-sm)' : 'none',
               }}
             >
-              {lang === 'zh' ? `确认下单 · ${duration} 秒视频` : `Confirm Order · ${duration}s video`}
+              {lang === 'zh' ? `确认兑换 · ${duration} 秒视频` : `Confirm Order · ${duration}s video`}
             </button>
           </div>
         </div>
