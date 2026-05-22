@@ -96,8 +96,8 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
               <div className="min-w-0">
                 <p className="text-[13px] text-tokenSub">{lang === 'zh' ? '购买数量' : 'Quantity'}</p>
                 <p className="mt-1 flex items-baseline gap-1 whitespace-nowrap">
-                  <span className="font-num text-[28px] font-bold leading-none text-tokenPrimary">{duration}</span>
-                  <span className="text-[15px] font-semibold text-tokenPrimary">{lang === 'zh' ? '秒视频' : 'sec video'}</span>
+                  <span className="font-num text-[28px] font-bold leading-none" style={{ color: `var(--token-${v}-from)` }}>{duration}</span>
+                  <span className="text-[15px] font-semibold" style={{ color: `var(--token-${v}-from)` }}>{lang === 'zh' ? '秒视频' : 'sec video'}</span>
                 </p>
               </div>
               <div className="flex items-center gap-3">
