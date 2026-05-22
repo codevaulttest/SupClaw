@@ -2,15 +2,59 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Home, PlayCircle, ReceiptText, UserCircle2 } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 
+const iconCutout = 'var(--color-bg-card)';
+
+const FilledHome = () => (
+  <svg viewBox="0 0 24 24" className="h-[22px] w-[22px]" aria-hidden="true">
+    <path
+      d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+      fill="currentColor"
+    />
+    <path d="M9 21v-8a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v8" fill={iconCutout} />
+  </svg>
+);
+
+const FilledPlay = () => (
+  <svg viewBox="0 0 24 24" className="h-[22px] w-[22px]" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" fill="currentColor" />
+    <path d="M10 8v8l6-4z" fill={iconCutout} />
+  </svg>
+);
+
+const FilledOrders = () => (
+  <svg viewBox="0 0 24 24" className="h-[22px] w-[22px]" aria-hidden="true">
+    <path
+      d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"
+      fill="currentColor"
+    />
+    <path
+      d="M8 8h6M8 12h8M8 16h5"
+      fill="none"
+      stroke={iconCutout}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+    />
+  </svg>
+);
+
+const FilledProfile = () => (
+  <svg viewBox="0 0 24 24" className="h-[22px] w-[22px]" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" fill="currentColor" />
+    <circle cx="12" cy="10" r="3.2" fill={iconCutout} />
+    <path d="M6.7 20a5.3 5.3 0 0 1 10.6 0" fill="none" stroke={iconCutout} strokeLinecap="round" strokeWidth="2.2" />
+  </svg>
+);
+
 export default function BottomNav() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { t } = useLanguage();
   const tabs = [
-    { label: t('首页', 'Home'), path: '/', Icon: Home },
-    { label: t('AI 生成', 'Create'), path: '/ai', Icon: PlayCircle },
-    { label: t('订单', 'Orders'), path: '/orders', Icon: ReceiptText },
-    { label: t('我的', 'Me'), path: '/profile', Icon: UserCircle2 },
+    { label: t('首页', 'Home'), path: '/', Icon: Home, FilledIcon: FilledHome },
+    { label: t('AI 生成', 'Create'), path: '/ai', Icon: PlayCircle, FilledIcon: FilledPlay },
+    { label: t('订单', 'Orders'), path: '/orders', Icon: ReceiptText, FilledIcon: FilledOrders },
+    { label: t('我的', 'Me'), path: '/profile', Icon: UserCircle2, FilledIcon: FilledProfile },
   ];
 
   const isActive = (path) =>
@@ -31,7 +75,7 @@ export default function BottomNav() {
           border: '1px solid rgba(255,255,255,0.72)',
         }}
       >
-        {tabs.map(({ label, path, Icon }) => {
+        {tabs.map(({ label, path, Icon, FilledIcon }) => {
           const active = isActive(path);
           return (
             <button
@@ -50,7 +94,7 @@ export default function BottomNav() {
                 />
               )}
               <span className="relative" style={{ transform: active ? 'scale(1.08)' : 'scale(1)', transition: 'transform 200ms cubic-bezier(0.34,1.56,0.64,1)' }}>
-                <Icon className="h-[22px] w-[22px]" strokeWidth={active ? 2.4 : 1.8} />
+                {active ? <FilledIcon /> : <Icon className="h-[22px] w-[22px]" strokeWidth={1.8} />}
               </span>
               <span className={`relative ${active ? 'font-semibold' : ''}`}>{label}</span>
             </button>
