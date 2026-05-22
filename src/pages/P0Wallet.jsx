@@ -493,7 +493,12 @@ export default function P0Wallet() {
         />
       )}
       {devModal !== null && <SubsidyResultModal subsidyAmount={devModal} orderTotal={9} onClose={() => setDevModal(null)} />}
-      {membershipOpen && <MembershipSheet onClose={() => setMembershipOpen(false)} />}
+      {membershipOpen && (
+        <MembershipSheet
+          onClose={() => setMembershipOpen(false)}
+          onActivate={() => { setMembershipOpen(false); setBuyOpen(true); }}
+        />
+      )}
     </>
   );
 }

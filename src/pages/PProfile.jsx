@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Crown, Copy, Check, ChevronRight, HelpCircle, Gift } from 'lucide-react';
 import { useLanguage } from '../components/LanguageContext';
 import { useUser } from '../components/UserContext';
@@ -136,6 +137,7 @@ function HelpSection() {
 
 export default function PProfile() {
   const { lang } = useLanguage();
+  const navigate = useNavigate();
   const [membershipOpen, setMembershipOpen] = useState(false);
 
   return (
@@ -158,7 +160,12 @@ export default function PProfile() {
       <HelpSection />
     </div>
 
-    {membershipOpen && <MembershipSheet onClose={() => setMembershipOpen(false)} />}
+    {membershipOpen && (
+      <MembershipSheet
+        onClose={() => setMembershipOpen(false)}
+        onActivate={() => { setMembershipOpen(false); navigate('/'); }}
+      />
+    )}
     </>
   );
 }
