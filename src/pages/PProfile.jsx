@@ -188,7 +188,7 @@ export default function PProfile() {
 
   return (
     <>
-      <header className="flex h-[68px] items-center px-4">
+      <header className="flex h-[68px] items-center px-4 bg-white border-b border-tokenBorderSubtle">
         <div className="w-[86px]" />
         <h1 className="flex-1 text-center text-[20px] font-semibold text-tokenText">{lang === 'zh' ? '我的' : 'Profile'}</h1>
         <HeaderActions />

@@ -164,7 +164,7 @@ export default function P8Orders() {
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-58px)]">
-      <header className="flex h-[68px] items-center px-4">
+      <header className="flex h-[68px] items-center px-4 bg-white border-b border-tokenBorderSubtle">
         <div className="w-[86px]" />
         <h1 className="flex-1 text-center text-[20px] font-semibold text-tokenText">{lang === 'zh' ? '订单' : 'Orders'}</h1>
         <HeaderActions />
@@ -187,7 +187,7 @@ export default function P8Orders() {
         ))}
       </div>
 
-      <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 pt-4 pb-[74px]">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 pt-[20px] pb-[74px]">
         {items.length === 0 ? (
           <EmptyState
             icon={Inbox}
