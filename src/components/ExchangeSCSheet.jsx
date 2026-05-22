@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowDownUp, X } from 'lucide-react';
-import Toast from './Toast';
+import { useLanguage } from './LanguageContext';
 
 const DOS_BALANCE = 50;
 const SC_BALANCE = 32.11;
 
 export default function ExchangeSCSheet({ onClose, onSubmit }) {
+  const { lang } = useLanguage();
   const [amount, setAmount] = useState('');
   const inputRef = useRef(null);
 
@@ -49,7 +50,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
             <div className="absolute top-3 left-1/2 -translate-x-1/2 h-1 w-10 rounded-full" style={{ background: 'var(--color-border)' }} />
             <div className="mt-4 flex w-full items-center justify-between">
               <div className="w-8" />
-              <span className="text-[17px] font-semibold text-tokenText">兑换 SC</span>
+              <span className="text-[17px] font-semibold text-tokenText">{lang === 'zh' ? '兑换 SC' : 'Swap SC'}</span>
               <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-full" style={{ background: 'var(--color-bg-card)' }}>
                 <X className="h-4 w-4 text-tokenSub" strokeWidth={2} />
               </button>
@@ -60,15 +61,15 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
             {/* 从 */}
             <div className="rounded-2xl px-4 pt-3 pb-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
               <div className="mb-3 flex items-center justify-between">
-                <span className="text-[13px] font-medium text-tokenSub">从</span>
+                <span className="text-[13px] font-medium text-tokenSub">{lang === 'zh' ? '从' : 'From'}</span>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[12px] text-tokenHint">余额：{DOS_BALANCE} DOS</span>
+                  <span className="text-[12px] text-tokenHint">{lang === 'zh' ? `余额：${DOS_BALANCE} DOS` : `Balance: ${DOS_BALANCE} DOS`}</span>
                   <button
                     onClick={() => setAmount(String(DOS_BALANCE))}
                     className="rounded px-1.5 py-0.5 text-[11px] font-semibold text-tokenPrimary"
                     style={{ background: 'var(--color-primary-soft)' }}
                   >
-                    全部
+                    {lang === 'zh' ? '全部' : 'Max'}
                   </button>
                 </div>
               </div>
@@ -87,13 +88,13 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
                   min="0"
                   value={amount}
                   onChange={e => setAmount(e.target.value)}
-                  placeholder="输入数量"
+                  placeholder={lang === 'zh' ? '输入数量' : 'Enter amount'}
                   className="min-w-0 flex-1 bg-transparent text-right font-num text-[26px] font-semibold outline-none placeholder:text-[18px] placeholder:text-tokenHint"
                   style={{ color: insufficient ? 'var(--color-danger)' : 'var(--color-text-primary)' }}
                 />
               </div>
               {insufficient && (
-                <p className="mt-1.5 text-right text-[11px] text-tokenDanger">余额不足</p>
+                <p className="mt-1.5 text-right text-[11px] text-tokenDanger">{lang === 'zh' ? '余额不足' : 'Insufficient balance'}</p>
               )}
             </div>
 
@@ -105,8 +106,8 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
             {/* 到 */}
             <div className="rounded-2xl px-4 pt-3 pb-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
               <div className="mb-3 flex items-center justify-between">
-                <span className="text-[13px] font-medium text-tokenSub">到</span>
-                <span className="text-[12px] text-tokenHint">余额：{SC_BALANCE} 亿 SC</span>
+                <span className="text-[13px] font-medium text-tokenSub">{lang === 'zh' ? '到' : 'To'}</span>
+                <span className="text-[12px] text-tokenHint">{lang === 'zh' ? `余额：${SC_BALANCE} 亿 SC` : `Balance: ${SC_BALANCE}B SC`}</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex shrink-0 items-center gap-2">
@@ -117,7 +118,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
                   <span className="font-num text-[26px] font-semibold" style={{ color: num > 0 && !insufficient ? 'var(--color-primary)' : 'var(--color-text-secondary)' }}>
                     {num > 0 && !insufficient ? willReceive : '0.00'}
                   </span>
-                  <span className="text-[14px] font-medium text-tokenSub">亿</span>
+                  <span className="text-[14px] font-medium text-tokenSub">{lang === 'zh' ? '亿' : 'B'}</span>
                 </div>
               </div>
             </div>
@@ -125,7 +126,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
             {/* 汇率 */}
             <div className="mt-3 flex items-center justify-center gap-1.5">
               <ArrowDownUp className="h-3 w-3 text-tokenHint" strokeWidth={2} />
-              <span className="text-[12px] text-tokenHint">1 DOS ≈ 1 亿 SC</span>
+              <span className="text-[12px] text-tokenHint">{lang === 'zh' ? '1 DOS ≈ 1 亿 SC' : '1 DOS ≈ 1B SC'}</span>
             </div>
 
             {/* 提交 */}
@@ -141,7 +142,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
                   boxShadow: canSubmit ? '0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent)' : 'none',
                 }}
               >
-                确认兑换
+                {lang === 'zh' ? '确认兑换' : 'Confirm Swap'}
               </button>
             </div>
           </div>
@@ -151,4 +152,3 @@ export default function ExchangeSCSheet({ onClose, onSubmit }) {
     document.body
   );
 }
-

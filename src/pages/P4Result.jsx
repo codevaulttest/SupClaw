@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useLanguage } from '../components/LanguageContext';
 
 export default function P4Result() {
   const navigate = useNavigate();
+  const { lang } = useLanguage();
   const { state } = useLocation();
   const subsidy = state?.subsidy ?? 3.11;
   const total   = state?.total   ?? 9;
@@ -56,22 +58,22 @@ export default function P4Result() {
         </div>
 
         <p className="mb-1 text-center text-[15px] font-medium text-tokenSub">
-          {isZherang ? '本轮折让已到账' : '本轮补贴已到账'}
+          {lang === 'zh' ? (isZherang ? '本轮折让已到账' : '本轮补贴已到账') : (isZherang ? 'This round discount has been credited' : 'This round subsidy has been credited')}
         </p>
         <p className="mb-1 text-center font-num text-[42px] font-bold leading-none" style={{ color: 'var(--color-success)' }}>
-          +{displayVal.toFixed(2)} 亿
+          +{displayVal.toFixed(2)} {lang === 'zh' ? '亿' : 'B'}
         </p>
-        <p className="mb-6 text-center text-[13px] text-tokenHint">SC 词元</p>
+        <p className="mb-6 text-center text-[13px] text-tokenHint">SC</p>
 
         <div className="mb-6 flex gap-3">
           {combo && (
             <div className="flex-1 rounded-xl py-3 text-center" style={{ background: 'var(--color-bg-page)' }}>
-              <p className="text-[11px] text-tokenHint">订单</p>
+              <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '订单' : 'Order'}</p>
               <p className="mt-0.5 text-[12px] font-semibold text-tokenText leading-tight">{combo}</p>
             </div>
           )}
           <div className="flex-1 rounded-xl py-3 text-center" style={{ background: 'var(--color-bg-page)' }}>
-            <p className="text-[11px] text-tokenHint">{isZherang ? '本轮折让' : '本轮补贴'}</p>
+            <p className="text-[11px] text-tokenHint">{lang === 'zh' ? (isZherang ? '本轮折让' : '本轮补贴') : (isZherang ? 'Discount' : 'Subsidy')}</p>
             <p className="mt-0.5 text-[13px] font-semibold" style={{ color: isZherang ? 'var(--color-primary)' : 'var(--color-success)' }}>
               {isZherang ? '' : '+'}{pct}%
             </p>
@@ -83,13 +85,13 @@ export default function P4Result() {
             onClick={() => navigate('/buy')}
             className="flex-1 py-3 text-[14px] font-semibold rounded-xl border border-tokenBorder text-tokenSub"
           >
-            继续购买
+            {lang === 'zh' ? '继续购买' : 'Buy More'}
           </button>
           <button
             onClick={() => navigate('/history')}
             className="flex-1 py-3 text-[14px] font-semibold rounded-xl border border-tokenBorder text-tokenSub"
           >
-            查看记录
+            {lang === 'zh' ? '查看记录' : 'View History'}
           </button>
         </div>
         <button
@@ -97,7 +99,7 @@ export default function P4Result() {
           className="mt-2 w-full py-3 text-[15px] font-semibold text-white"
           style={{ borderRadius: 'var(--radius-md)', background: 'var(--color-primary)', boxShadow: '0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent)' }}
         >
-          返回首页
+          {lang === 'zh' ? '返回首页' : 'Back to Home'}
         </button>
       </div>
     </div>

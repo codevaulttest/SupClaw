@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
+import { useLanguage } from '../components/LanguageContext';
 
 const TOTAL_SECS = 100;
 const SETTLE_WINDOW = 10; // last 10s → delayed to next round
 
 export default function P3Lottery() {
   const navigate = useNavigate();
+  const { lang } = useLanguage();
   const { state } = useLocation();
   const combo  = state?.combo  ?? 'A×1';
   const total  = state?.total  ?? 5;
@@ -37,14 +39,14 @@ export default function P3Lottery() {
 
   return (
     <>
-      <PageHeader title="抽奖中" onBack={() => navigate('/')} />
+      <PageHeader title={lang === 'zh' ? '抽奖中' : 'Drawing'} onBack={() => navigate('/')} />
 
       <div className="flex flex-col items-center px-4 pt-8 pb-8">
         {/* 订单摘要 */}
         <div className="w-full mb-8 rounded-xl px-5 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-md)' }}>
-          <p className="text-[12px] text-tokenHint mb-1">本次订单</p>
+          <p className="text-[12px] text-tokenHint mb-1">{lang === 'zh' ? '本次订单' : 'This Order'}</p>
           <p className="text-[16px] font-semibold text-tokenText">{combo}</p>
-          <p className="mt-1 font-num text-[14px] text-tokenSub">消耗 {total} 亿 SC</p>
+          <p className="mt-1 font-num text-[14px] text-tokenSub">{lang === 'zh' ? `消耗 ${total} 亿 SC` : `${total}B SC spent`}</p>
         </div>
 
         {/* 倒计时环 */}
@@ -57,18 +59,18 @@ export default function P3Lottery() {
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="font-num text-[32px] font-bold leading-none text-tokenText">{mm}:{ss}</span>
-            <span className="mt-1 text-[12px] text-tokenHint">本轮剩余</span>
+            <span className="mt-1 text-[12px] text-tokenHint">{lang === 'zh' ? '本轮剩余' : 'Remaining'}</span>
           </div>
         </div>
 
         {delayed && (
           <div className="mb-4 w-full rounded-xl px-4 py-3 text-center" style={{ background: '#fffaf1', border: '1px solid var(--token-a-border)' }}>
-            <p className="text-[13px] font-medium" style={{ color: 'var(--token-a-text)' }}>已进入结算窗口，自动顺延至下一轮</p>
+            <p className="text-[13px] font-medium" style={{ color: 'var(--token-a-text)' }}>{lang === 'zh' ? '已进入结算窗口，自动顺延至下一轮' : 'Entered the settlement window. Moved to the next round automatically.'}</p>
           </div>
         )}
 
         <p className="text-center text-[13px] leading-[20px] text-tokenSub px-6 mb-8">
-          后台正在处理抽奖，您可以离开，结果会自动到账
+          {lang === 'zh' ? '后台正在处理抽奖，您可以离开，结果会自动到账' : 'The draw is being processed in the background. You can leave now and the result will be credited automatically.'}
         </p>
 
         <button
@@ -76,7 +78,7 @@ export default function P3Lottery() {
           className="w-full py-[14px] text-[15px] font-semibold text-tokenSub border border-tokenBorder rounded-xl"
           style={{ borderRadius: 'var(--radius-md)' }}
         >
-          离开等待（后台继续）
+          {lang === 'zh' ? '离开等待（后台继续）' : 'Leave and Wait'}
         </button>
       </div>
     </>

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { PlayCircle } from 'lucide-react';
 import HeaderActions from '../components/HeaderActions';
+import { useLanguage } from '../components/LanguageContext';
 
 const CATEGORIES = [
   { id: 'classics',   name: '国学经典',   image: '/assets/booklist-classics.png' },
@@ -12,13 +13,21 @@ const CATEGORIES = [
 
 export default function P6Store() {
   const navigate = useNavigate();
+  const { lang } = useLanguage();
+  const categories = lang === 'zh' ? CATEGORIES : [
+    { id: 'classics', name: 'Traditional Classics', image: '/assets/booklist-classics.png' },
+    { id: 'business', name: 'Business Classics', image: '/assets/booklist-business.png' },
+    { id: 'humanities', name: 'Humanities & Geography', image: '/assets/booklist-humanities.png' },
+    { id: 'science', name: 'Future Tech', image: '/assets/booklist-science.png' },
+    { id: 'lifestyle', name: 'Lifestyle Aesthetics', image: '/assets/booklist-lifestyle.png' },
+  ];
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-58px)]">
       {/* header */}
       <header className="flex h-[68px] items-center px-4">
         <div className="w-[86px]" />
-        <h1 className="flex-1 text-center text-[20px] font-semibold text-tokenText">AI 生成</h1>
+        <h1 className="flex-1 text-center text-[20px] font-semibold text-tokenText">{lang === 'zh' ? 'AI 生成' : 'AI Create'}</h1>
         <HeaderActions />
       </header>
 
@@ -26,17 +35,17 @@ export default function P6Store() {
       <div className="mx-4 mb-5 overflow-hidden rounded-[20px] px-5 py-5" style={{ background: 'linear-gradient(135deg,#0e2a4a 0%,#0a3d62 60%,#0d6e94 100%)', boxShadow: 'var(--shadow-lg)' }}>
         <div className="flex items-center gap-2 mb-2">
           <PlayCircle className="h-5 w-5 text-white/80" strokeWidth={1.8} />
-          <span className="text-[13px] text-white/70 font-medium">AI 视频生成专区</span>
+          <span className="text-[13px] text-white/70 font-medium">{lang === 'zh' ? 'AI 视频生成专区' : 'AI Video Studio'}</span>
         </div>
-          <p className="text-[20px] font-extrabold text-white leading-tight mb-1">选择主题·兑换视频</p>
-        <p className="text-[13px] text-white/60">使用 ASC / BSC / CSC 兑换专属视频</p>
+          <p className="text-[20px] font-extrabold text-white leading-tight mb-1">{lang === 'zh' ? '选择主题·兑换视频' : 'Pick a Theme, Swap for a Video'}</p>
+        <p className="text-[13px] text-white/60">{lang === 'zh' ? '使用 ASC / BSC / CSC 兑换专属视频' : 'Use ASC / BSC / CSC to swap for exclusive videos'}</p>
       </div>
 
       {/* categories */}
       <div className="flex-1 px-4 pb-[96px]">
-        <p className="mb-3 text-[13px] font-semibold text-tokenSub">全部分类</p>
+        <p className="mb-3 text-[13px] font-semibold text-tokenSub">{lang === 'zh' ? '全部分类' : 'All Categories'}</p>
         <div className="grid grid-cols-2 gap-3">
-          {CATEGORIES.map(cat => (
+          {categories.map(cat => (
             <button
               key={cat.id}
               onClick={() => navigate(`/ai/${cat.id}`)}

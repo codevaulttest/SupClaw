@@ -4,18 +4,20 @@ import { Minus, Plus, ArrowLeftRight } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import InfoTip from '../components/InfoTip';
 import ExchangeSubmittedSheet from '../components/ExchangeSubmittedSheet';
+import { useLanguage } from '../components/LanguageContext';
 
 const SC_BALANCE = 32.11;
 const PRICES = { A: 5, B: 3, C: 1 };
 const TIPS = {
-  A: 'A 类专用词元，用于兑换 A 类 AI 视频商品；购买价为 5 亿 SC = 1 亿 ASC，兑换商品时还需支付 10% 附加 SC',
-  B: 'B 类专用词元，用于兑换 B 类 AI 视频商品；购买价为 3 亿 SC = 1 亿 BSC，兑换商品时还需支付 10% 附加 SC',
-  C: 'C 类专用词元，用于兑换 C 类 AI 视频商品；购买价为 1 亿 SC = 1 亿 CSC，兑换商品时还需支付 10% 附加 SC',
+  A: '持有 ASC 可兑换 A 类 AI 视频；从 SC 兑换时，5 亿 SC 可换 1 亿 ASC；兑换视频时另扣 10% SC',
+  B: '持有 BSC 可兑换 B 类 AI 视频；从 SC 兑换时，3 亿 SC 可换 1 亿 BSC；兑换视频时另扣 10% SC',
+  C: '持有 CSC 可兑换 C 类 AI 视频；从 SC 兑换时，1 亿 SC 可换 1 亿 CSC；兑换视频时另扣 10% SC',
 };
 const TOKEN_V = { A: 'a', B: 'b', C: 'c' };
 
 export default function P2BuyABC() {
   const navigate = useNavigate();
+  const { lang } = useLanguage();
   const [counts, setCounts] = useState({ A: 0, B: 0, C: 0 });
   const [submitted, setSubmitted] = useState(null);
 
@@ -37,13 +39,13 @@ export default function P2BuyABC() {
 
   return (
     <>
-      <PageHeader title="兑换首发权" />
+      <PageHeader title={lang === 'zh' ? '兑换首发权' : 'Swap for Premiere Access'} />
 
       <div className="px-4 pt-5 pb-8">
         {/* SC 余额 */}
         <div className="mb-4 flex items-center justify-between rounded-xl px-4 py-3" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
-          <span className="text-[13px] text-tokenSub">SC 词元余额</span>
-          <span className="font-num text-[18px] font-semibold text-tokenPrimary">{SC_BALANCE} 亿</span>
+          <span className="text-[13px] text-tokenSub">{lang === 'zh' ? 'SC 词元余额' : 'SC Balance'}</span>
+          <span className="font-num text-[18px] font-semibold text-tokenPrimary">{SC_BALANCE} {lang === 'zh' ? '亿' : 'B'}</span>
         </div>
 
         {/* ABC 行 */}
@@ -64,10 +66,14 @@ export default function P2BuyABC() {
                   >
                     {key}
                   </div>
-                  <span className="text-[15px] font-semibold text-tokenText">{key}SC 首发权</span>
-                  <InfoTip text={TIPS[key]} />
+                  <span className="text-[15px] font-semibold text-tokenText">{lang === 'zh' ? `${key}SC 首发权` : `${key}SC Premiere Access`}</span>
+                  <InfoTip text={lang === 'zh' ? TIPS[key] : {
+                    A: 'Hold ASC to swap for Type A AI videos. 5B SC swaps into 1B ASC, and swapping for the video also consumes an extra 10% in SC.',
+                    B: 'Hold BSC to swap for Type B AI videos. 3B SC swaps into 1B BSC, and swapping for the video also consumes an extra 10% in SC.',
+                    C: 'Hold CSC to swap for Type C AI videos. 1B SC swaps into 1B CSC, and swapping for the video also consumes an extra 10% in SC.',
+                  }[key]} />
                   <span className="ml-auto font-num text-[13px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>
-                    {PRICES[key]} 亿 SC / 个
+                    {PRICES[key]} {lang === 'zh' ? '亿 SC / 个' : 'B SC / unit'}
                   </span>
                 </div>
 
@@ -91,7 +97,7 @@ export default function P2BuyABC() {
                     </button>
                   </div>
                   {subtotal > 0 && (
-                    <span className="font-num text-[13px] font-medium text-tokenSub">= {subtotal} 亿 SC</span>
+                    <span className="font-num text-[13px] font-medium text-tokenSub">= {subtotal} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
                   )}
                 </div>
               </div>
@@ -100,14 +106,14 @@ export default function P2BuyABC() {
         })}
 
         <div className="mb-4 flex items-center justify-between px-1">
-          <span className="text-[13px] font-medium text-tokenSub">合计消耗 SC</span>
-          <span className="font-num text-[16px] font-semibold text-tokenText">{total} 亿 SC</span>
+          <span className="text-[13px] font-medium text-tokenSub">{lang === 'zh' ? '合计消耗 SC' : 'Total SC Cost'}</span>
+          <span className="font-num text-[16px] font-semibold text-tokenText">{total} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
         </div>
 
         {insufficient && (
           <div className="mb-4 flex items-center justify-between rounded-lg px-3 py-2" style={{ background: 'var(--color-danger-soft)' }}>
-            <span className="text-[12px] text-tokenDanger">SC 余额不足</span>
-            <button onClick={() => navigate('/exchange')} className="text-[12px] font-semibold text-tokenDanger underline">去兑换 SC</button>
+            <span className="text-[12px] text-tokenDanger">{lang === 'zh' ? 'SC 余额不足' : 'Insufficient SC balance'}</span>
+            <button onClick={() => navigate('/exchange')} className="text-[12px] font-semibold text-tokenDanger underline">{lang === 'zh' ? '去兑换 SC' : 'Swap SC'}</button>
           </div>
         )}
 
@@ -125,14 +131,14 @@ export default function P2BuyABC() {
         >
           <span className="flex items-center justify-center gap-2">
             <ArrowLeftRight className="h-4 w-4" strokeWidth={2.5} />
-            兑换首发权
+            {lang === 'zh' ? '兑换首发权' : 'Swap for Premiere Access'}
           </span>
         </button>
       </div>
 
       {submitted && (
         <ExchangeSubmittedSheet
-          detail={`${submitted.combo} · 扣除 ${submitted.total} 亿 SC`}
+          detail={lang === 'zh' ? `${submitted.combo} · 扣除 ${submitted.total} 亿 SC` : `${submitted.combo} · ${submitted.total}B SC deducted`}
           onClose={() => setSubmitted(null)}
         />
       )}

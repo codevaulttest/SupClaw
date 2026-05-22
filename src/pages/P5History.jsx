@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { ArrowDownLeft, ArrowUpRight, ShoppingCart } from 'lucide-react';
+import { ArrowDownLeft, ShoppingCart } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
+import { useLanguage } from '../components/LanguageContext';
 
 const SC_FLOWS = [
   { label: '补贴到账', sub: '本轮补贴 3.11 亿（+3.7%）',   amount: '+3.11 亿 SC', time: '今天 16:40',  color: 'success' },
@@ -21,16 +22,35 @@ const ORDERS = [
 const TABS = [{ key: 'sc', label: '词元收支明细' }, { key: 'order', label: '首发权兑换记录' }];
 
 export default function P5History() {
+  const { lang } = useLanguage();
   const [tab, setTab] = useState('sc');
+  const tabs = [
+    { key: 'sc', label: lang === 'zh' ? '词元收支明细' : 'SC Activity' },
+    { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Premiere Access Orders' },
+  ];
+  const flows = lang === 'zh' ? SC_FLOWS : [
+    { label: 'Subsidy Received', sub: 'Round subsidy 3.11B (+3.7%)', amount: '+3.11B SC', time: 'Today 16:40' },
+    { label: 'SC Swap', sub: '10 DOS -> 10B SC', amount: '+10B SC', time: 'Today 14:23' },
+    { label: 'Subsidy Received', sub: 'Round discount 36%', amount: '+5.20B SC', time: 'Yesterday 20:08' },
+    { label: 'SC Swap', sub: '5 DOS -> 5B SC', amount: '+5B SC', time: 'Yesterday 10:15' },
+    { label: 'Subsidy Received', sub: 'Round subsidy 2.88B (+2.1%)', amount: '+2.88B SC', time: '3d ago 18:33' },
+    { label: 'SC Swap', sub: '20 DOS -> 20B SC', amount: '+20B SC', time: '3d ago 09:00' },
+  ];
+  const orders = lang === 'zh' ? ORDERS : [
+    { combo: 'A×12  B×7  C×23', amount: '-9B SC', time: 'Today 16:42' },
+    { combo: 'A×2  B×1', amount: '-13B SC', time: 'Yesterday 20:11' },
+    { combo: 'B×5  C×10', amount: '-25B SC', time: '2d ago 14:05' },
+    { combo: 'A×3', amount: '-15B SC', time: '3d ago 19:22' },
+  ];
 
   return (
     <>
-      <PageHeader title="历史记录" />
+      <PageHeader title={lang === 'zh' ? '历史记录' : 'History'} />
 
       <div className="px-4 pt-4 pb-8">
         {/* tab bar */}
         <div className="mb-4 flex border-b border-tokenBorderSubtle">
-          {TABS.map(t => (
+          {tabs.map(t => (
             <button
               key={t.key}
               onClick={() => setTab(t.key)}
@@ -48,7 +68,7 @@ export default function P5History() {
 
         {tab === 'sc' && (
           <div className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
-            {SC_FLOWS.map((item, i) => (
+            {flows.map((item, i) => (
               <div key={i} className={`flex items-center gap-3 px-4 py-3${i < SC_FLOWS.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>
                 <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={{ background: 'var(--color-success-soft)' }}>
                   <ArrowDownLeft className="h-[18px] w-[18px] text-tokenSuccess" strokeWidth={2.2} />
@@ -68,14 +88,14 @@ export default function P5History() {
 
         {tab === 'order' && (
           <div className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
-            {ORDERS.map((item, i) => (
+            {orders.map((item, i) => (
               <div key={i} className={`flex items-center gap-3 px-4 py-3${i < ORDERS.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>
                 <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={{ background: 'var(--color-danger-soft)' }}>
                   <ShoppingCart className="h-[18px] w-[18px] text-tokenDanger" strokeWidth={2} />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[14px] font-medium leading-[18px] text-tokenText">{item.combo}</p>
-                  <p className="mt-0.5 text-[12px] leading-[16px] text-tokenSub">首发权</p>
+                  <p className="mt-0.5 text-[12px] leading-[16px] text-tokenSub">{lang === 'zh' ? '首发权' : 'Premiere Access'}</p>
                 </div>
                 <div className="shrink-0 text-right">
                   <p className="font-num text-[15px] font-semibold leading-[20px] text-tokenDanger">{item.amount}</p>

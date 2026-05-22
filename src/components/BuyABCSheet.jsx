@@ -2,17 +2,19 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Minus, Plus, ArrowLeftRight, X } from 'lucide-react';
 import InfoTip from './InfoTip';
+import { useLanguage } from './LanguageContext';
 
 const SC_BALANCE = 32.11;
 const PRICES = { A: 5, B: 3, C: 1 };
 const TIPS = {
-  A: 'A 类专用词元，用于兑换 A 类 AI 视频商品；购买价为 5 亿 SC = 1 亿 ASC，兑换商品时还需支付 10% 附加 SC',
-  B: 'B 类专用词元，用于兑换 B 类 AI 视频商品；购买价为 3 亿 SC = 1 亿 BSC，兑换商品时还需支付 10% 附加 SC',
-  C: 'C 类专用词元，用于兑换 C 类 AI 视频商品；购买价为 1 亿 SC = 1 亿 CSC，兑换商品时还需支付 10% 附加 SC',
+  A: '持有 ASC 可兑换 A 类 AI 视频；从 SC 兑换时，5 亿 SC 可换 1 亿 ASC；兑换视频时另扣 10% SC',
+  B: '持有 BSC 可兑换 B 类 AI 视频；从 SC 兑换时，3 亿 SC 可换 1 亿 BSC；兑换视频时另扣 10% SC',
+  C: '持有 CSC 可兑换 C 类 AI 视频；从 SC 兑换时，1 亿 SC 可换 1 亿 CSC；兑换视频时另扣 10% SC',
 };
 const TOKEN_V = { A: 'a', B: 'b', C: 'c' };
 
 export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
+  const { lang } = useLanguage();
   const [counts, setCounts] = useState({ A: 0, B: 0, C: 0 });
 
   const total = Object.entries(counts).reduce((s, [k, v]) => s + v * PRICES[k], 0);
@@ -57,7 +59,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
             <div className="absolute top-3 left-1/2 -translate-x-1/2 h-1 w-10 rounded-full" style={{ background: 'var(--color-border)' }} />
             <div className="mt-4 flex w-full items-center justify-between">
               <div className="w-8" />
-              <span className="text-[17px] font-semibold text-tokenText">兑换首发权</span>
+              <span className="text-[17px] font-semibold text-tokenText">{lang === 'zh' ? '兑换首发权' : 'Swap for Premiere Access'}</span>
               <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-full" style={{ background: 'var(--color-bg-card)' }}>
                 <X className="h-4 w-4 text-tokenSub" strokeWidth={2} />
               </button>
@@ -83,10 +85,14 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
                       >
                         {key}
                       </div>
-                      <span className="text-[15px] font-semibold text-tokenText">{key}SC 首发权</span>
-                      <InfoTip text={TIPS[key]} />
+                      <span className="text-[15px] font-semibold text-tokenText">{lang === 'zh' ? `${key}SC 首发权` : `${key}SC Premiere Access`}</span>
+                      <InfoTip text={lang === 'zh' ? TIPS[key] : {
+                        A: 'Hold ASC to swap for Type A AI videos. 5B SC swaps into 1B ASC, and swapping for the video also consumes an extra 10% in SC.',
+                        B: 'Hold BSC to swap for Type B AI videos. 3B SC swaps into 1B BSC, and swapping for the video also consumes an extra 10% in SC.',
+                        C: 'Hold CSC to swap for Type C AI videos. 1B SC swaps into 1B CSC, and swapping for the video also consumes an extra 10% in SC.',
+                      }[key]} />
                       <span className="ml-auto font-num text-[13px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>
-                        {PRICES[key]} 亿 SC / 个
+                        {PRICES[key]} {lang === 'zh' ? '亿 SC / 个' : 'B SC / unit'}
                       </span>
                     </div>
 
@@ -110,7 +116,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
                         </button>
                       </div>
                       {subtotal > 0 && (
-                        <span className="font-num text-[13px] font-medium text-tokenSub">= {subtotal} 亿 SC</span>
+                        <span className="font-num text-[13px] font-medium text-tokenSub">= {subtotal} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
                       )}
                     </div>
                   </div>
@@ -119,14 +125,14 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
             })}
 
             <div className="mb-4 flex items-center justify-between px-1">
-              <span className="text-[13px] font-medium text-tokenSub">合计消耗 SC</span>
-              <span className="font-num text-[16px] font-semibold text-tokenText">{total} 亿 SC</span>
+              <span className="text-[13px] font-medium text-tokenSub">{lang === 'zh' ? '合计消耗 SC' : 'Total SC Cost'}</span>
+              <span className="font-num text-[16px] font-semibold text-tokenText">{total} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
             </div>
 
             {insufficient && (
               <div className="mb-4 flex items-center justify-between rounded-lg px-3 py-2" style={{ background: 'var(--color-danger-soft)' }}>
-                <span className="text-[12px] text-tokenDanger">SC 余额不足</span>
-                <button onClick={() => { onClose(); onOpenExchange?.(); }} className="text-[12px] font-semibold text-tokenDanger underline">去兑换 SC</button>
+                <span className="text-[12px] text-tokenDanger">{lang === 'zh' ? 'SC 余额不足' : 'Insufficient SC balance'}</span>
+                <button onClick={() => { onClose(); onOpenExchange?.(); }} className="text-[12px] font-semibold text-tokenDanger underline">{lang === 'zh' ? '去兑换 SC' : 'Swap SC'}</button>
               </div>
             )}
 
@@ -144,7 +150,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
             >
               <span className="flex items-center justify-center gap-2">
                 <ArrowLeftRight className="h-4 w-4" strokeWidth={2.5} />
-                兑换首发权
+                {lang === 'zh' ? '兑换首发权' : 'Swap for Premiere Access'}
               </span>
             </button>
           </div>

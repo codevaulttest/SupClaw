@@ -1,7 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
+import { useLanguage } from './LanguageContext';
 
 export default function SubsidyResultModal({ onClose, subsidyAmount = 3.11, orderTotal = 9 }) {
+  const { lang } = useLanguage();
   const [displayVal, setDisplayVal] = useState(0);
   const [phase, setPhase] = useState('counting');
   const isZherang = subsidyAmount < orderTotal;
@@ -58,20 +60,20 @@ export default function SubsidyResultModal({ onClose, subsidyAmount = 3.11, orde
           </div>
 
           <p className="mb-1 text-center text-[15px] font-medium text-tokenSub">
-            {isZherang ? '本轮折让已到账' : '本轮补贴已到账'}
+            {lang === 'zh' ? (isZherang ? '本轮折让已到账' : '本轮补贴已到账') : (isZherang ? 'This round discount has been credited' : 'This round subsidy has been credited')}
           </p>
           <p className="mb-1 text-center font-num text-[38px] font-bold leading-none" style={{ color: 'var(--color-success)' }}>
-            +{displayVal.toFixed(2)} 亿
+            +{displayVal.toFixed(2)} {lang === 'zh' ? '亿' : 'B'}
           </p>
-          <p className="mb-5 text-center text-[13px] text-tokenHint">SC 词元</p>
+          <p className="mb-5 text-center text-[13px] text-tokenHint">SC</p>
 
           <div className="mb-5 flex gap-3">
             <div className="flex-1 rounded-xl py-3 text-center" style={{ background: 'var(--color-bg-page)' }}>
-              <p className="text-[11px] text-tokenHint">本次扣除</p>
-              <p className="mt-0.5 text-[13px] font-semibold text-tokenText">{orderTotal} 亿 SC</p>
+              <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '本次扣除' : 'Deducted'}</p>
+              <p className="mt-0.5 text-[13px] font-semibold text-tokenText">{orderTotal} {lang === 'zh' ? '亿 SC' : 'B SC'}</p>
             </div>
             <div className="flex-1 rounded-xl py-3 text-center" style={{ background: 'var(--color-bg-page)' }}>
-              <p className="text-[11px] text-tokenHint">{isZherang ? '本轮折让' : '本轮补贴'}</p>
+              <p className="text-[11px] text-tokenHint">{lang === 'zh' ? (isZherang ? '本轮折让' : '本轮补贴') : (isZherang ? 'Discount' : 'Subsidy')}</p>
               <p className="mt-0.5 text-[13px] font-semibold" style={{ color: isZherang ? 'var(--color-primary)' : 'var(--color-success)' }}>
                 {isZherang ? '' : '+'}{pct}%
               </p>
@@ -83,7 +85,7 @@ export default function SubsidyResultModal({ onClose, subsidyAmount = 3.11, orde
             className="w-full py-3 text-[15px] font-semibold text-white"
             style={{ borderRadius: 'var(--radius-md)', background: 'var(--color-primary)', boxShadow: '0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent)' }}
           >
-            好的
+            {lang === 'zh' ? '好的' : 'OK'}
           </button>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Home, PlayCircle, ReceiptText } from 'lucide-react';
+import { useLanguage } from './LanguageContext';
 
 const FilledHome = () => (
   <svg viewBox="0 0 24 24" className="h-[22px] w-[22px]" fill="currentColor">
@@ -17,15 +18,15 @@ const FilledOrders = () => (
   </svg>
 );
 
-const TABS = [
-  { label: '首页',    path: '/',       Icon: Home,        FilledIcon: FilledHome },
-  { label: 'AI 生成', path: '/ai',     Icon: PlayCircle,  FilledIcon: FilledPlay },
-  { label: '订单',    path: '/orders', Icon: ReceiptText, FilledIcon: FilledOrders },
-];
-
 export default function BottomNav() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { t } = useLanguage();
+  const tabs = [
+    { label: t('首页', 'Home'), path: '/', Icon: Home, FilledIcon: FilledHome },
+    { label: t('AI 生成', 'Create'), path: '/ai', Icon: PlayCircle, FilledIcon: FilledPlay },
+    { label: t('订单', 'Orders'), path: '/orders', Icon: ReceiptText, FilledIcon: FilledOrders },
+  ];
 
   const isActive = (path) =>
     path === '/' ? pathname === '/' : pathname.startsWith(path);
@@ -45,7 +46,7 @@ export default function BottomNav() {
           border: '1px solid rgba(255,255,255,0.72)',
         }}
       >
-        {TABS.map(({ label, path, Icon, FilledIcon }) => {
+        {tabs.map(({ label, path, Icon, FilledIcon }) => {
           const active = isActive(path);
           return (
             <button

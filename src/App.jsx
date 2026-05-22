@@ -11,6 +11,7 @@ import P6List     from './pages/P6List';
 import P7Product  from './pages/P7Product';
 import P8Orders   from './pages/P8Orders';
 import P9Video    from './pages/P9Video';
+import { LanguageProvider } from './components/LanguageContext';
 
 const SHELL = 'mx-auto min-h-screen w-full max-w-[480px] overflow-x-hidden font-ui text-tokenText';
 
@@ -33,27 +34,29 @@ function SubLayout() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Pages with bottom nav */}
-        <Route element={<MainLayout />}>
-          <Route path="/"       element={<P0Wallet />} />
-          <Route path="/ai"     element={<P6Store />} />
-          <Route path="/orders" element={<P8Orders />} />
-        </Route>
+    <LanguageProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Pages with bottom nav */}
+          <Route element={<MainLayout />}>
+            <Route path="/"       element={<P0Wallet />} />
+            <Route path="/ai"     element={<P6Store />} />
+            <Route path="/orders" element={<P8Orders />} />
+          </Route>
 
-        {/* Sub-pages — no bottom nav */}
-        <Route element={<SubLayout />}>
-          <Route path="/exchange"              element={<P1Exchange />} />
-          <Route path="/buy"                   element={<P2BuyABC />} />
-          <Route path="/lottery"               element={<P3Lottery />} />
-          <Route path="/result"                element={<P4Result />} />
-          <Route path="/history"               element={<P5History />} />
-          <Route path="/ai/:category"          element={<P6List />} />
-          <Route path="/ai/:category/:id"      element={<P7Product />} />
-          <Route path="/orders/:orderId"       element={<P9Video />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+          {/* Sub-pages — no bottom nav */}
+          <Route element={<SubLayout />}>
+            <Route path="/exchange"              element={<P1Exchange />} />
+            <Route path="/buy"                   element={<P2BuyABC />} />
+            <Route path="/lottery"               element={<P3Lottery />} />
+            <Route path="/result"                element={<P4Result />} />
+            <Route path="/history"               element={<P5History />} />
+            <Route path="/ai/:category"          element={<P6List />} />
+            <Route path="/ai/:category/:id"      element={<P7Product />} />
+            <Route path="/orders/:orderId"       element={<P9Video />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </LanguageProvider>
   );
 }

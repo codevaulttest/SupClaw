@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { Minus, Plus, X } from 'lucide-react';
+import { useLanguage } from './LanguageContext';
 
 const BALANCES = { A: 5.20, B: 3.00, C: 1.80 };
 const SC_BALANCE = 32.11;
@@ -14,6 +15,7 @@ const TYPE_INFO = {
 
 export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenExchange }) {
   const navigate = useNavigate();
+  const { lang } = useLanguage();
   const [qty, setQty] = useState(1);
   const [ordered, setOrdered] = useState(false);
 
@@ -74,21 +76,21 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
               <div className="flex h-[120px] items-end px-5 pb-4" style={{ background: `linear-gradient(135deg, var(--token-${v}-from), var(--token-${v}-to))` }}>
                 <div>
                   <span className="rounded-full px-2.5 py-1 text-[11px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.25)' }}>
-                    {type} · {info.label}
+                    {type} · {lang === 'zh' ? info.label : { A: 'Brand Custom', B: 'Creative Copy', C: 'Surprise Drop' }[type]}
                   </span>
                   <p className="mt-2 text-[18px] font-bold text-white">{product.title}</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 bg-tokenCard px-5 py-3">
                 <div>
-                  <p className="text-[11px] text-tokenHint">每单时长</p>
-                  <p className="font-num text-[16px] font-semibold text-tokenText">{product.duration} 秒</p>
+                  <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '每单时长' : 'Duration per Order'}</p>
+                  <p className="font-num text-[16px] font-semibold text-tokenText">{product.duration} {lang === 'zh' ? '秒' : 's'}</p>
                 </div>
                 <div className="h-8 w-px bg-tokenBorder" />
                 <div>
-                  <p className="text-[11px] text-tokenHint">单价</p>
+                  <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '单价' : 'Unit Price'}</p>
                   <p className="font-num text-[16px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>
-                    {unitABC}亿 {type}SC + {(unitABC * SC_RATE[type] * 0.1).toFixed(1)}亿 SC
+                    {unitABC}{lang === 'zh' ? '亿' : 'B'} {type}SC + {(unitABC * SC_RATE[type] * 0.1).toFixed(1)}{lang === 'zh' ? '亿' : 'B'} SC
                   </p>
                 </div>
               </div>
@@ -96,10 +98,10 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
 
             <div className="mb-4 flex items-center justify-between rounded-xl px-5 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
               <div className="min-w-0">
-                <p className="text-[13px] text-tokenSub">购买数量</p>
+                <p className="text-[13px] text-tokenSub">{lang === 'zh' ? '购买数量' : 'Quantity'}</p>
                 <p className="mt-1 flex items-baseline gap-1 whitespace-nowrap">
                   <span className="font-num text-[28px] font-bold leading-none text-tokenPrimary">{duration}</span>
-                  <span className="text-[15px] font-semibold text-tokenPrimary">秒视频</span>
+                  <span className="text-[15px] font-semibold text-tokenPrimary">{lang === 'zh' ? '秒视频' : 'sec video'}</span>
                 </p>
               </div>
               <div className="flex items-center gap-3">
@@ -114,18 +116,18 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
             </div>
 
             <div className="mb-4 rounded-xl px-5 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
-              <p className="mb-3 text-[13px] font-semibold text-tokenText">组合支付</p>
+              <p className="mb-3 text-[13px] font-semibold text-tokenText">{lang === 'zh' ? '组合支付' : 'Split Payment'}</p>
               <div className="mb-2 flex items-center justify-between">
                 <span className="text-[13px] text-tokenSub">{type}SC</span>
-                <span className="font-num text-[15px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>{totalABC} 亿 {type}SC</span>
+                <span className="font-num text-[15px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>{totalABC} {lang === 'zh' ? '亿' : 'B'} {type}SC</span>
               </div>
               <div className="mb-3 flex items-center justify-between">
-                <span className="text-[13px] text-tokenSub">SC（+10%）</span>
-                <span className="font-num text-[15px] font-semibold text-tokenPrimary">{totalSC} 亿 SC</span>
+                <span className="text-[13px] text-tokenSub">SC (+10%)</span>
+                <span className="font-num text-[15px] font-semibold text-tokenPrimary">{totalSC} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
               </div>
               <div className="mb-3 h-px bg-tokenBorderSubtle" />
               <div className="flex items-center justify-between">
-                <span className="text-[12px] text-tokenHint">{type}SC 余额 / SC 余额</span>
+                <span className="text-[12px] text-tokenHint">{lang === 'zh' ? `${type}SC 余额 / SC 余额` : `${type}SC Balance / SC Balance`}</span>
                 <span className="text-[12px]" style={{ color: abcInsufficient || scInsufficient ? 'var(--color-danger)' : 'var(--color-success)' }}>
                   {abcBal} / {SC_BALANCE}
                 </span>
@@ -134,14 +136,14 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
 
             {abcInsufficient && (
               <div className="mb-3 flex items-center justify-between rounded-xl px-4 py-3" style={{ background: 'var(--color-danger-soft)' }}>
-                <span className="text-[12px] text-tokenDanger">{type}SC 余额不足</span>
-                <button onClick={onOpenBuy} className="text-[12px] font-semibold text-tokenDanger underline">去兑换首发权</button>
+                <span className="text-[12px] text-tokenDanger">{lang === 'zh' ? `${type}SC 余额不足` : `Insufficient ${type}SC balance`}</span>
+                <button onClick={onOpenBuy} className="text-[12px] font-semibold text-tokenDanger underline">{lang === 'zh' ? '去兑换首发权' : 'Swap for Premiere Access'}</button>
               </div>
             )}
             {!abcInsufficient && scInsufficient && (
               <div className="mb-3 flex items-center justify-between rounded-xl px-4 py-3" style={{ background: 'var(--color-danger-soft)' }}>
-                <span className="text-[12px] text-tokenDanger">SC 余额不足</span>
-                <button onClick={onOpenExchange} className="text-[12px] font-semibold text-tokenDanger underline">去兑换 SC</button>
+                <span className="text-[12px] text-tokenDanger">{lang === 'zh' ? 'SC 余额不足' : 'Insufficient SC balance'}</span>
+                <button onClick={onOpenExchange} className="text-[12px] font-semibold text-tokenDanger underline">{lang === 'zh' ? '去兑换 SC' : 'Swap SC'}</button>
               </div>
             )}
 
@@ -150,7 +152,7 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="var(--color-success)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span className="text-[15px] font-semibold text-tokenSuccess">下单成功，跳转订单…</span>
+                <span className="text-[15px] font-semibold text-tokenSuccess">{lang === 'zh' ? '下单成功，跳转订单…' : 'Order placed. Redirecting to Orders…'}</span>
               </div>
             ) : (
               <button
@@ -164,7 +166,7 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
                   boxShadow: canOrder ? 'var(--shadow-sm)' : 'none',
                 }}
               >
-                确认下单 · {duration} 秒视频
+                {lang === 'zh' ? `确认下单 · ${duration} 秒视频` : `Confirm Order · ${duration}s video`}
               </button>
             )}
           </div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Clock, Cog, CheckCircle2 } from 'lucide-react';
 import HeaderActions from '../components/HeaderActions';
+import { useLanguage } from '../components/LanguageContext';
 
 const MOCK = {
   pending: [
@@ -28,20 +29,39 @@ const TYPE_BG    = { A: 'var(--token-a-soft)', B: 'var(--token-b-soft)', C: 'var
 
 export default function P8Orders() {
   const navigate = useNavigate();
+  const { lang } = useLanguage();
   const [tab, setTab] = useState('pending');
   const items = MOCK[tab] ?? [];
+  const tabs = lang === 'zh' ? TABS : [
+    { key: 'pending', label: 'Queued', Icon: Clock, color: 'var(--token-a-text)', bg: 'var(--token-a-soft)' },
+    { key: 'making', label: 'Rendering', Icon: Cog, color: 'var(--token-b-text)', bg: 'var(--token-b-soft)' },
+    { key: 'done', label: 'Done', Icon: CheckCircle2, color: 'var(--color-success)', bg: 'var(--color-success-soft)' },
+  ];
+  const localizedItems = lang === 'zh' ? items : {
+    pending: [
+      { id: 'o001', title: 'Analects × 3', type: 'A', cost: '30B ASC + 15B SC', time: 'Today 16:42', duration: '30s' },
+      { id: 'o002', title: 'Tao Te Ching × 1', type: 'B', cost: '6B BSC + 3B SC', time: 'Today 14:05', duration: '10s' },
+    ],
+    making: [
+      { id: 'o003', title: 'The Art of War × 5', type: 'A', cost: '50B ASC + 25B SC', time: 'Yesterday 20:11', duration: '50s' },
+    ],
+    done: [
+      { id: 'o004', title: 'Tang Poems × 2', type: 'C', cost: '4B CSC + 2B SC', time: '2d ago 10:15', duration: '20s' },
+      { id: 'o005', title: 'Zhuangzi × 4', type: 'B', cost: '24B BSC + 12B SC', time: '3d ago 09:30', duration: '40s' },
+    ],
+  }[tab] ?? [];
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-58px)]">
       <header className="flex h-[68px] items-center px-4">
         <div className="w-[86px]" />
-        <h1 className="flex-1 text-center text-[20px] font-semibold text-tokenText">订单</h1>
+        <h1 className="flex-1 text-center text-[20px] font-semibold text-tokenText">{lang === 'zh' ? '订单' : 'Orders'}</h1>
         <HeaderActions />
       </header>
 
       {/* tab bar */}
       <div className="flex border-b border-tokenBorder px-4">
-        {TABS.map(t => (
+        {tabs.map(t => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
@@ -58,14 +78,14 @@ export default function P8Orders() {
       </div>
 
       <div className="flex-1 px-4 pt-4 pb-[74px]">
-        {items.length === 0 ? (
+        {localizedItems.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-tokenHint">
-            <p className="text-[14px]">暂无订单</p>
+            <p className="text-[14px]">{lang === 'zh' ? '暂无订单' : 'No orders yet'}</p>
           </div>
         ) : (
           <div className="flex flex-col gap-3">
-            {items.map(order => {
-              const tabInfo = TABS.find(t => t.key === tab);
+            {localizedItems.map(order => {
+              const tabInfo = tabs.find(t => t.key === tab);
               return (
                 <button
                   key={order.id}
@@ -91,9 +111,9 @@ export default function P8Orders() {
                   </div>
                   {tab === 'done' && (
                     <div className="flex items-center justify-between border-t border-tokenBorderSubtle px-4 py-2.5">
-                      <span className="text-[12px] text-tokenHint">时长 {order.duration}</span>
+                      <span className="text-[12px] text-tokenHint">{lang === 'zh' ? `时长 ${order.duration}` : `Duration ${order.duration}`}</span>
                       <span className="flex items-center gap-1 text-[12px] font-semibold text-tokenPrimary">
-                        查看视频 <ChevronRight className="h-3.5 w-3.5" />
+                        {lang === 'zh' ? '查看视频' : 'Watch Video'} <ChevronRight className="h-3.5 w-3.5" />
                       </span>
                     </div>
                   )}
