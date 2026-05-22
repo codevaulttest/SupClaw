@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Search, X } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
+import ExchangeSubmittedSheet from '../components/ExchangeSubmittedSheet';
 import ProductOrderSheet from '../components/ProductOrderSheet';
 import BuyABCSheet from '../components/BuyABCSheet';
 import ExchangeSCSheet from '../components/ExchangeSCSheet';
@@ -18,11 +19,13 @@ const TOKEN_INFO = {
 export default function P6List() {
   const { lang } = useLanguage();
   const { category } = useParams();
+  const navigate = useNavigate();
   const [filter, setFilter] = useState('all');
   const [query, setQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [buyOpen, setBuyOpen] = useState(false);
   const [exchangeOpen, setExchangeOpen] = useState(false);
+  const [snack, setSnack] = useState(false);
 
   const products = getProductsByCategory(category);
   const q = query.trim().toLowerCase();
@@ -101,6 +104,7 @@ export default function P6List() {
         <ProductOrderSheet
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
+          onOrdered={() => setSnack(true)}
           onOpenBuy={() => {
             setSelectedProduct(null);
             setBuyOpen(true);
@@ -121,6 +125,13 @@ export default function P6List() {
         />
       )}
       {exchangeOpen && <ExchangeSCSheet onClose={() => setExchangeOpen(false)} />}
+      {snack && (
+        <ExchangeSubmittedSheet
+          variant="success"
+          actionTo="/orders"
+          onClose={() => setSnack(false)}
+        />
+      )}
     </>
   );
 }

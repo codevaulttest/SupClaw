@@ -8,13 +8,25 @@ const MOCK = {
   pending: [
     { id: 'o001', title: '管理的实践 × 3', type: 'A', cost: '3亿 ASC + 1.5亿 SC', time: '今天 16:42', duration: '30s' },
     { id: 'o002', title: '卓有成效的管理者 × 1', type: 'B', cost: '1亿 BSC + 0.3亿 SC', time: '今天 14:05', duration: '10s' },
+    { id: 'o006', title: '管理：任务、责任、实践 × 2', type: 'C', cost: '2亿 CSC + 0.2亿 SC', time: '今天 13:28', duration: '20s' },
+    { id: 'o007', title: '创新与企业家精神 × 4', type: 'C', cost: '4亿 CSC + 0.4亿 SC', time: '今天 11:46', duration: '40s' },
+    { id: 'o008', title: '竞争战略 × 1', type: 'B', cost: '1亿 BSC + 0.3亿 SC', time: '昨天 22:18', duration: '10s' },
+    { id: 'o009', title: '竞争优势 × 2', type: 'A', cost: '2亿 ASC + 1亿 SC', time: '昨天 18:35', duration: '20s' },
   ],
   making: [
     { id: 'o003', title: '地理学与生活 × 5', type: 'A', cost: '5亿 ASC + 2.5亿 SC', time: '昨天 20:11', duration: '50s' },
+    { id: 'o010', title: '人文地理学导论 × 3', type: 'B', cost: '3亿 BSC + 0.9亿 SC', time: '今天 15:30', duration: '30s' },
+    { id: 'o011', title: '地理学思想史 × 2', type: 'C', cost: '2亿 CSC + 0.2亿 SC', time: '今天 12:08', duration: '20s' },
+    { id: 'o012', title: '地理学的性质 × 6', type: 'C', cost: '6亿 CSC + 0.6亿 SC', time: '昨天 19:52', duration: '60s' },
+    { id: 'o013', title: '地理学中的解释 × 1', type: 'B', cost: '1亿 BSC + 0.3亿 SC', time: '昨天 17:20', duration: '10s' },
   ],
   done: [
     { id: 'o004', title: '人文地理学导论 × 2', type: 'B', cost: '2亿 BSC + 0.6亿 SC',  time: '2天前 10:15', duration: '20s' },
     { id: 'o005', title: '地理学思想史 × 4', type: 'C', cost: '4亿 CSC + 0.4亿 SC', time: '3天前 09:30', duration: '40s' },
+    { id: 'o014', title: '国家竞争优势 × 2', type: 'B', cost: '2亿 BSC + 0.6亿 SC', time: '3天前 18:02', duration: '20s' },
+    { id: 'o015', title: '蓝海战略 × 1', type: 'C', cost: '1亿 CSC + 0.1亿 SC', time: '4天前 16:55', duration: '10s' },
+    { id: 'o016', title: '从优秀到卓越 × 3', type: 'C', cost: '3亿 CSC + 0.3亿 SC', time: '4天前 13:40', duration: '30s' },
+    { id: 'o017', title: '基业长青 × 2', type: 'B', cost: '2亿 BSC + 0.6亿 SC', time: '5天前 09:12', duration: '20s' },
   ],
 };
 
@@ -37,19 +49,19 @@ export default function P8Orders() {
     { key: 'making', label: 'Rendering', Icon: Cog, color: 'var(--token-b-text)', bg: 'var(--token-b-soft)' },
     { key: 'done', label: 'Done', Icon: CheckCircle2, color: 'var(--color-success)', bg: 'var(--color-success-soft)' },
   ];
-  const localizedItems = lang === 'zh' ? items : {
-    pending: [
-      { id: 'o001', title: '管理的实践 × 3', type: 'A', cost: '3B ASC + 1.5B SC', time: 'Today 16:42', duration: '30s' },
-      { id: 'o002', title: '卓有成效的管理者 × 1', type: 'B', cost: '1B BSC + 0.3B SC', time: 'Today 14:05', duration: '10s' },
-    ],
-    making: [
-      { id: 'o003', title: '地理学与生活 × 5', type: 'A', cost: '5B ASC + 2.5B SC', time: 'Yesterday 20:11', duration: '50s' },
-    ],
-    done: [
-      { id: 'o004', title: '人文地理学导论 × 2', type: 'B', cost: '2B BSC + 0.6B SC', time: '2d ago 10:15', duration: '20s' },
-      { id: 'o005', title: '地理学思想史 × 4', type: 'C', cost: '4B CSC + 0.4B SC', time: '3d ago 09:30', duration: '40s' },
-    ],
-  }[tab] ?? [];
+  const localizedItems = lang === 'zh'
+    ? items
+    : items.map(order => ({
+      ...order,
+      cost: order.cost.replaceAll('亿', 'B'),
+      time: order.time
+        .replace('今天', 'Today')
+        .replace('昨天', 'Yesterday')
+        .replace('2天前', '2d ago')
+        .replace('3天前', '3d ago')
+        .replace('4天前', '4d ago')
+        .replace('5天前', '5d ago'),
+    }));
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-58px)]">

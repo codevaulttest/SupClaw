@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
 import { Minus, Play, Plus, X } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 
@@ -18,11 +17,9 @@ function formatBookTitle(title) {
   return `《${title}》`;
 }
 
-export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenExchange }) {
-  const navigate = useNavigate();
+export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenBuy, onOpenExchange }) {
   const { lang } = useLanguage();
   const [qty, setQty] = useState(1);
-  const [ordered, setOrdered] = useState(false);
 
   const type = product.type;
   const info = TYPE_INFO[type];
@@ -39,11 +36,8 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
 
   function handleOrder() {
     if (!canOrder) return;
-    setOrdered(true);
-    setTimeout(() => {
-      onClose();
-      navigate('/orders');
-    }, 1400);
+    onClose();
+    onOrdered?.();
   }
 
   return createPortal(
@@ -145,28 +139,19 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
               </div>
             )}
 
-            {ordered ? (
-              <div className="flex items-center justify-center gap-2 rounded-xl py-4" style={{ background: 'var(--color-success-soft)', border: '1px solid var(--color-primary-border)' }}>
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="var(--color-success)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span className="text-[15px] font-semibold text-tokenSuccess">{lang === 'zh' ? '兑换成功，跳转订单…' : 'Order placed. Redirecting to Orders…'}</span>
-              </div>
-            ) : (
-              <button
-                onClick={handleOrder}
-                disabled={!canOrder}
-                className="w-full py-[14px] text-[15px] font-semibold text-white"
-                style={{
-                  borderRadius: 'var(--radius-md)',
-                  background: canOrder ? `linear-gradient(135deg, var(--token-${v}-from), var(--token-${v}-to))` : 'var(--color-border)',
-                  color: canOrder ? '#fff' : 'var(--color-text-hint)',
-                  boxShadow: canOrder ? 'var(--shadow-sm)' : 'none',
-                }}
-              >
-                {lang === 'zh' ? `确认兑换 · ${duration} 秒视频` : `Confirm Order · ${duration}s video`}
-              </button>
-            )}
+            <button
+              onClick={handleOrder}
+              disabled={!canOrder}
+              className="w-full py-[14px] text-[15px] font-semibold text-white"
+              style={{
+                borderRadius: 'var(--radius-md)',
+                background: canOrder ? `linear-gradient(135deg, var(--token-${v}-from), var(--token-${v}-to))` : 'var(--color-border)',
+                color: canOrder ? '#fff' : 'var(--color-text-hint)',
+                boxShadow: canOrder ? 'var(--shadow-sm)' : 'none',
+              }}
+            >
+              {lang === 'zh' ? `确认下单 · ${duration} 秒视频` : `Confirm Order · ${duration}s video`}
+            </button>
           </div>
         </div>
       </div>
