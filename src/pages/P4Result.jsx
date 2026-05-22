@@ -58,7 +58,7 @@ export default function P4Result() {
         </div>
 
         <p className="mb-1 text-center text-[15px] font-medium text-tokenSub">
-          {lang === 'zh' ? (isZherang ? '本轮折让已到账' : '本轮补贴已到账') : (isZherang ? 'This round discount has been credited' : 'This round subsidy has been credited')}
+          {lang === 'zh' ? (isZherang ? '本轮折让已到账' : '本轮补贴已到账') : (isZherang ? 'Round discount credited' : 'Round subsidy credited')}
         </p>
         <p className="mb-1 text-center font-num text-[42px] font-bold leading-none" style={{ color: 'var(--color-success)' }}>
           +{displayVal.toFixed(2)} {lang === 'zh' ? '亿' : 'B'}
@@ -85,7 +85,7 @@ export default function P4Result() {
             onClick={() => navigate('/buy')}
             className="flex-1 py-3 text-[14px] font-semibold rounded-xl border border-tokenBorder text-tokenSub"
           >
-            {lang === 'zh' ? '继续兑换' : 'Buy More'}
+            {lang === 'zh' ? '继续兑换' : 'Redeem More'}
           </button>
           <button
             onClick={() => navigate('/history')}

@@ -30,6 +30,7 @@ function mockValidateCode(raw, forceInvalid = false) {
 
 function TokenIcon({ tokenKey, size = 6 }) {
   const px = size < 7 ? (size < 6 ? 10 : 11) : 13;
+  const scPx = size < 7 ? (size < 6 ? 7 : 9) : 10;
   const cls = `h-${size} w-${size} shrink-0`;
   if (tokenKey === 'DOS') return <img src="/assets/DOS.svg" alt="DOS" className={cls} />;
   if (tokenKey === 'SCV') return (
@@ -38,7 +39,7 @@ function TokenIcon({ tokenKey, size = 6 }) {
   );
   return (
     <div className={`grid ${cls} place-items-center rounded-full font-bold text-white`}
-      style={{ background: 'linear-gradient(135deg,var(--color-primary),#0a9090)', fontSize: px }}>S</div>
+      style={{ background: 'linear-gradient(135deg,var(--color-primary),#0a9090)', fontSize: scPx }}>SC</div>
   );
 }
 
@@ -46,6 +47,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
   const { lang } = useLanguage();
   const [fromToken, setFromToken] = useState('DOS');
   const [menuOpen,  setMenuOpen]  = useState(false);
+  const [toMenuOpen, setToMenuOpen] = useState(false);
   const [amount,    setAmount]    = useState('');   // DOS / SC 数量
   const [code,      setCode]      = useState('');   // SCV 激活码
   const [codeResult, setCodeResult] = useState(null); // null | { valid, amount }
@@ -70,6 +72,18 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
       setCodeResult(null);
     }
     setMenuOpen(false);
+    setToMenuOpen(false);
+  }
+
+  function selectToToken(key) {
+    if (key !== toToken) {
+      setFromToken(key === 'DOS' ? 'SC' : 'DOS');
+      setAmount('');
+      setCode('');
+      setCodeResult(null);
+    }
+    setMenuOpen(false);
+    setToMenuOpen(false);
   }
 
   // 激活码输入 → 清空旧结果
@@ -122,7 +136,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
   let errorMsg = null;
   if (!isSCV && !isSCFrom && insuffDOS) errorMsg = lang === 'zh' ? '余额不足' : 'Insufficient balance';
   if (isSCFrom && insuffSC)             errorMsg = lang === 'zh' ? '余额不足' : 'Insufficient balance';
-  if (isSCFrom && belowMin && !insuffSC) errorMsg = lang === 'zh' ? '最小兑换单位为 1 亿 SC' : 'Min unit: 1B SC';
+  if (isSCFrom && belowMin && !insuffSC) errorMsg = lang === 'zh' ? '最小兑换单位为 1 亿 SC' : 'Minimum amount: 1B SC';
 
   function handleSubmit() {
     if (!canSubmit) return;
@@ -212,7 +226,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
                 {/* Token 下拉 */}
                 <div className="relative shrink-0">
                   <button
-                    onClick={() => setMenuOpen(o => !o)}
+                    onClick={() => { setToMenuOpen(false); setMenuOpen(o => !o); }}
                     className="flex items-center gap-1.5 rounded-lg px-2 py-1 active:opacity-70"
                     style={{ background: 'var(--color-bg-card)' }}
                   >
@@ -318,7 +332,7 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
             <div className="flex justify-center py-3">
               <button
                 disabled={isSCV}
-                onClick={() => { setFromToken(t => t === 'SC' ? 'DOS' : 'SC'); setAmount(''); }}
+                onClick={() => { setFromToken(t => t === 'SC' ? 'DOS' : 'SC'); setAmount(''); setMenuOpen(false); setToMenuOpen(false); }}
                 className="flex h-9 w-9 items-center justify-center rounded-full transition-opacity"
                 style={{
                   background: 'var(--color-bg-card)',
@@ -338,9 +352,37 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
                 <span className="text-[12px] text-tokenHint">{toBalanceLabel}</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="flex shrink-0 items-center gap-2">
-                  <TokenIcon tokenKey={toToken} size={7} />
-                  <span className="text-[15px] font-semibold text-tokenText">{toToken}</span>
+                <div className="relative shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => { setMenuOpen(false); setToMenuOpen(o => !o); }}
+                    className="flex items-center gap-2 rounded-lg px-2 py-1 active:opacity-70"
+                    style={{ background: 'var(--color-bg-card)' }}
+                  >
+                    <TokenIcon tokenKey={toToken} size={7} />
+                    <span className="text-[15px] font-semibold text-tokenText">{toToken}</span>
+                    <ChevronDown className={`h-3.5 w-3.5 text-tokenSub transition-transform duration-150 ${toMenuOpen ? 'rotate-180' : ''}`} strokeWidth={2.5} />
+                  </button>
+                  {toMenuOpen && (
+                    <div
+                      className="absolute left-0 top-full z-10 mt-1.5 min-w-[140px] overflow-hidden rounded-xl py-1"
+                      style={{ background: 'var(--color-bg-page)', boxShadow: '0 4px 20px rgba(13,21,39,0.16)', border: '1px solid var(--color-border)' }}
+                    >
+                      {['DOS', 'SC'].map(key => (
+                        <button
+                          key={key}
+                          type="button"
+                          onClick={() => selectToToken(key)}
+                          className="flex w-full items-center gap-2.5 px-3 py-2.5 text-left active:opacity-70"
+                          style={{ background: key === toToken ? 'var(--color-primary-soft)' : 'transparent' }}
+                        >
+                          <TokenIcon tokenKey={key} size={5} />
+                          <span className="text-[14px] font-semibold text-tokenText">{key}</span>
+                          {key === toToken && <Check className="ml-auto h-3.5 w-3.5 text-tokenPrimary" strokeWidth={2.5} />}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-1 items-baseline justify-end gap-1">
                   <span className="font-num text-[26px] font-semibold" style={{ color: toAmountActive ? 'var(--color-primary)' : 'var(--color-text-secondary)' }}>

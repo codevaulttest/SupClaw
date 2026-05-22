@@ -61,7 +61,7 @@ export default function P7Product() {
         <div className="mb-5 overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
           <div className="h-[120px] flex items-end px-5 pb-4" style={{ background: `linear-gradient(135deg, var(--token-${v}-from), var(--token-${v}-to))` }}>
             <div>
-              <span className="rounded-full px-2.5 py-1 text-[11px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.25)' }}>{type} · {lang === 'zh' ? info.label : { A: 'Brand Custom', B: 'Creative Copy', C: 'Surprise Drop' }[type]}</span>
+              <span className="rounded-full px-2.5 py-1 text-[11px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.25)' }}>{type} · {lang === 'zh' ? info.label : { A: 'Type A Video', B: 'Type B Video', C: 'Type C Video' }[type]}</span>
               <p className="mt-2 text-[18px] font-bold text-white">{title}</p>
             </div>
           </div>
@@ -124,7 +124,7 @@ export default function P7Product() {
         {abcInsufficient && (
           <div className="mb-3 flex items-center justify-between rounded-xl px-4 py-3" style={{ background: 'var(--color-danger-soft)' }}>
             <span className="text-[12px] text-tokenDanger">{lang === 'zh' ? `${type}SC 余额不足` : `Insufficient ${type}SC balance`}</span>
-            <button onClick={() => navigate('/buy')} className="text-[12px] font-semibold text-tokenDanger underline">{lang === 'zh' ? '去兑换首发权' : 'Swap for Premiere Access'}</button>
+            <button onClick={() => navigate('/buy')} className="text-[12px] font-semibold text-tokenDanger underline">{lang === 'zh' ? '去兑换首发权' : 'Redeem Early Access'}</button>
           </div>
         )}
         {!abcInsufficient && scInsufficient && (

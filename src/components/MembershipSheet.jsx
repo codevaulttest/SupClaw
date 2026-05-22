@@ -8,9 +8,9 @@ const PERKS = [
   {
     icon: Crown,
     zh: '首发权兑换',
-    en: 'Premiere Access Redemption',
+    en: 'Early Access Redemption',
     subZh: '用 SC 兑换 ASC / BSC / CSC，抢先解锁 AI 视频',
-    subEn: 'Swap SC for ASC / BSC / CSC to unlock AI videos first',
+    subEn: 'Redeem ASC / BSC / CSC with SC to unlock AI videos early',
   },
   {
     icon: Zap,
@@ -52,7 +52,7 @@ function SuccessSheet({ expiry, onClose, onSwap }) {
               {lang === 'zh' ? `有效期至 ${expiry}` : `Valid until ${expiry}`}
             </p>
             <p className="mt-3 text-center text-[13px] leading-[20px] text-tokenHint">
-              {lang === 'zh' ? '您现在可以兑换首发权，抢先解锁 AI 视频。' : 'You can now redeem premiere access to unlock AI videos first.'}
+              {lang === 'zh' ? '您现在可以兑换首发权，抢先解锁 AI 视频。' : 'You can now redeem early access and unlock AI videos ahead of time.'}
             </p>
           </div>
           <div className="px-4 pb-8 flex flex-col gap-3">
@@ -61,7 +61,7 @@ function SuccessSheet({ expiry, onClose, onSwap }) {
               className="w-full py-[14px] text-[15px] font-semibold text-white"
               style={{ borderRadius: 'var(--radius-md)', background: 'var(--color-primary)', boxShadow: '0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent)' }}
             >
-              {lang === 'zh' ? '立即兑换首发权' : 'Swap for Premiere Access'}
+              {lang === 'zh' ? '立即兑换首发权' : 'Redeem Early Access'}
             </button>
             <button onClick={onClose} className="w-full py-3 text-[15px] font-medium text-tokenSub">
               {lang === 'zh' ? '关闭' : 'Close'}
@@ -146,7 +146,7 @@ export default function MembershipSheet({ onClose, onActivate }) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[16px] font-bold text-white leading-snug">
-                      {lang === 'zh' ? '解锁专属首发权兑换及更多特权' : 'Unlock premiere access & more perks'}
+                      {lang === 'zh' ? '解锁专属首发权兑换及更多特权' : 'Unlock early access and member perks'}
                     </p>
                     <div className="mt-2 inline-block rounded-full bg-white/15 px-3 py-0.5">
                       <span className="font-num text-[12px] font-semibold text-white">

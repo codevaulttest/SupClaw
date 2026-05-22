@@ -16,7 +16,7 @@ export default function ExchangeSubmittedSheet({
   const resolvedTitle = title ?? (lang === 'zh' ? (isSuccess ? '兑换成功' : '兑换已提交') : (isSuccess ? 'Order Placed' : 'Request Submitted'));
   const resolvedHint = hint ?? (lang === 'zh'
     ? (isSuccess ? '视频正在生成中，可在订单页查看进度。' : '兑换正在处理中，到账时间取决于网络状态，可在记录页查看最新进度。')
-    : (isSuccess ? 'Your video is being generated. Check status in Orders.' : 'Your request is being processed. Arrival time depends on network conditions. You can check the latest status in History.'));
+    : (isSuccess ? 'Your video is being generated. Check its status in Orders.' : 'Your request is being processed. Arrival time depends on network conditions. Check the latest status in History.'));
   const resolvedActionLabel = actionLabel ?? (lang === 'zh' ? (isSuccess ? '查看订单' : '查看记录') : (isSuccess ? 'View Orders' : 'View History'));
 
   return createPortal(

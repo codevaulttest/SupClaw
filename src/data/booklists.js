@@ -7,9 +7,9 @@ export const TOKEN_LABELS = {
 export const VISIBLE_CATEGORIES = [
   { id: 'business', name: '商业管理经典', nameEn: 'Business Management Classics', image: '/assets/booklist-business.png', locked: false },
   { id: 'humanities', name: '人文地理', nameEn: 'Humanities & Geography', image: '/assets/booklist-humanities.png', locked: false },
-  { id: 'classics', name: '国学经典', nameEn: 'Traditional Classics', image: '/assets/booklist-classics.png', locked: true },
-  { id: 'lifestyle', name: '生活美学', nameEn: 'Lifestyle Aesthetics', image: '/assets/booklist-lifestyle.png', locked: true },
-  { id: 'science', name: '科技未来', nameEn: 'Future Tech', image: '/assets/booklist-science.png', locked: true },
+  { id: 'classics', name: '国学经典', nameEn: 'Chinese Classics', image: '/assets/booklist-classics.png', locked: true },
+  { id: 'lifestyle', name: '生活美学', nameEn: 'Lifestyle & Aesthetics', image: '/assets/booklist-lifestyle.png', locked: true },
+  { id: 'science', name: '科技未来', nameEn: 'Technology & the Future', image: '/assets/booklist-science.png', locked: true },
 ];
 
 const TYPE_PATTERN = ['A', 'B', 'C', 'C', 'B'];

@@ -17,7 +17,7 @@ export default function P6Store() {
       {/* header */}
       <header className="flex h-[68px] items-center px-4">
         <div className="w-[86px]" />
-        <h1 className="flex-1 text-center text-[20px] font-semibold text-tokenText">{lang === 'zh' ? 'AI 生成' : 'AI Create'}</h1>
+        <h1 className="flex-1 text-center text-[20px] font-semibold text-tokenText">{lang === 'zh' ? 'AI 生成' : 'AI Studio'}</h1>
         <HeaderActions />
       </header>
 
@@ -27,8 +27,8 @@ export default function P6Store() {
           <PlayCircle className="h-5 w-5 text-white/80" strokeWidth={1.8} />
           <span className="text-[13px] text-white/70 font-medium">{lang === 'zh' ? 'AI 视频生成专区' : 'AI Video Studio'}</span>
         </div>
-          <p className="text-[20px] font-extrabold text-white leading-tight mb-1">{lang === 'zh' ? '选择主题·兑换视频' : 'Pick a Theme, Swap for a Video'}</p>
-        <p className="text-[13px] text-white/60">{lang === 'zh' ? '使用 ASC / BSC / CSC 兑换专属视频' : 'Use ASC / BSC / CSC to swap for exclusive videos'}</p>
+          <p className="text-[20px] font-extrabold text-white leading-tight mb-1">{lang === 'zh' ? '选择主题·兑换视频' : 'Choose a Theme, Get Your Video'}</p>
+        <p className="text-[13px] text-white/60">{lang === 'zh' ? '使用 ASC / BSC / CSC 兑换专属视频' : 'Redeem exclusive videos with ASC / BSC / CSC'}</p>
       </div>
 
       {/* categories */}
@@ -51,7 +51,7 @@ export default function P6Store() {
                     <div className="flex items-start justify-end p-2">
                       <span className="inline-flex items-center gap-1 rounded-full bg-slate-600 px-2 py-1 text-[11px] font-semibold text-white shadow-sm">
                         <Lock className="h-3 w-3" strokeWidth={2} />
-                        {lang === 'zh' ? '敬请期待' : 'Locked'}
+                        {lang === 'zh' ? '敬请期待' : 'Coming Soon'}
                       </span>
                     </div>
                   </div>

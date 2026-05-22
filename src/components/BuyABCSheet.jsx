@@ -76,7 +76,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit, onOpenM
             <div className="absolute top-3 left-1/2 -translate-x-1/2 h-1 w-10 rounded-full" style={{ background: 'var(--color-border)' }} />
             <div className="mt-4 flex w-full items-center justify-between">
               <div className="w-8" />
-              <span className="text-[17px] font-semibold text-tokenText">{lang === 'zh' ? '兑换首发权' : 'Swap for Premiere Access'}</span>
+              <span className="text-[17px] font-semibold text-tokenText">{lang === 'zh' ? '兑换首发权' : 'Redeem Early Access'}</span>
               <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-full" style={{ background: 'var(--color-bg-card)' }}>
                 <X className="h-4 w-4 text-tokenSub" strokeWidth={2} />
               </button>
@@ -94,7 +94,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit, onOpenM
                 <p className="mb-6 text-[13px] leading-relaxed text-tokenSub">
                   {lang === 'zh'
                     ? '兑换首发权是超级龙虾会员专属权益，开通后即可使用。'
-                    : 'Premiere access redemption is exclusive to SupClaw annual members.'}
+                    : 'Early access redemption is available to SupClaw annual members only.'}
                 </p>
                 <button
                   onClick={() => { onClose(); onOpenMembership?.(); }}
@@ -105,7 +105,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit, onOpenM
                     boxShadow: '0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent)',
                   }}
                 >
-                  {lang === 'zh' ? '立即开通会员' : 'Activate Annual Membership'}
+                  {lang === 'zh' ? '立即开通会员' : 'Start Annual Membership'}
                 </button>
               </div>
             ) : (
@@ -129,11 +129,11 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit, onOpenM
                       >
                         {key}
                       </div>
-                      <span className="text-[15px] font-semibold text-tokenText">{lang === 'zh' ? `${key}SC 首发权` : `${key}SC Premiere Access`}</span>
+                      <span className="text-[15px] font-semibold text-tokenText">{lang === 'zh' ? `${key}SC 首发权` : `${key}SC Early Access`}</span>
                       <InfoTip text={lang === 'zh' ? TIPS[key] : {
-                        A: 'Hold ASC to swap for Type A AI videos. 5B SC swaps into 1 ASC, and swapping for the video also consumes an extra 10% in SC.',
-                        B: 'Hold BSC to swap for Type B AI videos. 3B SC swaps into 1 BSC, and swapping for the video also consumes an extra 10% in SC.',
-                        C: 'Hold CSC to swap for Type C AI videos. 1B SC swaps into 1 CSC, and swapping for the video also consumes an extra 10% in SC.',
+                        A: 'Use ASC to redeem Type A AI videos. 5B SC gets 1 ASC. Video redemption also costs an extra 10% in SC.',
+                        B: 'Use BSC to redeem Type B AI videos. 3B SC gets 1 BSC. Video redemption also costs an extra 10% in SC.',
+                        C: 'Use CSC to redeem Type C AI videos. 1B SC gets 1 CSC. Video redemption also costs an extra 10% in SC.',
                       }[key]} />
                       <span className="ml-auto font-num text-[13px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>
                         {PRICES[key]} {lang === 'zh' ? '亿 SC / 个' : 'B SC / unit'}
@@ -203,7 +203,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit, onOpenM
             >
               <span className="flex items-center justify-center gap-2">
                 <ArrowLeftRight className="h-4 w-4" strokeWidth={2.5} />
-                {lang === 'zh' ? '兑换首发权' : 'Swap for Premiere Access'}
+                {lang === 'zh' ? '兑换首发权' : 'Redeem Early Access'}
               </span>
             </button>
             </>

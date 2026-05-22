@@ -85,7 +85,7 @@ export default function DevPanel({ onClose }) {
 
           {emptyOpen && [
             { label: lang === 'zh' ? '订单列表' : 'Orders', sub: lang === 'zh' ? '订单页三个 tab 全部清空' : 'Clear all order tabs', value: emptyOrders, toggle: toggleEmptyOrders },
-            { label: lang === 'zh' ? '历史记录' : 'History', sub: lang === 'zh' ? 'SC收支 & 首发权记录清空' : 'SC activity & premiere orders', value: emptyHistory, toggle: toggleEmptyHistory },
+            { label: lang === 'zh' ? '历史记录' : 'History', sub: lang === 'zh' ? 'SC收支 & 首发权记录清空' : 'SC activity & early access orders', value: emptyHistory, toggle: toggleEmptyHistory },
             { label: lang === 'zh' ? '商品列表' : 'Product List', sub: lang === 'zh' ? 'AI 商品分类列表清空' : 'AI category product list', value: emptyProductList, toggle: toggleEmptyProductList },
           ].map((item, i, arr) => (
             <div key={i} className={`flex items-center justify-between px-4 py-3.5 border-t border-tokenBorderSubtle${i === arr.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>

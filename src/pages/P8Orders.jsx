@@ -70,7 +70,7 @@ const TABS = [
 
 const EMPTY_LABELS = {
   pending: { zh: ['暂无待制作订单', '兑换后将在这里显示'],     en: ['No queued orders',    'Your pending orders will appear here'] },
-  making:  { zh: ['暂无制作中订单', '制作开始后将在这里显示'], en: ['Nothing rendering',   'Orders in progress will appear here'] },
+  making:  { zh: ['暂无制作中订单', '制作开始后将在这里显示'], en: ['No videos rendering', 'Orders in progress will appear here'] },
   done:    { zh: ['暂无已完成订单', '完成的视频将在这里显示'], en: ['No completed orders', 'Finished videos will appear here'] },
 };
 
@@ -141,7 +141,7 @@ export default function P8Orders() {
   const tabs = lang === 'zh' ? TABS : [
     { key: 'pending', label: 'Queued',    Icon: Clock,        color: 'var(--token-a-text)' },
     { key: 'making',  label: 'Rendering', Icon: Cog,          color: 'var(--token-b-text)' },
-    { key: 'done',    label: 'Done',      Icon: CheckCircle2, color: 'var(--color-success)' },
+    { key: 'done',    label: 'Completed', Icon: CheckCircle2, color: 'var(--color-success)' },
   ];
 
   const rawItems = emptyOrders ? [] : (MOCK[tab] ?? []);

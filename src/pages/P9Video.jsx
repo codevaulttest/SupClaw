@@ -41,7 +41,7 @@ export default function P9Video() {
         <div className="mb-5 rounded-xl px-5 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
           <p className="text-[16px] font-semibold text-tokenText mb-1">{order.title}</p>
           <div className="flex items-center gap-3 mt-2">
-            <span className="rounded-full px-2.5 py-1 font-num text-[11px] font-bold text-white" style={{ background: `var(--token-${v}-from)` }}>{order.type} · {lang === 'zh' ? '已完成' : 'Done'}</span>
+            <span className="rounded-full px-2.5 py-1 font-num text-[11px] font-bold text-white" style={{ background: `var(--token-${v}-from)` }}>{order.type} · {lang === 'zh' ? '已完成' : 'Completed'}</span>
             <span className="text-[12px] text-tokenHint">{order.duration}</span>
             <span className="text-[12px] text-tokenHint">{order.time}</span>
           </div>

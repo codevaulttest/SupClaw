@@ -52,7 +52,7 @@ export default function BottomNav() {
   const { t } = useLanguage();
   const tabs = [
     { label: t('首页', 'Home'), path: '/', Icon: Home, FilledIcon: FilledHome },
-    { label: t('AI 生成', 'Create'), path: '/ai', Icon: PlayCircle, FilledIcon: FilledPlay },
+    { label: t('AI 生成', 'Studio'), path: '/ai', Icon: PlayCircle, FilledIcon: FilledPlay },
     { label: t('订单', 'Orders'), path: '/orders', Icon: ReceiptText, FilledIcon: FilledOrders },
     { label: t('我的', 'Me'), path: '/profile', Icon: UserCircle2, FilledIcon: FilledProfile },
   ];

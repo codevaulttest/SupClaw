@@ -47,15 +47,15 @@ function SloganBanner() {
     >
       <div className="pr-[128px]">
         <p className="font-slogan text-[19px] font-extrabold leading-[26px] text-tokenText">
-          {lang === 'zh' ? '抢占视频首发权' : 'Claim Premiere Access'}
+          {lang === 'zh' ? '抢占视频首发权' : 'Claim Early Access'}
         </p>
         <p className="font-slogan text-[19px] font-extrabold leading-[26px] text-tokenPrimary">
-          {lang === 'zh' ? '解锁万亿词元补贴' : 'Unlock Trillion-Token Subsidies'}
+          {lang === 'zh' ? '解锁万亿词元补贴' : 'Unlock Token Subsidies'}
         </p>
       </div>
       <img
         src="/assets/mascot-lobster.png"
-        alt={lang === 'zh' ? '首发权' : 'Premiere access'}
+        alt={lang === 'zh' ? '首发权' : 'Early access'}
         className="absolute right-[20px] top-[11px] h-[140px] w-[150px] object-contain object-bottom"
       />
       <button
@@ -99,7 +99,7 @@ function SCHeroCard({ onExchange }) {
           <div className="flex items-center gap-2">
             <Wallet className="h-[17px] w-[17px] text-tokenPrimary" strokeWidth={2} />
             <span className="text-[17px] font-semibold leading-[22px] text-tokenText">{lang === 'zh' ? '词元余额 (SC)' : 'SC Balance'}</span>
-            <InfoTip text={lang === 'zh' ? '用 SC 换成 ASC/BSC/CSC，解锁 AI 视频。SC 可通过 DOS 兑换获得，或通过 100 秒补贴自动到账。' : 'Swap SC into ASC, BSC, or CSC to unlock AI videos. Earn SC by swapping from DOS or receiving the 100-second subsidy.'} size={13} />
+            <InfoTip text={lang === 'zh' ? '用 SC 换成 ASC/BSC/CSC，解锁 AI 视频。SC 可通过 DOS 兑换获得，或通过 100 秒补贴自动到账。' : 'Use SC to redeem ASC, BSC, or CSC and unlock AI videos. Get SC by swapping DOS or receiving 100-second subsidies.'} size={13} />
           </div>
           <button
             onClick={onExchange}
@@ -135,7 +135,7 @@ function ABCCard({ onBuy }) {
           <path d="M9 1.5 L16 5.25 L16 12.75 L9 16.5 L2 12.75 L2 5.25 Z" fill="none" stroke="url(#hxGrad)" strokeWidth="1.5"/>
           <polygon points="9,5.2 10.1,7.7 12.8,8 10.9,9.8 11.4,12.5 9,11.2 6.6,12.5 7.1,9.8 5.2,8 7.9,7.7" fill="url(#hxGrad)"/>
         </svg>
-        <span className="text-[17px] font-semibold leading-[22px] text-tokenText">{lang === 'zh' ? '我的首发权' : 'My Premiere Access'}</span>
+        <span className="text-[17px] font-semibold leading-[22px] text-tokenText">{lang === 'zh' ? '我的首发权' : 'My Early Access'}</span>
       </div>
       <div className="h-px bg-tokenBorderSubtle" />
 
@@ -177,7 +177,7 @@ function ABCCard({ onBuy }) {
           <div className="relative grid h-9 w-9 shrink-0 place-items-center" style={{ borderRadius: 'var(--radius-sm)', background: 'rgba(255,255,255,0.22)' }}>
             <ArrowLeftRight className="nudge h-[18px] w-[18px] text-white" strokeWidth={2.2} />
           </div>
-          <p className="relative text-[15px] font-bold leading-[20px] text-white flex-1">{lang === 'zh' ? '兑换首发权' : 'Swap for Premiere Access'}</p>
+          <p className="relative text-[15px] font-bold leading-[20px] text-white flex-1">{lang === 'zh' ? '兑换首发权' : 'Redeem Early Access'}</p>
           <ChevronRight className="relative h-[17px] w-[17px] shrink-0 text-white/70" strokeWidth={2.2} />
         </button>
       </div>
@@ -231,7 +231,7 @@ function SubsidyCountdown({ onTrigger }) {
                 style={{ background: '#ff9500', boxShadow: '0 0 0 3px rgba(255,149,0,0.25)', animation: 'pulse 1s ease-in-out infinite' }}
               />
               <span className="text-[16px] font-extrabold tracking-tight" style={{ color: '#7a3800' }}>
-                {lang === 'zh' ? '补贴结算中' : 'Settlement in Progress'}
+                {lang === 'zh' ? '补贴结算中' : 'Subsidy Processing'}
               </span>
             </div>
             <p className="text-[12px] font-medium leading-[17px]" style={{ color: 'rgba(122,56,0,0.75)' }}>A×12  B×7  C×23</p>
@@ -265,12 +265,12 @@ function WalletHistory({ onMore, onMemberRequired }) {
   const [tab, setTab] = useState('sc');
   const TABS = [
     { key: 'sc', label: lang === 'zh' ? 'SC 收支明细' : 'SC Activity' },
-    { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Premiere Access Orders' },
+    { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Early Access Orders' },
   ];
   const flows = lang === 'zh' ? SC_FLOWS : [
     { dir: 'in', label: 'SC Swap', sub: '5 DOS -> 5B SC', amount: '+5B SC', time: '2026-05-22 17:02' },
     { dir: 'in', label: 'Subsidy Received', sub: 'Round subsidy 3.11B (+3.7%)', amount: '+3.11B SC', time: '2026-05-22 16:40' },
-    { dir: 'out', label: 'Premiere Access', sub: 'A×2  B×1', amount: '-13B SC', time: '2026-05-22 14:23' },
+    { dir: 'out', label: 'Early Access', sub: 'A×2  B×1', amount: '-13B SC', time: '2026-05-22 14:23' },
   ];
   const orders = lang === 'zh' ? ORDERS : [
     { combo: 'A×12  B×7  C×23', amount: '-9B SC', time: '2026-05-22 16:42' },
@@ -349,7 +349,7 @@ function WalletHistory({ onMore, onMemberRequired }) {
 
       {tab === 'order' && (
         emptyHistory
-          ? <EmptyState icon={ReceiptText} title={lang === 'zh' ? '暂无首发权记录' : 'No premiere orders yet'} subtitle={lang === 'zh' ? '兑换首发权后将在此显示' : 'Premiere access orders will appear here'} />
+          ? <EmptyState icon={ReceiptText} title={lang === 'zh' ? '暂无首发权记录' : 'No early access orders yet'} subtitle={lang === 'zh' ? '兑换首发权后将在此显示' : 'Early access orders will appear here'} />
           : <div key="order" className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
             {orders.map((item, i) => (
               <div key={i} className={`flex items-center gap-3 px-4 py-3${i < ORDERS.length - 1 ? ' border-b border-tokenBorderSubtle' : ''}`}>
@@ -358,7 +358,7 @@ function WalletHistory({ onMore, onMemberRequired }) {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[14px] font-medium leading-[18px] text-tokenText">{item.combo}</p>
-                  <p className="mt-0.5 truncate text-[12px] leading-[16px] text-tokenSub">{lang === 'zh' ? '首发权' : 'Premiere Access'}</p>
+                  <p className="mt-0.5 truncate text-[12px] leading-[16px] text-tokenSub">{lang === 'zh' ? '首发权' : 'Early Access'}</p>
                 </div>
                 <div className="shrink-0 text-right">
                   <p className="font-num text-[15px] font-semibold leading-[20px] text-tokenDanger">{item.amount}</p>
@@ -379,7 +379,7 @@ function AIVideoMallPreview({ onEnter, onCategory }) {
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <PlayCircle className="h-[17px] w-[17px] text-tokenPrimary" strokeWidth={2} />
-          <h2 className="text-[17px] font-semibold leading-[22px] text-tokenText">{lang === 'zh' ? 'AI 生成' : 'AI Create'}</h2>
+          <h2 className="text-[17px] font-semibold leading-[22px] text-tokenText">{lang === 'zh' ? 'AI 生成' : 'AI Studio'}</h2>
         </div>
         <button onClick={onEnter} className="flex items-center gap-0.5 text-[13px] leading-[17px] text-tokenSub">
           {lang === 'zh' ? '进入' : 'Open'} <ChevronRight className="h-[15px] w-[15px]" />
@@ -401,7 +401,7 @@ function AIVideoMallPreview({ onEnter, onCategory }) {
                   <div className="flex items-start justify-end p-1.5">
                     <span className="inline-flex items-center gap-1 rounded-full bg-slate-600 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm">
                       <Lock className="h-2.5 w-2.5" strokeWidth={2} />
-                      {lang === 'zh' ? '敬请期待' : 'Locked'}
+                      {lang === 'zh' ? '敬请期待' : 'Coming Soon'}
                     </span>
                   </div>
                 </div>
@@ -503,7 +503,7 @@ export default function P0Wallet() {
       )}
       {buySubmitted && (
         <ExchangeSubmittedSheet
-          detail={lang === 'zh' ? `${buySubmitted.combo} · 扣除 ${buySubmitted.total} 亿 SC` : `${buySubmitted.combo} · ${buySubmitted.total}B SC deducted`}
+          detail={lang === 'zh' ? `${buySubmitted.combo} · 扣除 ${buySubmitted.total} 亿 SC` : `${buySubmitted.combo} · ${buySubmitted.total}B SC spent`}
           onClose={() => setBuySubmitted(null)}
         />
       )}

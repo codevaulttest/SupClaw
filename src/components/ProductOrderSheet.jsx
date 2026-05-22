@@ -85,8 +85,8 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-semibold text-tokenText">{formatBookTitle(product.title)}</p>
                 <p className="mt-0.5 text-[12px]" style={{ color: `var(--token-${v}-text)` }}>
-                  {lang === 'zh' ? info.label : { A: 'Brand Custom', B: 'Creative Copy', C: 'Surprise Drop' }[type]}
-                  <span className="text-tokenHint"> · {lang === 'zh' ? '每' : 'per'} {product.duration}{lang === 'zh' ? '秒需' : 's'} {lang === 'zh' ? '' : 'costs '}{unitABC} {type}SC</span>
+                  {lang === 'zh' ? info.label : { A: 'Type A Video', B: 'Type B Video', C: 'Type C Video' }[type]}
+                  <span className="text-tokenHint"> · {lang === 'zh' ? '每' : 'Each'} {product.duration}{lang === 'zh' ? '秒需' : 's video costs '}{unitABC} {type}SC</span>
                 </p>
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
             {abcInsufficient && (
               <div className="mb-3 flex items-center justify-between rounded-xl px-4 py-3" style={{ background: 'var(--color-danger-soft)' }}>
                 <span className="text-[12px] text-tokenDanger">{lang === 'zh' ? `${type}SC 余额不足` : `Insufficient ${type}SC balance`}</span>
-                <button onClick={onOpenBuy} className="text-[12px] font-semibold text-tokenDanger underline">{lang === 'zh' ? '去兑换首发权' : 'Swap for Premiere Access'}</button>
+                <button onClick={onOpenBuy} className="text-[12px] font-semibold text-tokenDanger underline">{lang === 'zh' ? '去兑换首发权' : 'Redeem Early Access'}</button>
               </div>
             )}
             {!abcInsufficient && scInsufficient && (

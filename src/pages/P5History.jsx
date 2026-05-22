@@ -33,7 +33,7 @@ export default function P5History() {
   const [showMembership, setShowMembership] = useState(false);
   const tabs = [
     { key: 'sc', label: lang === 'zh' ? 'SC 收支明细' : 'SC Activity' },
-    { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Premiere Access Orders' },
+    { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Early Access Orders' },
   ];
   const flows = lang === 'zh' ? SC_FLOWS : [
     { label: 'Subsidy Received', sub: 'Round subsidy 3.11B (+3.7%)', amount: '+3.11B SC', time: '2026-05-22 16:40' },
@@ -102,7 +102,7 @@ export default function P5History() {
 
         {tab === 'order' && (
           emptyHistory
-            ? <EmptyState icon={ReceiptText} title={lang === 'zh' ? '暂无首发权记录' : 'No premiere orders yet'} subtitle={lang === 'zh' ? '兑换首发权后将在此显示' : 'Premiere access orders will appear here'} />
+            ? <EmptyState icon={ReceiptText} title={lang === 'zh' ? '暂无首发权记录' : 'No early access orders yet'} subtitle={lang === 'zh' ? '兑换首发权后将在此显示' : 'Early access orders will appear here'} />
             : (
               <div className="tab-enter overflow-hidden bg-tokenCard" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
                 {orders.map((item, i) => (
@@ -112,7 +112,7 @@ export default function P5History() {
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-[14px] font-medium leading-[18px] text-tokenText">{item.combo}</p>
-                      <p className="mt-0.5 text-[12px] leading-[16px] text-tokenSub">{lang === 'zh' ? '首发权' : 'Premiere Access'}</p>
+                      <p className="mt-0.5 text-[12px] leading-[16px] text-tokenSub">{lang === 'zh' ? '首发权' : 'Early Access'}</p>
                     </div>
                     <div className="shrink-0 text-right">
                       <p className="font-num text-[15px] font-semibold leading-[20px] text-tokenDanger">{item.amount}</p>
