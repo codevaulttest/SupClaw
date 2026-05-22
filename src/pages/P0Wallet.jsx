@@ -26,14 +26,14 @@ const ABC_BALANCES = [
 ];
 
 const SC_FLOWS = [
-  { dir: 'in',      label: '兑换 SC',  sub: '5 DOS → 5 亿 SC',              amount: '+5 亿 SC',    time: '今天 17:02' },
-  { dir: 'in',      label: '补贴到账', sub: '本轮补贴 +3.7%', amount: '+3.11 亿 SC', time: '今天 16:40' },
-  { dir: 'out',     label: '兑换首发权', sub: 'A×2  B×1',                     amount: '-13 亿 SC',   time: '今天 14:23' },
+  { dir: 'in',      label: '兑换 SC',  sub: '5 DOS → 5 亿 SC',              amount: '+5 亿 SC',    time: '2026-05-22 17:02' },
+  { dir: 'in',      label: '补贴到账', sub: '本轮补贴 +3.7%', amount: '+3.11 亿 SC', time: '2026-05-22 16:40' },
+  { dir: 'out',     label: '兑换首发权', sub: 'A×2  B×1',                     amount: '-13 亿 SC',   time: '2026-05-22 14:23' },
 ];
 
 const ORDERS = [
-  { combo: 'A×12  B×7  C×23', amount: '−9 亿 SC',  time: '今天 16:42' },
-  { combo: 'A×2  B×1',        amount: '−13 亿 SC', time: '昨天 20:11' },
+  { combo: 'A×12  B×7  C×23', amount: '−9 亿 SC',  time: '2026-05-22 16:42' },
+  { combo: 'A×2  B×1',        amount: '−13 亿 SC', time: '2026-05-21 20:11' },
 ];
 
 
@@ -252,13 +252,13 @@ function WalletHistory({ onMore, onMemberRequired }) {
     { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Premiere Access Orders' },
   ];
   const flows = lang === 'zh' ? SC_FLOWS : [
-    { dir: 'in', label: 'SC Swap', sub: '5 DOS -> 5B SC', amount: '+5B SC', time: 'Today 17:02' },
-    { dir: 'in', label: 'Subsidy Received', sub: 'Round subsidy 3.11B (+3.7%)', amount: '+3.11B SC', time: 'Today 16:40' },
-    { dir: 'out', label: 'Premiere Access', sub: 'A×2  B×1', amount: '-13B SC', time: 'Today 14:23' },
+    { dir: 'in', label: 'SC Swap', sub: '5 DOS -> 5B SC', amount: '+5B SC', time: '2026-05-22 17:02' },
+    { dir: 'in', label: 'Subsidy Received', sub: 'Round subsidy 3.11B (+3.7%)', amount: '+3.11B SC', time: '2026-05-22 16:40' },
+    { dir: 'out', label: 'Premiere Access', sub: 'A×2  B×1', amount: '-13B SC', time: '2026-05-22 14:23' },
   ];
   const orders = lang === 'zh' ? ORDERS : [
-    { combo: 'A×12  B×7  C×23', amount: '-9B SC', time: 'Today 16:42' },
-    { combo: 'A×2  B×1', amount: '-13B SC', time: 'Yesterday 20:11' },
+    { combo: 'A×12  B×7  C×23', amount: '-9B SC', time: '2026-05-22 16:42' },
+    { combo: 'A×2  B×1', amount: '-13B SC', time: '2026-05-21 20:11' },
   ];
 
   return (

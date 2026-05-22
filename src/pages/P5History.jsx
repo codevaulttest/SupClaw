@@ -8,19 +8,19 @@ import { useDev } from '../components/DevContext';
 import MembershipSheet from '../components/MembershipSheet';
 
 const SC_FLOWS = [
-  { label: '补贴到账', sub: '本轮补贴 +3.7%',              amount: '+3.11 亿 SC', time: '今天 16:40',  color: 'success' },
-  { label: '兑换 SC',  sub: '10 DOS → 10 亿 SC',           amount: '+10 亿 SC',   time: '今天 14:23',  color: 'success' },
-  { label: '补贴到账', sub: '本轮折让 36%',                 amount: '+5.20 亿 SC', time: '昨天 20:08',  color: 'success' },
-  { label: '兑换 SC',  sub: '5 DOS → 5 亿 SC',             amount: '+5 亿 SC',    time: '昨天 10:15',  color: 'success' },
-  { label: '补贴到账', sub: '本轮补贴 +2.1%',              amount: '+2.88 亿 SC', time: '3天前 18:33', color: 'success' },
-  { label: '兑换 SC',  sub: '20 DOS → 20 亿 SC',           amount: '+20 亿 SC',   time: '3天前 09:00', color: 'success' },
+  { label: '补贴到账', sub: '本轮补贴 +3.7%',              amount: '+3.11 亿 SC', time: '2026-05-22 16:40', color: 'success' },
+  { label: '兑换 SC',  sub: '10 DOS → 10 亿 SC',           amount: '+10 亿 SC',   time: '2026-05-22 14:23', color: 'success' },
+  { label: '补贴到账', sub: '本轮折让 36%',                 amount: '+5.20 亿 SC', time: '2026-05-21 20:08', color: 'success' },
+  { label: '兑换 SC',  sub: '5 DOS → 5 亿 SC',             amount: '+5 亿 SC',    time: '2026-05-21 10:15', color: 'success' },
+  { label: '补贴到账', sub: '本轮补贴 +2.1%',              amount: '+2.88 亿 SC', time: '2026-05-19 18:33', color: 'success' },
+  { label: '兑换 SC',  sub: '20 DOS → 20 亿 SC',           amount: '+20 亿 SC',   time: '2026-05-19 09:00', color: 'success' },
 ];
 
 const ORDERS = [
-  { combo: 'A×12  B×7  C×23', amount: '−9 亿 SC',  time: '今天 16:42' },
-  { combo: 'A×2  B×1',        amount: '−13 亿 SC', time: '昨天 20:11' },
-  { combo: 'B×5  C×10',       amount: '−25 亿 SC', time: '2天前 14:05' },
-  { combo: 'A×3',             amount: '−15 亿 SC', time: '3天前 19:22' },
+  { combo: 'A×12  B×7  C×23', amount: '−9 亿 SC',  time: '2026-05-22 16:42' },
+  { combo: 'A×2  B×1',        amount: '−13 亿 SC', time: '2026-05-21 20:11' },
+  { combo: 'B×5  C×10',       amount: '−25 亿 SC', time: '2026-05-20 14:05' },
+  { combo: 'A×3',             amount: '−15 亿 SC', time: '2026-05-19 19:22' },
 ];
 
 const TABS = [{ key: 'sc', label: 'SC 收支明细' }, { key: 'order', label: '首发权兑换记录' }];
@@ -36,18 +36,18 @@ export default function P5History() {
     { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Premiere Access Orders' },
   ];
   const flows = lang === 'zh' ? SC_FLOWS : [
-    { label: 'Subsidy Received', sub: 'Round subsidy 3.11B (+3.7%)', amount: '+3.11B SC', time: 'Today 16:40' },
-    { label: 'SC Swap', sub: '10 DOS -> 10B SC', amount: '+10B SC', time: 'Today 14:23' },
-    { label: 'Subsidy Received', sub: 'Round discount 36%', amount: '+5.20B SC', time: 'Yesterday 20:08' },
-    { label: 'SC Swap', sub: '5 DOS -> 5B SC', amount: '+5B SC', time: 'Yesterday 10:15' },
-    { label: 'Subsidy Received', sub: 'Round subsidy 2.88B (+2.1%)', amount: '+2.88B SC', time: '3d ago 18:33' },
-    { label: 'SC Swap', sub: '20 DOS -> 20B SC', amount: '+20B SC', time: '3d ago 09:00' },
+    { label: 'Subsidy Received', sub: 'Round subsidy 3.11B (+3.7%)', amount: '+3.11B SC', time: '2026-05-22 16:40' },
+    { label: 'SC Swap', sub: '10 DOS -> 10B SC', amount: '+10B SC', time: '2026-05-22 14:23' },
+    { label: 'Subsidy Received', sub: 'Round discount 36%', amount: '+5.20B SC', time: '2026-05-21 20:08' },
+    { label: 'SC Swap', sub: '5 DOS -> 5B SC', amount: '+5B SC', time: '2026-05-21 10:15' },
+    { label: 'Subsidy Received', sub: 'Round subsidy 2.88B (+2.1%)', amount: '+2.88B SC', time: '2026-05-19 18:33' },
+    { label: 'SC Swap', sub: '20 DOS -> 20B SC', amount: '+20B SC', time: '2026-05-19 09:00' },
   ];
   const orders = lang === 'zh' ? ORDERS : [
-    { combo: 'A×12  B×7  C×23', amount: '-9B SC', time: 'Today 16:42' },
-    { combo: 'A×2  B×1', amount: '-13B SC', time: 'Yesterday 20:11' },
-    { combo: 'B×5  C×10', amount: '-25B SC', time: '2d ago 14:05' },
-    { combo: 'A×3', amount: '-15B SC', time: '3d ago 19:22' },
+    { combo: 'A×12  B×7  C×23', amount: '-9B SC', time: '2026-05-22 16:42' },
+    { combo: 'A×2  B×1', amount: '-13B SC', time: '2026-05-21 20:11' },
+    { combo: 'B×5  C×10', amount: '-25B SC', time: '2026-05-20 14:05' },
+    { combo: 'A×3', amount: '-15B SC', time: '2026-05-19 19:22' },
   ];
 
   return (
