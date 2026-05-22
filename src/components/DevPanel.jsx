@@ -24,7 +24,7 @@ export default function DevPanel({ onClose }) {
 
   return createPortal(
     <div className="fixed inset-0 z-[60] flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.3)' }} onClick={onClose}>
-      <div className="w-full max-w-[480px] px-4 pb-6" style={{ animation: 'sheetUp 260ms cubic-bezier(0.22,1,0.36,1) both' }} onClick={e => e.stopPropagation()}>
+      <div className="w-full max-w-[480px] px-4 pb-[160px]" style={{ animation: 'sheetUp 260ms cubic-bezier(0.22,1,0.36,1) both' }} onClick={e => e.stopPropagation()}>
         <div className="overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-lg)' }}>
           <div className="flex items-center justify-between border-b border-tokenBorderSubtle px-4 py-3">
             <span className="text-[13px] font-semibold text-tokenSub">{lang === 'zh' ? '🛠 开发者演示' : 'Developer Demo'}</span>
