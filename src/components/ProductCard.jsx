@@ -6,6 +6,11 @@ const TOKEN_INFO = {
   C: { label: '极速盲盒版', color: 'var(--token-c-text)' },
 };
 
+function formatBookTitle(title) {
+  if (!title || title.startsWith('《') || /^[A-Za-z0-9\s',:.-]+$/.test(title)) return title;
+  return `《${title}》`;
+}
+
 export default function ProductCard({ product, onClick, list = false, className = '', style = {} }) {
   const type = product.type || 'C';
   const v = type.toLowerCase();
@@ -27,7 +32,7 @@ export default function ProductCard({ product, onClick, list = false, className 
           <span className="absolute left-1 top-1 rounded px-1 py-0 text-[9px] font-bold text-white leading-4" style={{ background: 'rgba(0,0,0,0.28)' }}>{badge}</span>
         </div>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-[14px] font-semibold text-tokenText leading-snug">{product.title}</p>
+          <p className="truncate text-[14px] font-semibold text-tokenText leading-snug">{formatBookTitle(product.title)}</p>
         </div>
         <ChevronRight className="h-4 w-4 shrink-0 text-tokenHint" strokeWidth={1.8} />
       </button>
@@ -58,7 +63,7 @@ export default function ProductCard({ product, onClick, list = false, className 
         </span>
       </div>
       <div className="px-3 py-2.5">
-        <p className="truncate text-[13px] font-semibold text-tokenText">{product.title}</p>
+        <p className="truncate text-[13px] font-semibold text-tokenText">{formatBookTitle(product.title)}</p>
       </div>
     </button>
   );

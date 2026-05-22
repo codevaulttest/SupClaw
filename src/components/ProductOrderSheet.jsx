@@ -13,6 +13,11 @@ const TYPE_INFO = {
   C: { label: '极速盲盒版', v: 'c' },
 };
 
+function formatBookTitle(title) {
+  if (!title || title.startsWith('《') || /^[A-Za-z0-9\s',:.-]+$/.test(title)) return title;
+  return `《${title}》`;
+}
+
 export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenExchange }) {
   const navigate = useNavigate();
   const { lang } = useLanguage();
@@ -64,7 +69,7 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
             <div className="absolute top-3 left-1/2 h-1 w-10 -translate-x-1/2 rounded-full" style={{ background: 'var(--color-border)' }} />
             <div className="mt-4 flex w-full items-center justify-between">
               <div className="w-8" />
-              <span className="text-[17px] font-semibold text-tokenText">{product.title}</span>
+              <span className="text-[17px] font-semibold text-tokenText">{formatBookTitle(product.title)}</span>
               <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-full" style={{ background: 'var(--color-bg-card)' }}>
                 <X className="h-4 w-4 text-tokenSub" strokeWidth={2} />
               </button>
@@ -78,7 +83,7 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
                   <span className="rounded-full px-2.5 py-1 text-[11px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.25)' }}>
                     {type} · {lang === 'zh' ? info.label : { A: 'Brand Custom', B: 'Creative Copy', C: 'Surprise Drop' }[type]}
                   </span>
-                  <p className="mt-2 text-[18px] font-bold text-white">{product.title}</p>
+                  <p className="mt-2 text-[18px] font-bold text-white">{formatBookTitle(product.title)}</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 bg-tokenCard px-5 py-3">
