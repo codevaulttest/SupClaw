@@ -20,9 +20,9 @@ import { VISIBLE_CATEGORIES } from '../data/booklists';
 
 // ── Mock data ────────────────────────────────────────────────
 const ABC_BALANCES = [
-  { key: 'A', v: 'a', label: 'ASC', value: '5.20', tip: '持有 ASC 可兑换 A 类 AI 视频；从 SC 兑换时，5 亿 SC 可换 1 ASC；兑换视频时另扣 10% SC' },
-  { key: 'B', v: 'b', label: 'BSC', value: '3.00', tip: '持有 BSC 可兑换 B 类 AI 视频；从 SC 兑换时，3 亿 SC 可换 1 BSC；兑换视频时另扣 10% SC' },
-  { key: 'C', v: 'c', label: 'CSC', value: '1.80', tip: '持有 CSC 可兑换 C 类 AI 视频；从 SC 兑换时，1 亿 SC 可换 1 CSC；兑换视频时另扣 10% SC' },
+  { key: 'A', v: 'a', label: 'ASC', value: '5.20', tip: '用 ASC 解锁 A 类 AI 视频，换 1 个 ASC 需消耗 5 亿 SC。' },
+  { key: 'B', v: 'b', label: 'BSC', value: '3.00', tip: '用 BSC 解锁 B 类 AI 视频，换 1 个 BSC 需消耗 3 亿 SC。' },
+  { key: 'C', v: 'c', label: 'CSC', value: '1.80', tip: '用 CSC 解锁 C 类 AI 视频，换 1 个 CSC 需消耗 1 亿 SC。' },
 ];
 
 const SC_FLOWS = [
@@ -99,7 +99,7 @@ function SCHeroCard({ onExchange }) {
           <div className="flex items-center gap-2">
             <Wallet className="h-[17px] w-[17px] text-tokenPrimary" strokeWidth={2} />
             <span className="text-[17px] font-semibold leading-[22px] text-tokenText">{lang === 'zh' ? '词元余额 (SC)' : 'SC Balance'}</span>
-            <InfoTip text={lang === 'zh' ? 'SC 是你的基础余额，可用 DOS 兑换获得，也可能来自 100 秒补贴；可用于换 ASC/BSC/CSC，兑换 AI 视频时另扣 10% SC' : 'SC is your base balance. You can get it by swapping from DOS or by receiving the 100-second subsidy. It can be used to swap into ASC, BSC, or CSC, and swapping for AI videos also consumes an extra 10% in SC.'} size={13} />
+            <InfoTip text={lang === 'zh' ? '用 SC 换成 ASC/BSC/CSC，解锁 AI 视频。SC 可通过 DOS 兑换获得，或通过 100 秒补贴自动到账。' : 'Swap SC into ASC, BSC, or CSC to unlock AI videos. Earn SC by swapping from DOS or receiving the 100-second subsidy.'} size={13} />
           </div>
           <button
             onClick={onExchange}
@@ -156,9 +156,9 @@ function ABCCard({ onBuy }) {
                 {item.label}
               </span>
               <InfoTip text={lang === 'zh' ? item.tip : {
-                A: 'Hold ASC to swap for Type A AI videos. 5B SC swaps into 1 ASC, and swapping for the video also consumes an extra 10% in SC.',
-                B: 'Hold BSC to swap for Type B AI videos. 3B SC swaps into 1 BSC, and swapping for the video also consumes an extra 10% in SC.',
-                C: 'Hold CSC to swap for Type C AI videos. 1B SC swaps into 1 CSC, and swapping for the video also consumes an extra 10% in SC.',
+                A: 'Use ASC to unlock Type A AI videos. 1 ASC costs 5B SC.',
+                B: 'Use BSC to unlock Type B AI videos. 1 BSC costs 3B SC.',
+                C: 'Use CSC to unlock Type C AI videos. 1 CSC costs 1B SC.',
               }[item.key]} />
             </div>
             <p className="mb-0.5 text-[10px] leading-[13px] text-tokenHint">{lang === 'zh' ? '数量' : 'Balance'}</p>
@@ -222,7 +222,7 @@ function SubsidyCountdown({ onTrigger }) {
           <div className="min-w-0 flex-1">
             <div className="mb-1 flex items-center gap-2">
               <span className="inline-block h-2 w-2 rounded-full" style={{ background: '#ffad00', boxShadow: '0 0 6px #ffad00', animation: 'pulse 1.2s ease-in-out infinite' }} />
-              <span className="text-[15px] font-bold" style={{ color: '#7a4800' }}>{lang === 'zh' ? '抽奖结算中' : 'Settlement in Progress'}</span>
+              <span className="text-[15px] font-bold" style={{ color: '#7a4800' }}>{lang === 'zh' ? '补贴结算中' : 'Settlement in Progress'}</span>
             </div>
             <p className="text-[12px] leading-[17px]" style={{ color: 'rgba(122,72,0,0.7)' }}>A×12  B×7  C×23</p>
           </div>
