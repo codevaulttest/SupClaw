@@ -48,7 +48,7 @@ export default function P6Store() {
                 {cat.locked && (
                   <div className="absolute inset-0 bg-slate-200/25">
                     <div className="flex items-start justify-end p-2">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-slate-700/55 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-600 px-2 py-1 text-[11px] font-semibold text-white shadow-sm">
                         <Lock className="h-3 w-3" strokeWidth={2} />
                         {lang === 'zh' ? '敬请期待' : 'Locked'}
                       </span>
