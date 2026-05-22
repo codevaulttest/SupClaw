@@ -103,7 +103,7 @@ function SCHeroCard({ onExchange }) {
             style={{ borderRadius: 'var(--radius-md)', background: 'var(--color-primary)', boxShadow: '0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent)' }}
           >
             <ArrowLeftRight className="h-[14px] w-[14px]" strokeWidth={2.5} />
-            {lang === 'zh' ? '兑换 SC' : 'Swap SC'}
+            {lang === 'zh' ? '兑换' : 'Swap SC'}
           </button>
         </div>
 

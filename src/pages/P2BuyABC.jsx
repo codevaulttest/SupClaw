@@ -106,8 +106,8 @@ export default function P2BuyABC() {
                       onChange={e => handleInput(key, e.target.value)}
                       onBlur={() => handleBlur(key)}
                       placeholder="0"
-                      className="font-num text-[20px] font-semibold text-tokenText text-center bg-transparent outline-none"
-                      style={{ width: '5rem' }}
+                      className="font-num text-[20px] font-semibold text-tokenText text-center bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      style={{ width: '8rem', flexShrink: 0 }}
                     />
                     <button
                       onClick={() => adjust(key, 1)}
