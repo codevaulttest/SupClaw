@@ -358,35 +358,57 @@ function AIVideoMallPreview({ onEnter, onCategory }) {
       </div>
 
       <div className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
-        {VISIBLE_CATEGORIES.map(cat => (
-          <button
-            key={cat.id}
-            onClick={() => !cat.locked && onCategory && onCategory(cat.id)}
-            className="relative shrink-0 overflow-hidden text-left"
-            style={{ width: 130, borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-md)', background: 'var(--color-bg-card)' }}
-          >
-            <div className="relative h-[86px] w-full overflow-hidden" style={{ borderRadius: 'var(--radius-md) var(--radius-md) 0 0' }}>
+        {VISIBLE_CATEGORIES.map(cat => {
+          const cardStyle = { width: 130, borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-md)', background: 'var(--color-bg-card)' };
+          const imageArea = (
+            <div className="relative aspect-[4/3] w-full overflow-hidden">
               <img
                 src={cat.image}
                 alt={lang === 'zh' ? cat.name : cat.nameEn}
-                className="h-full w-full object-cover"
+                className={`h-full w-full object-cover${cat.locked ? ' grayscale-[0.45] saturate-[0.7] opacity-80' : ''}`}
               />
               {cat.locked && (
-                <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'rgba(13,21,39,0.38)', backdropFilter: 'blur(2px)' }}>
-                  <Lock className="h-5 w-5 text-white/80" strokeWidth={2} />
+                <div className="absolute inset-0 bg-slate-200/25">
+                  <div className="flex items-start justify-end p-1.5">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-600 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm">
+                      <Lock className="h-2.5 w-2.5" strokeWidth={2} />
+                      {lang === 'zh' ? '敬请期待' : 'Locked'}
+                    </span>
+                  </div>
                 </div>
               )}
             </div>
+          );
+          const textArea = (
             <div className="px-2.5 py-2">
               <p className="truncate text-[12px] font-semibold leading-[16px] text-tokenText">
                 {lang === 'zh' ? cat.name : cat.nameEn}
               </p>
-              {cat.locked && (
-                <p className="mt-0.5 text-[10px] leading-[13px] text-tokenHint">{lang === 'zh' ? '敬请期待' : 'Coming soon'}</p>
-              )}
             </div>
-          </button>
-        ))}
+          );
+          return cat.locked ? (
+            <div
+              key={cat.id}
+              className="relative shrink-0 overflow-hidden text-left"
+              style={{ ...cardStyle, opacity: 0.72 }}
+              aria-disabled="true"
+            >
+              {imageArea}
+              {textArea}
+            </div>
+          ) : (
+            <button
+              type="button"
+              key={cat.id}
+              onClick={() => onCategory && onCategory(cat.id)}
+              className="relative shrink-0 appearance-none overflow-hidden border-0 p-0 text-left"
+              style={cardStyle}
+            >
+              {imageArea}
+              {textArea}
+            </button>
+          );
+        })}
       </div>
     </section>
   );
