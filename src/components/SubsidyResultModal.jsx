@@ -55,7 +55,7 @@ export default function SubsidyResultModal({ onClose, subsidyAmount = 3.11, orde
           <div className="pointer-events-none absolute -left-8 top-10 h-24 w-24 rounded-full opacity-70" style={{ background: 'var(--token-c-soft)' }} />
           <div className="pointer-events-none absolute -right-8 top-24 h-20 w-20 rounded-full opacity-80" style={{ background: 'var(--token-a-soft)' }} />
 
-          <div className="relative mx-auto mb-1 flex h-[132px] w-[204px] justify-center">
+          <div className="relative mx-auto mb-0 flex h-[132px] w-[204px] justify-center">
             <img
               src="/assets/mascot-lobster.png"
               alt=""
@@ -64,13 +64,13 @@ export default function SubsidyResultModal({ onClose, subsidyAmount = 3.11, orde
             />
           </div>
 
-          <p className="mb-1 text-center text-[17px] font-semibold text-tokenText">
+          <p className="mb-2 text-center text-[17px] font-semibold text-tokenText">
             {lang === 'zh' ? '恭喜获得词元补贴' : 'Token Subsidy Awarded'}
           </p>
-          <p className="mb-1 text-center font-num text-[40px] font-bold leading-none" style={{ color: 'var(--color-success)' }}>
+          <p className="mb-2 text-center font-num text-[40px] font-bold leading-none" style={{ color: 'var(--color-success)' }}>
             +{displayVal.toFixed(2)} {lang === 'zh' ? '亿' : 'B'}
           </p>
-          <p className="mb-5 text-center text-[13px] text-tokenHint">SC</p>
+          <p className="mb-6 text-center text-[13px] text-tokenHint">SC</p>
 
           <div className="mb-5 flex gap-3">
             <div className="flex-1 rounded-xl py-3 text-center" style={{ background: 'var(--color-bg-page)' }}>
