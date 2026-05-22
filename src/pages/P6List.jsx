@@ -51,7 +51,7 @@ export default function P6List() {
                   boxShadow: active ? 'var(--shadow-sm)' : 'none',
                 }}
               >
-                {f === 'all' ? (lang === 'zh' ? '全部' : 'All') : `${f} · ${lang === 'zh' ? TOKEN_INFO[f].label : { A: 'Brand Custom', B: 'Creative Copy', C: 'Surprise Drop' }[f]}`}
+                {f === 'all' ? (lang === 'zh' ? '推荐' : 'Recommended') : `${f} · ${lang === 'zh' ? TOKEN_INFO[f].label : { A: 'Brand Custom', B: 'Creative Copy', C: 'Surprise Drop' }[f]}`}
               </button>
             );
           })}
