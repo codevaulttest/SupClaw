@@ -22,7 +22,7 @@ const ABC_BALANCES = [
 ];
 
 const SC_FLOWS = [
-  { dir: 'pending', label: '兑换 SC',  sub: '5 DOS → 5 亿 SC',              amount: '5 亿 SC',     time: '今天 17:02' },
+  { dir: 'in',      label: '兑换 SC',  sub: '5 DOS → 5 亿 SC',              amount: '+5 亿 SC',    time: '今天 17:02' },
   { dir: 'in',      label: '补贴到账', sub: '本轮补贴 3.11 亿（补贴 +3.7%）', amount: '+3.11 亿 SC', time: '今天 16:40' },
   { dir: 'out',     label: '兑换首发权', sub: 'A×2  B×1',                     amount: '-13 亿 SC',   time: '今天 14:23' },
 ];
@@ -246,7 +246,7 @@ function WalletHistory({ onMore }) {
     { key: 'order', label: lang === 'zh' ? '首发权兑换记录' : 'Premiere Access Orders' },
   ];
   const flows = lang === 'zh' ? SC_FLOWS : [
-    { dir: 'pending', label: 'SC Swap', sub: '5 DOS -> 5B SC', amount: '5B SC', time: 'Today 17:02' },
+    { dir: 'in', label: 'SC Swap', sub: '5 DOS -> 5B SC', amount: '+5B SC', time: 'Today 17:02' },
     { dir: 'in', label: 'Subsidy Received', sub: 'Round subsidy 3.11B (+3.7%)', amount: '+3.11B SC', time: 'Today 16:40' },
     { dir: 'out', label: 'Premiere Access', sub: 'A×2  B×1', amount: '-13B SC', time: 'Today 14:23' },
   ];

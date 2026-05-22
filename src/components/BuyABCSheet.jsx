@@ -16,13 +16,28 @@ const TOKEN_V = { A: 'a', B: 'b', C: 'c' };
 export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
   const { lang } = useLanguage();
   const [counts, setCounts] = useState({ A: 0, B: 0, C: 0 });
+  const [drafts, setDrafts] = useState({ A: '', B: '', C: '' });
+  const [focusedKey, setFocusedKey] = useState(null);
 
   const total = Object.entries(counts).reduce((s, [k, v]) => s + v * PRICES[k], 0);
   const isEmpty = total === 0;
   const insufficient = total > SC_BALANCE;
 
   function adjust(key, delta) {
-    setCounts(c => ({ ...c, [key]: Math.max(0, c[key] + delta) }));
+    const next = Math.max(0, counts[key] + delta);
+    setCounts(c => ({ ...c, [key]: next }));
+    setDrafts(d => ({ ...d, [key]: '' }));
+  }
+
+  function handleInput(key, val) {
+    setDrafts(d => ({ ...d, [key]: val }));
+    const n = parseInt(val, 10);
+    setCounts(c => ({ ...c, [key]: Number.isFinite(n) && n >= 0 ? n : 0 }));
+  }
+
+  function handleBlur(key) {
+    setDrafts(d => ({ ...d, [key]: '' }));
+    setFocusedKey(null);
   }
 
   function handleConfirm() {
@@ -72,6 +87,7 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
               const v = TOKEN_V[key];
               const count = counts[key];
               const subtotal = count * PRICES[key];
+              const inputValue = drafts[key] !== '' ? drafts[key] : focusedKey === key && count === 0 ? '' : count;
               return (
                 <div key={key} className="mb-3 overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
                   <div className="px-4 pt-3.5 pb-3">
@@ -105,11 +121,21 @@ export default function BuyABCSheet({ onClose, onOpenExchange, onSubmit }) {
                         >
                           <Minus className="h-4 w-4 text-tokenText" strokeWidth={2} />
                         </button>
-                        <span className="w-8 text-center font-num text-[20px] font-semibold text-tokenText">{count}</span>
+                        <input
+                          type="number"
+                          inputMode="numeric"
+                          min="0"
+                          value={inputValue}
+                          onFocus={() => setFocusedKey(key)}
+                          onChange={e => handleInput(key, e.target.value)}
+                          onBlur={() => handleBlur(key)}
+                          className="h-8 w-12 bg-transparent text-center font-num text-[20px] font-semibold leading-8 text-tokenText outline-none"
+                        />
                         <button
                           onClick={() => adjust(key, 1)}
-                          className="flex h-8 w-8 items-center justify-center rounded-full text-white"
-                          style={{ background: `var(--token-${v}-from)` }}
+                          disabled={total + PRICES[key] > SC_BALANCE}
+                          className="flex h-8 w-8 items-center justify-center rounded-full text-white disabled:opacity-30"
+                          style={{ background: total + PRICES[key] > SC_BALANCE ? 'var(--color-danger)' : `var(--token-${v}-from)` }}
                         >
                           <Plus className="h-4 w-4" strokeWidth={2.5} />
                         </button>
