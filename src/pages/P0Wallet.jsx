@@ -6,7 +6,7 @@ import ExchangeSCSheet from '../components/ExchangeSCSheet';
 import ExchangeSubmittedSheet from '../components/ExchangeSubmittedSheet';
 import {
   ArrowDownLeft, ArrowUpRight, ArrowLeftRight, ChevronRight, Clock, History,
-  PlayCircle, ShoppingCart, Wallet, Lock,
+  PlayCircle, ShoppingCart, Wallet, Lock, Languages,
 } from 'lucide-react';
 import InfoTip from '../components/InfoTip';
 import SubsidyResultModal from '../components/SubsidyResultModal';
@@ -56,10 +56,10 @@ function SloganBanner() {
       />
       <button
         onClick={toggleLang}
-        className="absolute right-5 top-[32px] rounded-[4px] px-1.5 py-0.5 text-[12px] font-semibold leading-none"
+        className="absolute right-5 top-[32px] rounded-[4px] p-1"
         style={{ color: 'var(--color-text-secondary)', border: '1px solid color-mix(in srgb, var(--color-border) 62%, transparent)' }}
       >
-        {lang === 'zh' ? 'EN' : '中'}
+        <Languages size={16} />
       </button>
     </section>
   );
