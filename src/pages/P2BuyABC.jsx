@@ -107,13 +107,12 @@ export default function P2BuyABC() {
                       onBlur={() => handleBlur(key)}
                       placeholder="0"
                       className="font-num text-[20px] font-semibold text-tokenText text-center bg-transparent outline-none"
-                      style={{ width: '3rem' }}
+                      style={{ width: '5rem' }}
                     />
                     <button
                       onClick={() => adjust(key, 1)}
-                      disabled={total + PRICES[key] > SC_BALANCE}
-                      className="flex h-8 w-8 items-center justify-center rounded-full text-white disabled:opacity-30"
-                      style={{ background: total + PRICES[key] > SC_BALANCE ? 'var(--color-danger)' : `var(--token-${v}-from)` }}
+                      className="flex h-8 w-8 items-center justify-center rounded-full text-white"
+                      style={{ background: `var(--token-${v}-from)` }}
                     >
                       <Plus className="h-4 w-4" strokeWidth={2.5} />
                     </button>
