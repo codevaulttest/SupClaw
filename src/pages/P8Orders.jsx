@@ -170,7 +170,7 @@ export default function P8Orders() {
         <HeaderActions />
       </header>
 
-      <div className="flex border-b border-tokenBorder px-4">
+      <div className="flex border-b border-tokenBorder px-4 mt-3">
         {tabs.map(t => (
           <button
             key={t.key}
@@ -187,7 +187,7 @@ export default function P8Orders() {
         ))}
       </div>
 
-      <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 pt-[20px] pb-[74px]">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 pt-4 pb-[74px]">
         {items.length === 0 ? (
           <EmptyState
             icon={Inbox}
