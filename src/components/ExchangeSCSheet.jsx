@@ -30,7 +30,7 @@ function mockValidateCode(raw, forceInvalid = false) {
 
 function TokenIcon({ tokenKey, size = 6 }) {
   const px = size < 7 ? (size < 6 ? 10 : 11) : 13;
-  const scPx = size < 7 ? (size < 6 ? 7 : 9) : 10;
+  const scPx = size < 7 ? (size < 6 ? 8 : 10) : 11;
   const cls = `h-${size} w-${size} shrink-0`;
   if (tokenKey === 'DOS') return <img src="/assets/DOS.svg" alt="DOS" className={cls} />;
   if (tokenKey === 'SCV') return (
