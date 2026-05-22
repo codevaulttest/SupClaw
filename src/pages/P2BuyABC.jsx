@@ -19,6 +19,7 @@ export default function P2BuyABC() {
   const navigate = useNavigate();
   const { lang } = useLanguage();
   const [counts, setCounts] = useState({ A: 0, B: 0, C: 0 });
+  const [drafts, setDrafts] = useState({ A: '', B: '', C: '' });
   const [submitted, setSubmitted] = useState(null);
 
   const total = Object.entries(counts).reduce((s, [k, v]) => s + v * PRICES[k], 0);
@@ -26,7 +27,19 @@ export default function P2BuyABC() {
   const insufficient = total > SC_BALANCE;
 
   function adjust(key, delta) {
-    setCounts(c => ({ ...c, [key]: Math.max(0, c[key] + delta) }));
+    const next = Math.max(0, counts[key] + delta);
+    setCounts(c => ({ ...c, [key]: next }));
+    setDrafts(d => ({ ...d, [key]: '' }));
+  }
+
+  function handleInput(key, val) {
+    setDrafts(d => ({ ...d, [key]: val }));
+    const n = parseInt(val, 10);
+    setCounts(c => ({ ...c, [key]: Number.isFinite(n) && n >= 0 ? n : 0 }));
+  }
+
+  function handleBlur(key) {
+    setDrafts(d => ({ ...d, [key]: '' }));
   }
 
   function handleConfirm() {
@@ -45,7 +58,7 @@ export default function P2BuyABC() {
         {/* SC 余额 */}
         <div className="mb-4 flex items-center justify-between rounded-xl px-4 py-3" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
           <span className="text-[13px] text-tokenSub">{lang === 'zh' ? 'SC 词元余额' : 'SC Balance'}</span>
-          <span className="font-num text-[18px] font-semibold text-tokenPrimary">{SC_BALANCE} {lang === 'zh' ? '亿' : 'B'}</span>
+          <span className="font-num text-[18px] font-semibold text-tokenPrimary">{SC_BALANCE} {lang === 'zh' ? '亿 SC' : 'B SC'}</span>
         </div>
 
         {/* ABC 行 */}
@@ -86,7 +99,16 @@ export default function P2BuyABC() {
                     >
                       <Minus className="h-4 w-4 text-tokenText" strokeWidth={2} />
                     </button>
-                    <span className="font-num text-[20px] font-semibold text-tokenText w-8 text-center">{count}</span>
+                    <input
+                      type="number"
+                      min="0"
+                      value={drafts[key] !== '' ? drafts[key] : count === 0 ? '' : count}
+                      onChange={e => handleInput(key, e.target.value)}
+                      onBlur={() => handleBlur(key)}
+                      placeholder="0"
+                      className="font-num text-[20px] font-semibold text-tokenText text-center bg-transparent outline-none"
+                      style={{ width: '3rem' }}
+                    />
                     <button
                       onClick={() => adjust(key, 1)}
                       disabled={total + PRICES[key] > SC_BALANCE}

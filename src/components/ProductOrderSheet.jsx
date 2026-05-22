@@ -21,6 +21,7 @@ function formatBookTitle(title) {
 export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenBuy, onOpenExchange }) {
   const { lang } = useLanguage();
   const [qty, setQty] = useState(1);
+  const [qtyDraft, setQtyDraft] = useState('');
   const [email, setEmail] = useState(USER_EMAIL);
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
@@ -100,11 +101,23 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                <button onClick={() => setQty(q => Math.max(1, q - 1))} className="flex h-9 w-9 items-center justify-center rounded-full border border-tokenBorder">
+                <button onClick={() => { const next = Math.max(1, qty - 1); setQty(next); setQtyDraft(''); }} className="flex h-9 w-9 items-center justify-center rounded-full border border-tokenBorder">
                   <Minus className="h-4 w-4 text-tokenText" strokeWidth={2} />
                 </button>
-                <span className="w-8 text-center font-num text-[22px] font-semibold text-tokenText">{qty}</span>
-                <button onClick={() => setQty(q => q + 1)} className="flex h-9 w-9 items-center justify-center rounded-full text-white" style={{ background: `var(--token-${v}-from)` }}>
+                <input
+                  type="number"
+                  min="1"
+                  value={qtyDraft !== '' ? qtyDraft : qty}
+                  onChange={e => {
+                    setQtyDraft(e.target.value);
+                    const n = parseInt(e.target.value, 10);
+                    if (Number.isFinite(n) && n >= 1) setQty(n);
+                  }}
+                  onBlur={() => { setQtyDraft(''); if (qty < 1) setQty(1); }}
+                  className="text-center font-num text-[22px] font-semibold text-tokenText bg-transparent outline-none"
+                  style={{ width: '3rem' }}
+                />
+                <button onClick={() => { setQty(q => q + 1); setQtyDraft(''); }} className="flex h-9 w-9 items-center justify-center rounded-full text-white" style={{ background: `var(--token-${v}-from)` }}>
                   <Plus className="h-4 w-4" strokeWidth={2.5} />
                 </button>
               </div>
@@ -124,7 +137,7 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
               <div className="flex items-center justify-between">
                 <span className="text-[12px] text-tokenHint">{lang === 'zh' ? `${type}SC 余额 / SC 余额` : `${type}SC Balance / SC Balance`}</span>
                 <span className="text-[12px]" style={{ color: abcInsufficient || scInsufficient ? 'var(--color-danger)' : 'var(--color-success)' }}>
-                  {abcBal} / {SC_BALANCE}
+                  {abcBal} {type}SC / {SC_BALANCE} {lang === 'zh' ? '亿 SC' : 'B SC'}
                 </span>
               </div>
             </div>

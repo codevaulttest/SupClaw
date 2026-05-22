@@ -115,7 +115,7 @@ export default function P7Product() {
           <div className="flex items-center justify-between">
             <span className="text-[12px] text-tokenHint">{lang === 'zh' ? `${type}SC 余额 / SC 余额` : `${type}SC Balance / SC Balance`}</span>
             <span className="text-[12px]" style={{ color: abcInsufficient || scInsufficient ? 'var(--color-danger)' : 'var(--color-success)' }}>
-              {abcBal} / {SC_BALANCE}
+              {abcBal} {type}SC / {SC_BALANCE} {lang === 'zh' ? '亿 SC' : 'B SC'}
             </span>
           </div>
         </div>

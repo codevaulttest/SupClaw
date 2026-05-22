@@ -37,7 +37,7 @@ export default function P1Exchange() {
           </div>
           <div className="flex-1 rounded-xl px-4 py-3" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
             <p className="text-[11px] text-tokenHint">{lang === 'zh' ? 'SC 余额' : 'SC Balance'}</p>
-            <p className="mt-1 font-num text-[20px] font-semibold text-tokenPrimary">{SC_BALANCE} <span className="text-[13px] font-normal">{lang === 'zh' ? '亿' : 'B'}</span></p>
+            <p className="mt-1 font-num text-[20px] font-semibold text-tokenPrimary">{SC_BALANCE} <span className="text-[13px] font-normal">{lang === 'zh' ? '亿 SC' : 'B SC'}</span></p>
           </div>
         </div>
 
