@@ -2,25 +2,15 @@ import { useNavigate } from 'react-router-dom';
 import { PlayCircle } from 'lucide-react';
 import HeaderActions from '../components/HeaderActions';
 import { useLanguage } from '../components/LanguageContext';
-
-const CATEGORIES = [
-  { id: 'classics',   name: '国学经典',   image: '/assets/booklist-classics.png' },
-  { id: 'business',   name: '商业经典',   image: '/assets/booklist-business.png' },
-  { id: 'humanities', name: '人文地理',   image: '/assets/booklist-humanities.png' },
-  { id: 'science',    name: '科技未来',   image: '/assets/booklist-science.png' },
-  { id: 'lifestyle',  name: '生活美学',   image: '/assets/booklist-lifestyle.png' },
-];
+import { VISIBLE_CATEGORIES } from '../data/booklists';
 
 export default function P6Store() {
   const navigate = useNavigate();
   const { lang } = useLanguage();
-  const categories = lang === 'zh' ? CATEGORIES : [
-    { id: 'classics', name: 'Traditional Classics', image: '/assets/booklist-classics.png' },
-    { id: 'business', name: 'Business Classics', image: '/assets/booklist-business.png' },
-    { id: 'humanities', name: 'Humanities & Geography', image: '/assets/booklist-humanities.png' },
-    { id: 'science', name: 'Future Tech', image: '/assets/booklist-science.png' },
-    { id: 'lifestyle', name: 'Lifestyle Aesthetics', image: '/assets/booklist-lifestyle.png' },
-  ];
+  const categories = VISIBLE_CATEGORIES.map((category) => ({
+    ...category,
+    name: lang === 'zh' ? category.name : category.nameEn,
+  }));
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-58px)]">

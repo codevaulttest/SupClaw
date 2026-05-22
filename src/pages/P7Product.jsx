@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Minus, Plus } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { useLanguage } from '../components/LanguageContext';
+import { getProductsByCategory } from '../data/booklists';
 
 // mock balances
 const BALANCES = { A: 5.20, B: 3.00, C: 1.80 };
@@ -18,9 +19,8 @@ const TYPE_INFO   = {
 };
 
 function guessType(productId) {
-  const types = ['A','A','B','C','B','A','C','B','C','A'];
-  const idx = parseInt(productId?.split('-').pop() ?? '0');
-  return types[idx % types.length];
+  const idx = parseInt(productId?.split('-').pop() ?? '1', 10) - 1;
+  return getProductsByCategory(productId?.split('-').slice(0, -1).join('-'))[idx]?.type ?? 'C';
 }
 
 export default function P7Product() {
@@ -30,7 +30,8 @@ export default function P7Product() {
   const [qty, setQty] = useState(1);
   const [ordered, setOrdered] = useState(false);
 
-  const title = id?.replace(`${category}-`, '').replace(/-/g, lang === 'zh' ? '·' : ' ') ?? (lang === 'zh' ? '视频商品' : 'Video Item');
+  const product = getProductsByCategory(category).find((item) => item.id === id);
+  const title = product ? (lang === 'zh' ? product.title : product.titleEn) : (lang === 'zh' ? '视频商品' : 'Video Item');
   const type  = guessType(id);
   const info  = TYPE_INFO[type];
   const v     = info.v;

@@ -6,15 +6,15 @@ import { useLanguage } from '../components/LanguageContext';
 
 const MOCK = {
   pending: [
-    { id: 'o001', title: '论语·仁义篇 × 3', type: 'A', cost: '30亿 ASC + 15亿 SC', time: '今天 16:42', duration: '30s' },
-    { id: 'o002', title: '道德经·自然观 × 1', type: 'B', cost: '6亿 BSC + 3亿 SC', time: '今天 14:05', duration: '10s' },
+    { id: 'o001', title: '管理的实践 × 3', type: 'A', cost: '3亿 ASC + 1.5亿 SC', time: '今天 16:42', duration: '30s' },
+    { id: 'o002', title: '卓有成效的管理者 × 1', type: 'B', cost: '1亿 BSC + 0.3亿 SC', time: '今天 14:05', duration: '10s' },
   ],
   making: [
-    { id: 'o003', title: '孙子兵法·谋略 × 5', type: 'A', cost: '50亿 ASC + 25亿 SC', time: '昨天 20:11', duration: '50s' },
+    { id: 'o003', title: '地理学与生活 × 5', type: 'A', cost: '5亿 ASC + 2.5亿 SC', time: '昨天 20:11', duration: '50s' },
   ],
   done: [
-    { id: 'o004', title: '唐诗三百首 × 2', type: 'C', cost: '4亿 CSC + 2亿 SC',  time: '2天前 10:15', duration: '20s' },
-    { id: 'o005', title: '庄子·逍遥游 × 4', type: 'B', cost: '24亿 BSC + 12亿 SC', time: '3天前 09:30', duration: '40s' },
+    { id: 'o004', title: '人文地理学导论 × 2', type: 'B', cost: '2亿 BSC + 0.6亿 SC',  time: '2天前 10:15', duration: '20s' },
+    { id: 'o005', title: '地理学思想史 × 4', type: 'C', cost: '4亿 CSC + 0.4亿 SC', time: '3天前 09:30', duration: '40s' },
   ],
 };
 
@@ -39,15 +39,15 @@ export default function P8Orders() {
   ];
   const localizedItems = lang === 'zh' ? items : {
     pending: [
-      { id: 'o001', title: 'Analects × 3', type: 'A', cost: '30B ASC + 15B SC', time: 'Today 16:42', duration: '30s' },
-      { id: 'o002', title: 'Tao Te Ching × 1', type: 'B', cost: '6B BSC + 3B SC', time: 'Today 14:05', duration: '10s' },
+      { id: 'o001', title: '管理的实践 × 3', type: 'A', cost: '3B ASC + 1.5B SC', time: 'Today 16:42', duration: '30s' },
+      { id: 'o002', title: '卓有成效的管理者 × 1', type: 'B', cost: '1B BSC + 0.3B SC', time: 'Today 14:05', duration: '10s' },
     ],
     making: [
-      { id: 'o003', title: 'The Art of War × 5', type: 'A', cost: '50B ASC + 25B SC', time: 'Yesterday 20:11', duration: '50s' },
+      { id: 'o003', title: '地理学与生活 × 5', type: 'A', cost: '5B ASC + 2.5B SC', time: 'Yesterday 20:11', duration: '50s' },
     ],
     done: [
-      { id: 'o004', title: 'Tang Poems × 2', type: 'C', cost: '4B CSC + 2B SC', time: '2d ago 10:15', duration: '20s' },
-      { id: 'o005', title: 'Zhuangzi × 4', type: 'B', cost: '24B BSC + 12B SC', time: '3d ago 09:30', duration: '40s' },
+      { id: 'o004', title: '人文地理学导论 × 2', type: 'B', cost: '2B BSC + 0.6B SC', time: '2d ago 10:15', duration: '20s' },
+      { id: 'o005', title: '地理学思想史 × 4', type: 'C', cost: '4B CSC + 0.4B SC', time: '3d ago 09:30', duration: '40s' },
     ],
   }[tab] ?? [];
 

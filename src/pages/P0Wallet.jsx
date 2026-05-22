@@ -14,6 +14,7 @@ import InfoTip from '../components/InfoTip';
 import SubsidyResultModal from '../components/SubsidyResultModal';
 import HeaderActions from '../components/HeaderActions';
 import { useLanguage } from '../components/LanguageContext';
+import { getFeaturedProducts } from '../data/booklists';
 
 // ── Mock data ────────────────────────────────────────────────
 const ABC_BALANCES = [
@@ -33,12 +34,14 @@ const ORDERS = [
   { combo: 'A×2  B×1',        amount: '−13 亿 SC', time: '昨天 20:11' },
 ];
 
-const VIDEO_PRODUCTS = [
-  { id: 1, title: '星空延时·极光版', titleEn: 'Aurora Night Sky Time-Lapse', tag: '4K', dur: '30s', displayPrice: '3 亿 CSC', displayPriceEn: '3B CSC', type: 'C', orderPrice: 3, duration: 30, grad: 'linear-gradient(135deg,#1a1a4e,#3b2d8a,#6c3fa0)' },
-  { id: 2, title: '海浪慢镜·日落', titleEn: 'Sunset Ocean Slow Motion', tag: 'HD', dur: '15s', displayPrice: '1.5 亿 CSC', displayPriceEn: '1.5B CSC', type: 'C', orderPrice: 1.5, duration: 15, grad: 'linear-gradient(135deg,#0d4f7c,#1a8fa8,#43c6b0)' },
-  { id: 3, title: '城市航拍·霓虹夜', titleEn: 'Neon City Aerial', tag: '4K', dur: '60s', displayPrice: '6 亿 BSC', displayPriceEn: '6B BSC', type: 'B', orderPrice: 6, duration: 60, grad: 'linear-gradient(135deg,#1a0533,#7b1fa2,#e040fb)' },
-  { id: 4, title: '樱花飘落·慢镜', titleEn: 'Cherry Blossom Slow Motion', tag: 'HD', dur: '20s', displayPrice: '2 亿 CSC', displayPriceEn: '2B CSC', type: 'C', orderPrice: 2, duration: 20, grad: 'linear-gradient(135deg,#4a0010,#c2185b,#f48fb1)' },
-];
+const VIDEO_PRODUCTS = getFeaturedProducts().map((product) => ({
+  ...product,
+  tag: product.type,
+  dur: `${product.duration}s`,
+  displayPrice: `${product.price} 亿 ${product.type}SC`,
+  displayPriceEn: `${product.price}B ${product.type}SC`,
+  grad: `linear-gradient(135deg, var(--token-${product.type.toLowerCase()}-from), var(--token-${product.type.toLowerCase()}-to))`,
+}));
 
 // ── Sub-components ───────────────────────────────────────────
 function SloganBanner() {
