@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Search, X } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import ProductOrderSheet from '../components/ProductOrderSheet';
 import BuyABCSheet from '../components/BuyABCSheet';
@@ -18,12 +19,16 @@ export default function P6List() {
   const { lang } = useLanguage();
   const { category } = useParams();
   const [filter, setFilter] = useState('all');
+  const [query, setQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [buyOpen, setBuyOpen] = useState(false);
   const [exchangeOpen, setExchangeOpen] = useState(false);
 
   const products = getProductsByCategory(category);
-  const visible  = filter === 'all' ? products : products.filter(p => p.type === filter);
+  const q = query.trim().toLowerCase();
+  const visible = products
+    .filter(p => filter === 'all' || p.type === filter)
+    .filter(p => !q || p.title.toLowerCase().includes(q) || (p.titleEn && p.titleEn.toLowerCase().includes(q)));
   const catName  = lang === 'zh'
     ? (CATEGORY_NAME_BY_ID[category] ?? '商品列表')
     : (CATEGORY_NAME_EN_BY_ID[category] ?? 'Video Catalog');
@@ -34,6 +39,24 @@ export default function P6List() {
       <PageHeader title={catName} />
 
       <div className="px-4 pt-4 pb-8">
+        {/* search */}
+        <div className="relative mb-3">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-tokenHint" strokeWidth={1.8} />
+          <input
+            type="text"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            placeholder={lang === 'zh' ? '搜索…' : 'Search…'}
+            className="w-full py-2.5 pl-9 pr-9 text-[14px] text-tokenText placeholder:text-tokenHint outline-none"
+            style={{ background: 'var(--color-bg-card)', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}
+          />
+          {query && (
+            <button onClick={() => setQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2">
+              <X className="h-4 w-4 text-tokenHint" strokeWidth={1.8} />
+            </button>
+          )}
+        </div>
+
         {/* filter chips */}
         <div className="no-scrollbar mb-4 flex flex-nowrap gap-2 overflow-x-auto">
           {filters.map(f => {
@@ -57,7 +80,10 @@ export default function P6List() {
           })}
         </div>
 
-        <div className="overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)' }}>
+        {visible.length === 0 && (
+          <p className="py-12 text-center text-[14px] text-tokenHint">{lang === 'zh' ? '没有找到相关内容' : 'No results found'}</p>
+        )}
+        <div className="overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', boxShadow: visible.length ? 'var(--shadow-sm)' : 'none' }}>
           {visible.map((p, i) => (
             <div key={p.id}>
               {i > 0 && <div className="mx-4 h-px" style={{ background: 'var(--color-border)' }} />}

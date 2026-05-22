@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
-import { Minus, Plus, X } from 'lucide-react';
+import { Minus, Play, Plus, X } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 
 const BALANCES = { A: 5.20, B: 3.00, C: 1.80 };
@@ -77,27 +77,20 @@ export default function ProductOrderSheet({ product, onClose, onOpenBuy, onOpenE
           </div>
 
           <div className="px-4 pb-6 pt-2">
-            <div className="mb-5 overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
-              <div className="flex h-[120px] items-end px-5 pb-4" style={{ background: `linear-gradient(135deg, var(--token-${v}-from), var(--token-${v}-to))` }}>
-                <div>
-                  <span className="rounded-full px-2.5 py-1 text-[11px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.25)' }}>
-                    {type} · {lang === 'zh' ? info.label : { A: 'Brand Custom', B: 'Creative Copy', C: 'Surprise Drop' }[type]}
-                  </span>
-                  <p className="mt-2 text-[18px] font-bold text-white">{formatBookTitle(product.title)}</p>
+            <div className="mb-5 flex items-center gap-3 rounded-xl px-4 py-3" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
+              <div className="relative shrink-0 h-12 w-12 rounded-xl overflow-hidden" style={{ background: `linear-gradient(135deg, var(--token-${v}-from), var(--token-${v}-to))` }}>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Play className="h-5 w-5 fill-white text-white" strokeWidth={0} />
                 </div>
+                <span className="absolute left-1 top-1 rounded px-1 text-[9px] font-bold text-white leading-4" style={{ background: 'rgba(0,0,0,0.28)' }}>{type}</span>
               </div>
-              <div className="flex items-center gap-4 bg-tokenCard px-5 py-3">
-                <div>
-                  <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '每单时长' : 'Duration per Order'}</p>
-                  <p className="font-num text-[16px] font-semibold text-tokenText">{product.duration} {lang === 'zh' ? '秒' : 's'}</p>
-                </div>
-                <div className="h-8 w-px bg-tokenBorder" />
-                <div>
-                  <p className="text-[11px] text-tokenHint">{lang === 'zh' ? '单价' : 'Unit Price'}</p>
-                  <p className="font-num text-[16px] font-semibold" style={{ color: `var(--token-${v}-text)` }}>
-                    {unitABC}{lang === 'zh' ? '亿' : 'B'} {type}SC + {(unitABC * SC_RATE[type] * 0.1).toFixed(1)}{lang === 'zh' ? '亿' : 'B'} SC
-                  </p>
-                </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[15px] font-semibold text-tokenText">{formatBookTitle(product.title)}</p>
+                <p className="mt-0.5 text-[12px] text-tokenHint">
+                  {lang === 'zh' ? info.label : { A: 'Brand Custom', B: 'Creative Copy', C: 'Surprise Drop' }[type]}
+                  {' · '}{product.duration}{lang === 'zh' ? '秒' : 's'}
+                  {' · '}<span style={{ color: `var(--token-${v}-text)` }}>{unitABC}{lang === 'zh' ? '亿' : 'B'} {type}SC</span>
+                </p>
               </div>
             </div>
 
