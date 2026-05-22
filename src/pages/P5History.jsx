@@ -8,11 +8,11 @@ import { useDev } from '../components/DevContext';
 import MembershipSheet from '../components/MembershipSheet';
 
 const SC_FLOWS = [
-  { label: '补贴到账', sub: '本轮补贴 3.11 亿（+3.7%）',   amount: '+3.11 亿 SC', time: '今天 16:40',  color: 'success' },
+  { label: '补贴到账', sub: '本轮补贴 +3.7%',              amount: '+3.11 亿 SC', time: '今天 16:40',  color: 'success' },
   { label: '兑换 SC',  sub: '10 DOS → 10 亿 SC',           amount: '+10 亿 SC',   time: '今天 14:23',  color: 'success' },
-  { label: '补贴到账', sub: '本轮折让 36%（折让）',         amount: '+5.20 亿 SC', time: '昨天 20:08',  color: 'success' },
+  { label: '补贴到账', sub: '本轮折让 36%',                 amount: '+5.20 亿 SC', time: '昨天 20:08',  color: 'success' },
   { label: '兑换 SC',  sub: '5 DOS → 5 亿 SC',             amount: '+5 亿 SC',    time: '昨天 10:15',  color: 'success' },
-  { label: '补贴到账', sub: '本轮补贴 2.88 亿（+2.1%）',   amount: '+2.88 亿 SC', time: '3天前 18:33', color: 'success' },
+  { label: '补贴到账', sub: '本轮补贴 +2.1%',              amount: '+2.88 亿 SC', time: '3天前 18:33', color: 'success' },
   { label: '兑换 SC',  sub: '20 DOS → 20 亿 SC',           amount: '+20 亿 SC',   time: '3天前 09:00', color: 'success' },
 ];
 
