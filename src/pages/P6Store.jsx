@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { PlayCircle } from 'lucide-react';
+import { PlayCircle, Lock } from 'lucide-react';
 import HeaderActions from '../components/HeaderActions';
 import { useLanguage } from '../components/LanguageContext';
 import { VISIBLE_CATEGORIES } from '../data/booklists';
@@ -35,26 +35,56 @@ export default function P6Store() {
       <div className="flex-1 px-4 pb-[96px]">
         <p className="mb-3 text-[13px] font-semibold text-tokenSub">{lang === 'zh' ? '全部分类' : 'All Categories'}</p>
         <div className="grid grid-cols-2 gap-3">
-          {categories.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => navigate(`/ai/${cat.id}`)}
-              className="overflow-hidden bg-tokenCard text-left transition-transform duration-150 active:scale-[0.98]"
-              style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}
-            >
+          {categories.map(cat => {
+            const cardStyle = { borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' };
+            const image = (
               <div className="aspect-[4/3] w-full overflow-hidden">
                 <img
                   src={cat.image}
                   alt=""
-                  className="h-full w-full object-cover"
+                  className={`h-full w-full object-cover${cat.locked ? ' grayscale-[0.45] saturate-[0.7] opacity-80' : ''}`}
                   loading="lazy"
                 />
+                {cat.locked && (
+                  <div className="absolute inset-0 bg-slate-200/25">
+                    <div className="flex items-start justify-end p-2">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-slate-700/55 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur">
+                        <Lock className="h-3 w-3" strokeWidth={2} />
+                        {lang === 'zh' ? '敬请期待' : 'Locked'}
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
+            );
+            const body = (
               <div className="px-3 py-3">
                 <p className="truncate text-[16px] font-semibold text-tokenText">{cat.name}</p>
               </div>
+            );
+
+            return cat.locked ? (
+              <div
+                key={cat.id}
+                className="relative overflow-hidden bg-tokenCard text-left"
+                style={{ ...cardStyle, opacity: 0.72 }}
+                aria-disabled="true"
+              >
+                {image}
+                {body}
+              </div>
+            ) : (
+            <button
+              key={cat.id}
+              onClick={() => navigate(`/ai/${cat.id}`)}
+              className="overflow-hidden bg-tokenCard text-left transition-transform duration-150 active:scale-[0.98]"
+              style={cardStyle}
+            >
+              {image}
+              {body}
             </button>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
