@@ -57,9 +57,16 @@ export default function P6List() {
           })}
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          {visible.map(p => (
-            <ProductCard key={p.id} product={{ ...p, title: lang === 'zh' ? p.title : p.titleEn }} onClick={() => setSelectedProduct({ ...p, title: lang === 'zh' ? p.title : p.titleEn })} />
+        <div className="overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)' }}>
+          {visible.map((p, i) => (
+            <div key={p.id}>
+              {i > 0 && <div className="mx-4 h-px" style={{ background: 'var(--color-border)' }} />}
+              <ProductCard
+                product={{ ...p, title: lang === 'zh' ? p.title : p.titleEn }}
+                onClick={() => setSelectedProduct({ ...p, title: lang === 'zh' ? p.title : p.titleEn })}
+                list
+              />
+            </div>
           ))}
         </div>
       </div>
