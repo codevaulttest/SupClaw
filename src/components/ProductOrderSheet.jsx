@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Minus, Play, Plus, X } from 'lucide-react';
+import { Mail, Minus, Play, Plus, X } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 
+const USER_EMAIL = 'zhangsan@gmail.com';
 const BALANCES = { A: 5.20, B: 3.00, C: 1.80 };
 const SC_BALANCE = 32.11;
 const SC_RATE = { A: 5, B: 3, C: 1 };
@@ -20,6 +21,8 @@ function formatBookTitle(title) {
 export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenBuy, onOpenExchange }) {
   const { lang } = useLanguage();
   const [qty, setQty] = useState(1);
+  const [email, setEmail] = useState(USER_EMAIL);
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
   const type = product.type;
   const info = TYPE_INFO[type];
@@ -32,7 +35,7 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
   const abcBal = BALANCES[type];
   const abcInsufficient = totalABC > abcBal;
   const scInsufficient = totalSC > SC_BALANCE;
-  const canOrder = !abcInsufficient && !scInsufficient;
+  const canOrder = !abcInsufficient && !scInsufficient && emailValid;
 
   function handleOrder() {
     if (!canOrder) return;
@@ -138,6 +141,26 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
                 <button onClick={onOpenExchange} className="text-[12px] font-semibold text-tokenDanger underline">{lang === 'zh' ? '去兑换 SC' : 'Swap SC'}</button>
               </div>
             )}
+
+            <div className="mb-4 rounded-xl px-4 py-3" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)', border: `1px solid ${!emailValid && email ? 'var(--color-danger)' : 'transparent'}` }}>
+              <p className="mb-2 text-[13px] font-semibold text-tokenText">
+                {lang === 'zh' ? '接收邮箱' : 'Delivery Email'}
+                <span className="ml-1 text-tokenDanger">*</span>
+              </p>
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4 shrink-0 text-tokenHint" strokeWidth={1.8} />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  className="min-w-0 flex-1 bg-transparent text-[14px] text-tokenText outline-none placeholder:text-tokenHint"
+                  placeholder="email@example.com"
+                />
+              </div>
+              {!emailValid && email && (
+                <p className="mt-1.5 text-[11px] text-tokenDanger">{lang === 'zh' ? '请输入有效的邮箱地址' : 'Please enter a valid email'}</p>
+              )}
+            </div>
 
             <button
               onClick={handleOrder}
