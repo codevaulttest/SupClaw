@@ -193,7 +193,10 @@ export default function PProfile() {
         <h1 className="flex-1 text-center text-[20px] font-semibold text-tokenText">{lang === 'zh' ? '我的' : 'Profile'}</h1>
         <HeaderActions />
       </header>
-      <div className="no-scrollbar h-[calc(100vh-68px-58px)] overflow-y-auto px-4 pb-8 pt-3">
+      <div
+        className="no-scrollbar h-[calc(100vh-68px-58px)] overflow-y-auto px-4 pb-8 pt-3"
+        style={{ background: 'linear-gradient(180deg, #e2f8f5 0%, #f7fbff 18%)' }}
+      >
 
       <div className="enter mb-4 w-fit overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)', animationDelay: '0ms' }}>
         <WalletRow />

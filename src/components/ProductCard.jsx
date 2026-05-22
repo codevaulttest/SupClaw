@@ -29,7 +29,7 @@ export default function ProductCard({ product, onClick, list = false, className 
           <div className="absolute inset-0 flex items-center justify-center">
             <Play className="h-4 w-4 fill-white text-white" strokeWidth={0} />
           </div>
-          <span className="absolute left-1 top-1 rounded px-1 py-0 text-[9px] font-bold text-white leading-4" style={{ background: 'rgba(0,0,0,0.28)' }}>{badge}</span>
+          <span className="absolute left-1 top-1 rounded-full h-[18px] w-[18px] flex items-center justify-center text-[9px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.28)' }}>{badge}</span>
         </div>
         <div className="min-w-0 flex-1">
           <p className="truncate text-[14px] font-semibold text-tokenText leading-snug">{formatBookTitle(product.title)}</p>

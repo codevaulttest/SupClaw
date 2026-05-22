@@ -99,7 +99,7 @@ function OrderCard({ order, tabInfo, tab, lang, navigate, index }) {
           <div className="absolute inset-0 flex items-center justify-center">
             <Play className="h-4 w-4 fill-white text-white" strokeWidth={0} />
           </div>
-          <span className="absolute left-1 top-1 rounded px-1 py-0 text-[9px] font-bold text-white leading-4" style={{ background: 'rgba(0,0,0,0.28)' }}>{order.type}</span>
+          <span className="absolute left-1 top-1 rounded-full h-[18px] w-[18px] flex items-center justify-center text-[9px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.28)' }}>{order.type}</span>
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 min-w-0">

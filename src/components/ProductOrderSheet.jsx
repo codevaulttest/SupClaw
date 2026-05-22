@@ -83,7 +83,7 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
                 <div className="absolute inset-0 flex items-center justify-center">
                   <Play className="h-5 w-5 fill-white text-white" strokeWidth={0} />
                 </div>
-                <span className="absolute left-1 top-1 rounded px-1 text-[9px] font-bold text-white leading-4" style={{ background: 'rgba(0,0,0,0.28)' }}>{type}</span>
+                <span className="absolute left-1 top-1 rounded-full h-[18px] w-[18px] flex items-center justify-center text-[9px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.28)' }}>{type}</span>
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-semibold text-tokenText">{formatBookTitle(product.title)}</p>
