@@ -451,7 +451,7 @@ export default function P0Wallet() {
   const { lang } = useLanguage();
   const { subsidyTrigger, setSubsidyTrigger, devScvInvalid } = useDev();
   const [exchangeOpen, setExchangeOpen] = useState(false);
-  const [exchangeSubmitted, setExchangeSubmitted] = useState(null);
+  const [exchangeSubmitted, setExchangeSubmitted] = useState(null); // { amt, fromSC }
   const [buySubmitted, setBuySubmitted] = useState(null);
   const [buyOpen, setBuyOpen] = useState(false);
   const [devModal, setDevModal] = useState(null);
@@ -496,12 +496,18 @@ export default function P0Wallet() {
       {exchangeOpen && (
         <ExchangeSCSheet
           onClose={() => setExchangeOpen(false)}
-          onSubmit={(amt) => setExchangeSubmitted(amt)}
+          onSubmit={(amt, _token, type) => setExchangeSubmitted({ amt, fromSC: type === 'from-sc' })}
           devForceInvalid={devScvInvalid}
         />
       )}
       {exchangeSubmitted !== null && (
-        <ExchangeSubmittedSheet amount={exchangeSubmitted} onClose={() => setExchangeSubmitted(null)} />
+        <ExchangeSubmittedSheet
+          amount={exchangeSubmitted.fromSC ? 0 : exchangeSubmitted.amt}
+          onClose={() => setExchangeSubmitted(null)}
+          hint={exchangeSubmitted.fromSC
+            ? (lang === 'zh' ? 'SC → DOS 兑换已提交，预计 48 小时内到账' : 'SC → DOS exchange submitted. DOS will arrive within 48 hours.')
+            : undefined}
+        />
       )}
       {buySubmitted && (
         <ExchangeSubmittedSheet

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { ArrowDownUp, X, ChevronDown, Check, CircleCheck, CircleX, Loader } from 'lucide-react';
+import { ArrowDownUp, X, ChevronDown, Check, CircleCheck, CircleX, Loader, Clock } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 import { formatScAmount } from '../utils/formatSc';
 
@@ -329,6 +329,12 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
                   )}
                   </div>{/* end right group */}
                 </div>
+              )}
+              {isSCFrom && !errorMsg && (
+                <p className="mt-1.5 flex items-center gap-1 text-[12px]" style={{ color: '#f59e0b' }}>
+                  <Clock className="h-3 w-3 shrink-0" strokeWidth={2} />
+                  {lang === 'zh' ? 'SC 兑 DOS 预计 48 小时内到账' : 'DOS will arrive within 48 hours'}
+                </p>
               )}
               {errorMsg && (
                 <p className="mt-1.5 text-right text-[11px] text-tokenDanger">{errorMsg}</p>
