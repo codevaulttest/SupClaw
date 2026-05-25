@@ -104,7 +104,7 @@ function OwnedCodesSection({ onTransfer, onActivate }) {
     <div className="flex items-center justify-between px-4 py-4">
       <div className="flex items-center gap-3">
         <Key className="h-[18px] w-[18px] shrink-0" style={{ color: 'var(--color-primary)' }} strokeWidth={1.8} />
-        <span className="text-[14px] font-medium text-tokenText">{lang === 'zh' ? '我的续期码' : 'My Renewal Codes'}</span>
+        <span className="text-[14px] font-medium text-tokenText">{lang === 'zh' ? '我的激活码' : 'My Activation Codes'}</span>
         {ownedCodeCount > 0 && (
           <span
             className="rounded-full px-2 py-0.5 text-[11px] font-semibold text-white"
@@ -142,10 +142,10 @@ function OwnedCodesSection({ onTransfer, onActivate }) {
 
 const HELP_ITEMS = [
   {
-    zhLabel: '什么是续期码？',
-    enLabel: 'What is a renewal code?',
-    zhContent: '续期码是用来开通或续期超级龙虾年会员的凭证。有主码直接使用即可；无主码需要输入码上印的账号和密码才能激活。',
-    enContent: 'A renewal code is a voucher to activate or renew your SupClaw annual membership. Owned codes can be used directly; unowned codes require the account and password printed on the voucher.',
+    zhLabel: '什么是激活码？',
+    enLabel: 'What is an activation code?',
+    zhContent: '激活码是用来开通或续期超级龙虾年会员的凭证。有主码直接使用即可；无主码需要输入码上印的账号和密码才能激活。',
+    enContent: 'An activation code is a voucher to activate or renew your SupClaw annual membership. Owned activation codes can be used directly; unowned activation codes require the account and password printed on the voucher.',
   },
   {
     zhLabel: '什么是首发权？',
@@ -263,18 +263,18 @@ export default function PProfile() {
         <ActivationCodeTransferSheet onClose={() => setTransferOpen(false)} />
       )}
 
-      {/* 直接使用有主续期码：确认 sheet */}
+      {/* 直接使用有主激活码：确认 sheet */}
       {useConfirming && createPortal(
         <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.35)' }} onClick={() => setUseConfirming(false)}>
           <div className="w-full max-w-[480px]" style={{ animation: 'sheetUp 260ms cubic-bezier(0.22,1,0.36,1) both' }} onClick={e => e.stopPropagation()}>
             <div style={{ borderRadius: '20px 20px 0 0', background: 'var(--color-bg-page)', boxShadow: '0 -4px 32px rgba(13,21,39,0.14)' }}>
               <div className="flex justify-center pt-3 pb-1"><div className="h-1 w-10 rounded-full" style={{ background: 'var(--color-border)' }} /></div>
               <div className="px-6 pt-3 pb-3 text-center">
-                <p className="text-[17px] font-semibold text-tokenText">{lang === 'zh' ? '确认使用续期码？' : 'Use Renewal Code?'}</p>
+                <p className="text-[17px] font-semibold text-tokenText">{lang === 'zh' ? '确认使用激活码？' : 'Use Activation Code?'}</p>
                 <p className="mt-2 text-[13px] leading-[20px] text-tokenHint">
                   {lang === 'zh'
-                    ? `将使用 1 张续期码，会员有效期增加 1 年，剩余 ${ownedCodeCount - 1} 张。`
-                    : `1 renewal code will be used. Membership extended by 1 year. ${ownedCodeCount - 1} remaining.`}
+                    ? `将使用 1 张激活码，会员有效期增加 1 年，剩余 ${ownedCodeCount - 1} 张。`
+                    : `1 activation code will be used. Membership extended by 1 year. ${ownedCodeCount - 1} remaining.`}
                 </p>
               </div>
               <div className="px-4 pb-8 flex flex-col gap-3">

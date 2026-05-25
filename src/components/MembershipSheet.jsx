@@ -4,7 +4,7 @@ import { X, Key, CheckCircle, Loader, AlertCircle } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 import { useUser } from './UserContext';
 
-// 无主续期码校验：账号16位大写字母+数字，密码8位数字
+// 无主激活码校验：账号16位大写字母+数字，密码8位数字
 function validateUnowned(account, password) {
   const acctOk = /^[A-Z0-9]{16}$/.test(account.trim().toUpperCase());
   const pwOk   = /^\d{8}$/.test(password.trim());
@@ -110,12 +110,12 @@ export default function MembershipSheet({ onClose, onActivate }) {
           </div>
           <div className="px-6 pt-3 pb-3 text-center">
             <p className="text-[17px] font-semibold text-tokenText">
-              {lang === 'zh' ? '确认使用续期码？' : 'Use Renewal Code?'}
+              {lang === 'zh' ? '确认使用激活码？' : 'Use Activation Code?'}
             </p>
             <p className="mt-2 text-[13px] leading-[20px] text-tokenHint">
               {lang === 'zh'
-                ? `将使用 1 张续期码，会员有效期增加 1 年，剩余 ${ownedCodeCount - 1} 张。`
-                : `1 renewal code will be used. Membership extended by 1 year. ${ownedCodeCount - 1} remaining.`}
+                ? `将使用 1 张激活码，会员有效期增加 1 年，剩余 ${ownedCodeCount - 1} 张。`
+                : `1 activation code will be used. Membership extended by 1 year. ${ownedCodeCount - 1} remaining.`}
             </p>
           </div>
           <div className="px-4 pb-8 flex flex-col gap-3">
@@ -160,8 +160,8 @@ export default function MembershipSheet({ onClose, onActivate }) {
           {/* Tab switcher */}
           <div className="mx-4 mb-4 flex border-b border-tokenBorderSubtle">
             {[
-              { key: 'owned',   zh: `我的续期码${ownedCodeCount > 0 ? ` (${ownedCodeCount})` : ''}`, en: `My Codes${ownedCodeCount > 0 ? ` (${ownedCodeCount})` : ''}` },
-              { key: 'unowned', zh: '输入续期码', en: 'Enter Code' },
+              { key: 'owned',   zh: `我的激活码${ownedCodeCount > 0 ? ` (${ownedCodeCount})` : ''}`, en: `My Activation Codes${ownedCodeCount > 0 ? ` (${ownedCodeCount})` : ''}` },
+              { key: 'unowned', zh: '输入激活码', en: 'Enter Activation Code' },
             ].map(t => (
               <button
                 key={t.key}
@@ -180,7 +180,7 @@ export default function MembershipSheet({ onClose, onActivate }) {
 
           <div className="px-4 pb-8">
 
-            {/* Tab: 我的续期码（有主码） */}
+            {/* Tab: 我的激活码（有主码） */}
             {tab === 'owned' && (
               ownedCodeCount === 0 ? (
                 <div className="flex flex-col items-center gap-3 py-8">
@@ -188,14 +188,14 @@ export default function MembershipSheet({ onClose, onActivate }) {
                     <Key className="h-5 w-5 text-tokenHint" strokeWidth={1.8} />
                   </div>
                   <p className="text-[14px] text-tokenHint">
-                    {lang === 'zh' ? '暂无可用续期码' : 'No renewal codes available'}
+                    {lang === 'zh' ? '暂无可用激活码' : 'No activation codes available'}
                   </p>
                   <button
                     onClick={() => setTab('unowned')}
                     className="text-[13px] font-semibold"
                     style={{ color: 'var(--color-primary)' }}
                   >
-                    {lang === 'zh' ? '输入续期码开通' : 'Enter a renewal code instead'}
+                    {lang === 'zh' ? '输入激活码开通' : 'Enter an activation code instead'}
                   </button>
                 </div>
               ) : (
@@ -207,10 +207,10 @@ export default function MembershipSheet({ onClose, onActivate }) {
                       </div>
                       <div>
                         <p className="text-[15px] font-semibold text-tokenText">
-                          {lang === 'zh' ? `${ownedCodeCount} 张续期码` : `${ownedCodeCount} Renewal Code${ownedCodeCount > 1 ? 's' : ''}`}
+                          {lang === 'zh' ? `${ownedCodeCount} 张激活码` : `${ownedCodeCount} Activation Code${ownedCodeCount > 1 ? 's' : ''}`}
                         </p>
                         <p className="text-[12px] text-tokenHint">
-                          {lang === 'zh' ? '每张增加 1 年有效期' : '+1 year per code'}
+                          {lang === 'zh' ? '每张增加 1 年有效期' : '+1 year per activation code'}
                         </p>
                       </div>
                     </div>
@@ -226,12 +226,12 @@ export default function MembershipSheet({ onClose, onActivate }) {
               )
             )}
 
-            {/* Tab: 输入续期码（无主码） */}
+            {/* Tab: 输入激活码（无主码） */}
             {tab === 'unowned' && (
               <div className="flex flex-col gap-3">
                 {[
-                  { key: 'account',  val: account,  set: v => { setAccount(v);  setError(null); }, zh: '续期码账号', en: 'Code Account',  type: 'text',     hint: lang === 'zh' ? '16 位大写字母或数字' : '16 uppercase letters or digits' },
-                  { key: 'password', val: password, set: v => { setPassword(v); setError(null); }, zh: '续期码密码', en: 'Code Password', type: 'password', hint: lang === 'zh' ? '8 位数字' : '8 digits' },
+                  { key: 'account',  val: account,  set: v => { setAccount(v);  setError(null); }, zh: '激活码账号', en: 'Activation Code Account',  type: 'text',     hint: lang === 'zh' ? '16 位大写字母或数字' : '16 uppercase letters or digits' },
+                  { key: 'password', val: password, set: v => { setPassword(v); setError(null); }, zh: '激活码密码', en: 'Activation Code Password', type: 'password', hint: lang === 'zh' ? '8 位数字' : '8 digits' },
                 ].map(f => (
                   <div key={f.key}>
                     <div className="mb-1.5 flex items-baseline justify-between">

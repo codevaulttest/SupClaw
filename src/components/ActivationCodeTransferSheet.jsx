@@ -44,8 +44,8 @@ export default function ActivationCodeTransferSheet({ onClose }) {
             </p>
             <p className="mt-2 text-[13px] leading-[20px] text-tokenHint">
               {lang === 'zh'
-                ? `将 ${qty} 张续期码转让给 ${recipient}，转让后不可撤销，剩余 ${ownedCodeCount - qty} 张。`
-                : `Transfer ${qty} renewal code${qty > 1 ? 's' : ''} to ${recipient}. This cannot be undone. ${ownedCodeCount - qty} remaining.`}
+                ? `将 ${qty} 张激活码转让给 ${recipient}，转让后不可撤销，剩余 ${ownedCodeCount - qty} 张。`
+                : `Transfer ${qty} activation code${qty > 1 ? 's' : ''} to ${recipient}. This cannot be undone. ${ownedCodeCount - qty} remaining.`}
             </p>
           </div>
           <div className="px-4 pb-8 flex flex-col gap-3">
@@ -100,8 +100,8 @@ export default function ActivationCodeTransferSheet({ onClose }) {
                   </p>
                   <p className="mt-2 text-center text-[13px] leading-[20px] text-tokenHint">
                     {lang === 'zh'
-                      ? `已将 ${qty} 张续期码转让给 ${recipient}。`
-                      : `${qty} renewal code${qty > 1 ? 's' : ''} transferred to ${recipient}.`}
+                      ? `已将 ${qty} 张激活码转让给 ${recipient}。`
+                      : `${qty} activation code${qty > 1 ? 's' : ''} transferred to ${recipient}.`}
                   </p>
                 </div>
                 <div className="px-4 pb-8">
@@ -118,7 +118,7 @@ export default function ActivationCodeTransferSheet({ onClose }) {
               <>
                 <div className="flex items-center justify-between px-4 pt-1 pb-3">
                   <p className="text-[17px] font-semibold text-tokenText">
-                    {lang === 'zh' ? '转让续期码' : 'Transfer Renewal Codes'}
+                    {lang === 'zh' ? '转让激活码' : 'Transfer Activation Codes'}
                   </p>
                   <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-full" style={{ background: 'var(--color-bg-card)' }}>
                     <X className="h-4 w-4 text-tokenSub" strokeWidth={2} />
