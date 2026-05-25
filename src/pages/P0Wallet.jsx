@@ -469,7 +469,14 @@ export default function P0Wallet() {
     <>
       <header className="flex h-[68px] items-center px-4 bg-white border-b border-tokenBorderSubtle">
         <div className="w-[86px]" />
-        <h1 className="flex-1 text-center text-[20px] font-semibold text-tokenText">{lang === 'zh' ? '超级龙虾' : 'SupClaw'}</h1>
+        <h1 className="flex flex-1 items-center justify-center gap-2 text-[20px] font-semibold text-tokenText">
+          <img
+            src="/assets/logo-supclaw-lobster.webp"
+            alt=""
+            className="h-7 w-7 shrink-0 rounded-lg"
+          />
+          <span>{lang === 'zh' ? '超级龙虾' : 'SupClaw'}</span>
+        </h1>
         <HeaderActions />
       </header>
 
