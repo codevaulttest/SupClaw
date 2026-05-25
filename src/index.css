@@ -103,6 +103,11 @@ body {
   to   { transform: scale(1);   opacity: 1; }
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
 @keyframes confettiFall {
   from { transform: translateY(0)     rotate(0deg);   opacity: 1; }
   to   { transform: translateY(180px) rotate(360deg); opacity: 0; }

@@ -55,9 +55,10 @@ function SloganBanner() {
         </p>
       </div>
       <img
-        src="/assets/mascot-lobster.png"
+        src="/assets/mascot-lobster.webp"
         alt={lang === 'zh' ? '首发权' : 'Early access'}
         className="absolute right-[20px] top-[11px] h-[140px] w-[150px] object-contain object-bottom"
+        style={{ animation: 'popIn 420ms cubic-bezier(0.34,1.56,0.64,1) both, float 3s 420ms ease-in-out infinite' }}
       />
       <button
         onClick={toggleLang}
@@ -95,7 +96,7 @@ function SCHeroCard({ onExchange }) {
       style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: '0 4px 16px rgba(13,21,39,0.08)' }}
     >
       <div className="absolute -right-6 top-11 h-[90px] w-[110px] rounded-full blur-[20px] opacity-35" style={{ background: 'var(--color-primary-soft)' }} />
-      <img src="/assets/sc-hero-illustration.png" className="absolute -right-7 -top-2.5 h-[180px] w-[180px] object-contain opacity-40" alt="" />
+      <img src="/assets/sc-hero-illustration.webp" className="absolute -right-7 -top-2.5 h-[180px] w-[180px] object-contain opacity-40" alt="" />
 
       <div className="relative">
         <div className="mb-2.5 flex items-center justify-between">
@@ -523,7 +524,14 @@ export default function P0Wallet() {
           onOpenMembership={() => { setBuyOpen(false); setMembershipOpen(true); }}
         />
       )}
-      {devModal !== null && <SubsidyResultModal subsidyAmount={devModal} orderTotal={9} onClose={() => setDevModal(null)} />}
+      {devModal !== null && (
+        <SubsidyResultModal
+          subsidyAmount={devModal === 'error' ? 0 : devModal}
+          orderTotal={9}
+          error={devModal === 'error'}
+          onClose={() => setDevModal(null)}
+        />
+      )}
       {membershipOpen && (
         <MembershipSheet
           onClose={() => setMembershipOpen(false)}

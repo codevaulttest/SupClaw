@@ -2,9 +2,9 @@ import { ChevronRight, Play } from 'lucide-react';
 import TokenIcon from './TokenIcon';
 
 const TOKEN_INFO = {
-  A: { label: 'A 类视频', color: 'var(--token-a-text)' },
-  B: { label: 'B 类视频', color: 'var(--token-b-text)' },
-  C: { label: 'C 类视频', color: 'var(--token-c-text)' },
+  A: { label: 'A · 品牌定制', color: 'var(--token-a-text)' },
+  B: { label: 'B · 创意文案', color: 'var(--token-b-text)' },
+  C: { label: 'C · 极速盲盒', color: 'var(--token-c-text)' },
 };
 
 function formatBookTitle(title) {

@@ -14,9 +14,9 @@ const UNIT_PRICE  = { A: 1, B: 1, C: 1 };
 // SC rate: 1 ASC = 5亿 SC; 10% of that = 0.5亿 SC per ASC
 const SC_RATE     = { A: 5, B: 3, C: 1 };
 const TYPE_INFO   = {
-  A: { label: 'A 类视频', color: 'var(--token-a-text)', bg: 'var(--token-a-soft)', v: 'a' },
-  B: { label: 'B 类视频', color: 'var(--token-b-text)', bg: 'var(--token-b-soft)', v: 'b' },
-  C: { label: 'C 类视频', color: 'var(--token-c-text)', bg: 'var(--token-c-soft)', v: 'c' },
+  A: { label: 'A · 品牌定制', color: 'var(--token-a-text)', bg: 'var(--token-a-soft)', v: 'a' },
+  B: { label: 'B · 创意文案', color: 'var(--token-b-text)', bg: 'var(--token-b-soft)', v: 'b' },
+  C: { label: 'C · 极速盲盒', color: 'var(--token-c-text)', bg: 'var(--token-c-soft)', v: 'c' },
 };
 
 function guessType(productId) {
@@ -65,7 +65,7 @@ export default function P7Product() {
         <div className="mb-5 overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
           <div className="h-[120px] flex items-end px-5 pb-4" style={{ background: `linear-gradient(135deg, var(--token-${v}-from), var(--token-${v}-to))` }}>
             <div>
-              <span className="rounded-full px-2.5 py-1 text-[11px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.25)' }}>{type} · {lang === 'zh' ? info.label : { A: 'Type A Video', B: 'Type B Video', C: 'Type C Video' }[type]}</span>
+              <span className="rounded-full px-2.5 py-1 text-[11px] font-bold text-white" style={{ background: 'rgba(0,0,0,0.25)' }}>{type} · {lang === 'zh' ? info.label : { A: 'A · Brand Custom', B: 'B · Creative Copy', C: 'C · Blind Box' }[type]}</span>
               <p className="mt-2 text-[18px] font-bold text-white">{title}</p>
             </div>
           </div>

@@ -1,15 +1,15 @@
 export const TOKEN_LABELS = {
-  A: 'A 类视频',
-  B: 'B 类视频',
-  C: 'C 类视频',
+  A: 'A · 品牌定制',
+  B: 'B · 创意文案',
+  C: 'C · 极速盲盒',
 };
 
 export const VISIBLE_CATEGORIES = [
-  { id: 'business', name: '商业管理经典', nameEn: 'Business Management Classics', image: '/assets/booklist-business.png', locked: false },
-  { id: 'humanities', name: '人文地理', nameEn: 'Humanities & Geography', image: '/assets/booklist-humanities.png', locked: false },
-  { id: 'classics', name: '国学经典', nameEn: 'Chinese Classics', image: '/assets/booklist-classics.png', locked: true },
-  { id: 'lifestyle', name: '生活美学', nameEn: 'Lifestyle & Aesthetics', image: '/assets/booklist-lifestyle.png', locked: true },
-  { id: 'science', name: '科技未来', nameEn: 'Technology & the Future', image: '/assets/booklist-science.png', locked: true },
+  { id: 'business', name: '商业管理经典', nameEn: 'Business Management Classics', image: '/assets/booklist-business.webp', locked: false },
+  { id: 'humanities', name: '人文地理', nameEn: 'Humanities & Geography', image: '/assets/booklist-humanities.webp', locked: false },
+  { id: 'classics', name: '国学经典', nameEn: 'Chinese Classics', image: '/assets/booklist-classics.webp', locked: true },
+  { id: 'lifestyle', name: '生活美学', nameEn: 'Lifestyle & Aesthetics', image: '/assets/booklist-lifestyle.webp', locked: true },
+  { id: 'science', name: '科技未来', nameEn: 'Technology & the Future', image: '/assets/booklist-science.webp', locked: true },
 ];
 
 const TYPE_PATTERN = ['A', 'B', 'C', 'C', 'B'];

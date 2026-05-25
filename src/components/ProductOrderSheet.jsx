@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Mail, Minus, Plus, X } from 'lucide-react';
+import { Mail, Minus, Plus, X, Paperclip, Trash2 } from 'lucide-react';
 import TokenIcon from './TokenIcon';
 import { useLanguage } from './LanguageContext';
 import { formatScAmount } from '../utils/formatSc';
@@ -10,9 +10,9 @@ const BALANCES = { A: 3, B: 5, C: 8 };
 const SC_BALANCE = 32.11;
 const SC_RATE = { A: 5, B: 3, C: 1 };
 const TYPE_INFO = {
-  A: { label: 'A 类视频', v: 'a' },
-  B: { label: 'B 类视频', v: 'b' },
-  C: { label: 'C 类视频', v: 'c' },
+  A: { label: 'A · 品牌定制', v: 'a' },
+  B: { label: 'B · 创意文案', v: 'b' },
+  C: { label: 'C · 极速盲盒', v: 'c' },
 };
 
 function formatBookTitle(title) {
@@ -25,6 +25,10 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
   const [qty, setQty] = useState(1);
   const [qtyDraft, setQtyDraft] = useState('');
   const [email, setEmail] = useState(USER_EMAIL);
+  const [title, setTitle] = useState('');
+  const [coreMsg, setCoreMsg] = useState('');
+  const [assets, setAssets] = useState([]);
+  const fileInputRef = useRef(null);
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
   const type = product.type;
@@ -84,7 +88,7 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-semibold text-tokenText">{formatBookTitle(product.title)}</p>
                 <p className="mt-0.5 text-[12px]" style={{ color: `var(--token-${v}-text)` }}>
-                  {lang === 'zh' ? info.label : { A: 'Type A Video', B: 'Type B Video', C: 'Type C Video' }[type]}
+                  {lang === 'zh' ? info.label : { A: 'A · Brand Custom', B: 'B · Creative Copy', C: 'C · Blind Box' }[type]}
                   <span className="text-tokenHint"> · {lang === 'zh' ? '每' : 'Each'} {product.duration}{lang === 'zh' ? '秒需' : 's video costs '}{unitABC} {type}SC</span>
                 </p>
               </div>
@@ -172,6 +176,83 @@ export default function ProductOrderSheet({ product, onClose, onOrdered, onOpenB
                 <p className="mt-1.5 text-[11px] text-tokenDanger">{lang === 'zh' ? '请输入有效的邮箱地址' : 'Please enter a valid email'}</p>
               )}
             </div>
+
+            {(type === 'B' || type === 'A') && (
+              <div className="mb-4 flex flex-col gap-3 rounded-xl px-4 py-4" style={{ background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)' }}>
+                <p className="text-[13px] font-semibold text-tokenText">
+                  {lang === 'zh' ? '创作信息' : 'Creative Brief'}
+                  <span className="ml-1.5 text-[11px] font-normal text-tokenHint">{lang === 'zh' ? '可选' : 'Optional'}</span>
+                </p>
+
+                <div>
+                  <label className="mb-1.5 block text-[12px] font-medium text-tokenHint">
+                    {lang === 'zh' ? '视频标题' : 'Video Title'}
+                  </label>
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                    placeholder={lang === 'zh' ? '请输入视频标题' : 'Enter video title'}
+                    className="w-full rounded-xl px-3 py-2.5 text-[14px] outline-none"
+                    style={{ background: 'var(--color-bg-page)', border: '1.5px solid var(--color-border)', color: 'var(--color-text-primary)' }}
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-[12px] font-medium text-tokenHint">
+                    {lang === 'zh' ? '核心表达' : 'Core Message'}
+                  </label>
+                  <textarea
+                    value={coreMsg}
+                    onChange={e => setCoreMsg(e.target.value)}
+                    rows={3}
+                    placeholder={lang === 'zh' ? '请描述视频想传达的核心内容' : 'Describe the core message for this video'}
+                    className="w-full resize-none rounded-xl px-3 py-2.5 text-[14px] outline-none"
+                    style={{ background: 'var(--color-bg-page)', border: '1.5px solid var(--color-border)', color: 'var(--color-text-primary)' }}
+                  />
+                </div>
+
+                {type === 'A' && (
+                  <div>
+                    <label className="mb-1.5 block text-[12px] font-medium text-tokenHint">
+                      {lang === 'zh' ? '素材（品牌元素、LOGO、风格参考等）' : 'Assets (brand elements, logo, style references, etc.)'}
+                    </label>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      multiple
+                      accept="image/*,.pdf"
+                      className="hidden"
+                      onChange={e => {
+                        const picked = Array.from(e.target.files || []);
+                        setAssets(prev => [...prev, ...picked]);
+                        e.target.value = '';
+                      }}
+                    />
+                    {assets.length > 0 && (
+                      <div className="mb-2 flex flex-col gap-1.5">
+                        {assets.map((f, i) => (
+                          <div key={i} className="flex items-center justify-between rounded-lg px-3 py-2" style={{ background: 'var(--color-bg-page)', border: '1px solid var(--color-border)' }}>
+                            <span className="truncate text-[13px] text-tokenSub">{f.name}</span>
+                            <button onClick={() => setAssets(prev => prev.filter((_, j) => j !== i))} className="ml-2 shrink-0">
+                              <Trash2 className="h-3.5 w-3.5 text-tokenHint" strokeWidth={1.8} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-[13px] font-medium"
+                      style={{ background: 'var(--color-bg-page)', border: '1.5px dashed var(--color-border)', color: 'var(--color-text-secondary)', width: '100%' }}
+                    >
+                      <Paperclip className="h-4 w-4 shrink-0 text-tokenHint" strokeWidth={1.8} />
+                      {lang === 'zh' ? '添加素材' : 'Add Assets'}
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
 
             <button
               onClick={handleOrder}
