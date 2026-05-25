@@ -5,11 +5,18 @@ export const TOKEN_LABELS = {
 };
 
 export const VISIBLE_CATEGORIES = [
-  { id: 'business', name: '商业管理经典', nameEn: 'Business Management Classics', image: '/assets/booklist-business.webp', locked: false },
-  { id: 'humanities', name: '人文地理', nameEn: 'Humanities & Geography', image: '/assets/booklist-humanities.webp', locked: false },
-  { id: 'classics', name: '国学经典', nameEn: 'Chinese Classics', image: '/assets/booklist-classics.webp', locked: true },
-  { id: 'lifestyle', name: '生活美学', nameEn: 'Lifestyle & Aesthetics', image: '/assets/booklist-lifestyle.webp', locked: true },
-  { id: 'science', name: '科技未来', nameEn: 'Technology & the Future', image: '/assets/booklist-science.webp', locked: true },
+  { id: 'confucian', name: '儒家经典', nameEn: 'Confucian Classics', image: 'https://placehold.co/400x300', locked: false },
+  { id: 'taoist', name: '道家经典', nameEn: 'Taoist Classics', image: 'https://placehold.co/400x300', locked: false },
+  { id: 'mohist', name: '墨家法家名家', nameEn: 'Mohist, Legalist & Logician Schools', image: 'https://placehold.co/400x300', locked: false },
+  { id: 'military', name: '兵家谋略', nameEn: 'Military Strategy', image: 'https://placehold.co/400x300', locked: false },
+  { id: 'miscellaneous', name: '诸子杂家', nameEn: 'Miscellaneous Schools of Thought', image: 'https://placehold.co/400x300', locked: false },
+  { id: 'astronomy', name: '天文历法', nameEn: 'Astronomy & Calendar', image: 'https://placehold.co/400x300', locked: false },
+  { id: 'medicine', name: '医药医学', nameEn: 'Medicine & Pharmacology', image: 'https://placehold.co/400x300', locked: false },
+  { id: 'mathematics', name: '数学算术', nameEn: 'Mathematics & Arithmetic', image: 'https://placehold.co/400x300', locked: false },
+  { id: 'agriculture', name: '农学农业', nameEn: 'Agriculture & Agronomy', image: 'https://placehold.co/400x300', locked: false },
+  { id: 'technology', name: '科技工艺', nameEn: 'Technology & Craftsmanship', image: 'https://placehold.co/400x300', locked: false },
+  { id: 'geography', name: '地理方志', nameEn: 'Geography & Local Chronicles', image: 'https://placehold.co/400x300', locked: false },
+  { id: 'history', name: '史书典籍', nameEn: 'Historical Texts & Classics', image: 'https://placehold.co/400x300', locked: false },
 ];
 
 const TYPE_PATTERN = ['A', 'B', 'C', 'C', 'B'];
