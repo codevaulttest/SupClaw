@@ -8,7 +8,7 @@ import HeaderActions from '../components/HeaderActions';
 import MembershipSheet from '../components/MembershipSheet';
 import ActivationCodeTransferSheet from '../components/ActivationCodeTransferSheet';
 
-const MOCK_INVITE_CODE = 'SUPRA-8X4K';
+const MOCK_INVITE_CODE = 'SC8V';
 
 function InviteCodeRow() {
   const { lang } = useLanguage();
@@ -244,11 +244,13 @@ export default function PProfile() {
           />
         </div>
 
-        <div className="enter mb-4 overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)', animationDelay: '90ms' }}>
-          <InviteCodeRow />
-        </div>
+        {isMember && (
+          <div className="enter mb-4 overflow-hidden" style={{ borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-card)', boxShadow: 'var(--shadow-sm)', animationDelay: '90ms' }}>
+            <InviteCodeRow />
+          </div>
+        )}
 
-        <div className="enter" style={{ animationDelay: '120ms' }}>
+        <div className="enter" style={{ animationDelay: isMember ? '120ms' : '90ms' }}>
           <HelpSection />
         </div>
       </div>
