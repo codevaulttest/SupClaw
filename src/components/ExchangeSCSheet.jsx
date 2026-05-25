@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { ArrowDownUp, X, ChevronDown, Check, CircleCheck, CircleX, Loader, Clock, CreditCard } from 'lucide-react';
+import { ArrowDownUp, X, ChevronDown, Check, CircleCheck, CircleX, Loader, Clock } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 import { formatScAmount } from '../utils/formatSc';
 
@@ -374,13 +374,6 @@ export default function ExchangeSCSheet({ onClose, onSubmit, devForceInvalid = f
               /* ── SC 实体卡 tab ── */
               <>
                 <div className="rounded-2xl px-4 pt-4 pb-5 flex flex-col gap-4" style={cardStyle}>
-                  <div className="flex items-center gap-2">
-                    <CreditCard className="h-4 w-4 shrink-0 text-tokenPrimary" strokeWidth={2} />
-                    <span className="text-[13px] font-medium text-tokenSub">
-                      {lang === 'zh' ? 'SC 实体卡' : 'SC Physical Card'}
-                    </span>
-                  </div>
-
                   {/* 卡号 */}
                   <div className="flex flex-col gap-1.5">
                     <label className="text-[12px] text-tokenHint">{lang === 'zh' ? '卡号' : 'Card Number'}</label>

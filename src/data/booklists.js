@@ -5,18 +5,18 @@ export const TOKEN_LABELS = {
 };
 
 export const VISIBLE_CATEGORIES = [
-  { id: 'confucian', name: '儒家经典', nameEn: 'Confucian Classics', image: 'https://placehold.co/400x300', locked: false },
-  { id: 'taoist', name: '道家经典', nameEn: 'Taoist Classics', image: 'https://placehold.co/400x300', locked: false },
-  { id: 'mohist', name: '墨家法家名家', nameEn: 'Mohist, Legalist & Logician Schools', image: 'https://placehold.co/400x300', locked: false },
-  { id: 'military', name: '兵家谋略', nameEn: 'Military Strategy', image: 'https://placehold.co/400x300', locked: false },
-  { id: 'miscellaneous', name: '诸子杂家', nameEn: 'Miscellaneous Schools of Thought', image: 'https://placehold.co/400x300', locked: false },
-  { id: 'astronomy', name: '天文历法', nameEn: 'Astronomy & Calendar', image: 'https://placehold.co/400x300', locked: false },
-  { id: 'medicine', name: '医药医学', nameEn: 'Medicine & Pharmacology', image: 'https://placehold.co/400x300', locked: false },
-  { id: 'mathematics', name: '数学算术', nameEn: 'Mathematics & Arithmetic', image: 'https://placehold.co/400x300', locked: false },
-  { id: 'agriculture', name: '农学农业', nameEn: 'Agriculture & Agronomy', image: 'https://placehold.co/400x300', locked: false },
-  { id: 'technology', name: '科技工艺', nameEn: 'Technology & Craftsmanship', image: 'https://placehold.co/400x300', locked: false },
-  { id: 'geography', name: '地理方志', nameEn: 'Geography & Local Chronicles', image: 'https://placehold.co/400x300', locked: false },
-  { id: 'history', name: '史书典籍', nameEn: 'Historical Texts & Classics', image: 'https://placehold.co/400x300', locked: false },
+  { id: 'confucian', name: '儒家经典', nameEn: 'Confucian Classics', image: '/assets/category-images-v2/01-confucian-classics.webp', locked: false },
+  { id: 'taoist', name: '道家经典', nameEn: 'Taoist Classics', image: '/assets/category-images-v2/02-daoist-classics.webp', locked: false },
+  { id: 'mohist', name: '墨家法家名家', nameEn: 'Mohist, Legalist & Logician Schools', image: '/assets/category-images-v2/03-mohist-legalist-logicians.webp', locked: false },
+  { id: 'military', name: '兵家谋略', nameEn: 'Military Strategy', image: '/assets/category-images-v2/04-military-strategy.webp', locked: false },
+  { id: 'miscellaneous', name: '诸子杂家', nameEn: 'Miscellaneous Schools of Thought', image: '/assets/category-images-v2/05-hundred-schools.webp', locked: false },
+  { id: 'astronomy', name: '天文历法', nameEn: 'Astronomy & Calendar', image: '/assets/category-images-v2/06-astronomy-calendar.webp', locked: false },
+  { id: 'medicine', name: '医药医学', nameEn: 'Medicine & Pharmacology', image: '/assets/category-images-v2/07-medicine.webp', locked: false },
+  { id: 'mathematics', name: '数学算术', nameEn: 'Mathematics & Arithmetic', image: '/assets/category-images-v2/08-mathematics.webp', locked: false },
+  { id: 'agriculture', name: '农学农业', nameEn: 'Agriculture & Agronomy', image: '/assets/category-images-v2/09-agriculture.webp', locked: false },
+  { id: 'technology', name: '科技工艺', nameEn: 'Technology & Craftsmanship', image: '/assets/category-images-v2/10-technology-craft.webp', locked: false },
+  { id: 'geography', name: '地理方志', nameEn: 'Geography & Local Chronicles', image: '/assets/category-images-v2/11-geography-gazetteers.webp', locked: false },
+  { id: 'history', name: '史书典籍', nameEn: 'Historical Texts & Classics', image: '/assets/category-images-v2/12-history-classics.webp', locked: false },
 ];
 
 const TYPE_PATTERN = ['A', 'B', 'C', 'C', 'B'];
